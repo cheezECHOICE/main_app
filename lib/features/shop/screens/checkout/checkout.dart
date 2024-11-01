@@ -5,11 +5,9 @@ import 'package:food/common/widgets/products/cart/coupon_widget.dart';
 import 'package:food/features/shop/controllers/product/cart_controller.dart';
 import 'package:food/features/shop/controllers/product/order_controller.dart';
 import 'package:food/features/shop/screens/cart/widgets/cart_items.dart';
-import 'package:food/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:food/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:food/features/shop/screens/checkout/widgets/billing_payment_section.dart';
-import 'package:food/features/shop/screens/checkout/widgets/order_type.dart';
-// import 'package:food/features/shop/screens/checkout/widgets/otp_with_cart.dart';
+import 'package:food/features/shop/screens/checkout/widgets/select_address.dart';
 import 'package:food/utils/constants/colors.dart';
 import 'package:food/utils/constants/sizes.dart';
 import 'package:food/utils/helpers/helper_functions.dart';
@@ -33,15 +31,6 @@ class CheckOutScreen extends StatelessWidget {
         showBackArrow: true,
         title: Text('Order Review',
             style: Theme.of(context).textTheme.headlineSmall),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.shopping_cart),
-        //     onPressed: () {
-        //       // Navigate to the new page
-        //       Get.to(() => CartDetailsWithOtpScreen());
-        //     },
-        //   ),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -52,11 +41,15 @@ class CheckOutScreen extends StatelessWidget {
               const TCartItems(showAddRemoveButtons: false),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              OrderTypeButton(),
-              const SizedBox(height: TSizes.spaceBtwSections),
+              // OrderTypeButton(),
+              // const SizedBox(height: TSizes.spaceBtwSections),
 
               ///Coupon Text
               const TCouponCode(),
+              const SizedBox(height: TSizes.spaceBtwSections),
+
+              ///Delivery Address Section
+              const DeliveryAddressSection(),
               const SizedBox(height: TSizes.spaceBtwSections),
 
               ///Billing
@@ -76,12 +69,9 @@ class CheckOutScreen extends StatelessWidget {
                     ///Payment Method
                     TBillingPaymentSection(),
                     SizedBox(height: TSizes.spaceBtwItems),
-
-                    ///Address
-                    //TBillingAddressSection(),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

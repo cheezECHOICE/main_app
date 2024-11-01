@@ -5,6 +5,7 @@ import 'package:food/common/widgets/custom_shapes/container/primary_header_conta
 import 'package:food/common/widgets/layouts/listTiltes/setting_menu_tile.dart';
 import 'package:food/common/widgets/layouts/listTiltes/user_profile.dart';
 import 'package:food/common/widgets/texts/section_heading.dart';
+import 'package:food/features/personalisation/screens/address/address.dart';
 import 'package:food/features/personalisation/screens/profile/widgets/profile.dart';
 import 'package:food/features/personalisation/screens/settings/utils/logout.dart';
 import 'package:food/features/shop/screens/cart/cart.dart';
@@ -43,9 +44,9 @@ class _SettingScreenState extends State<SettingScreen> {
       // Load Privacy Policy
       final privacyPolicyData =
           await rootBundle.load('assets/docs/all policies.pdf');
-      final privacyPolicyFile =
-          File('${directory.path}/all policies.pdf');
-      await privacyPolicyFile.writeAsBytes(privacyPolicyData.buffer.asUint8List());
+      final privacyPolicyFile = File('${directory.path}/all policies.pdf');
+      await privacyPolicyFile
+          .writeAsBytes(privacyPolicyData.buffer.asUint8List());
       localPrivacyPath = privacyPolicyFile.path;
 
       setState(() {
@@ -76,7 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   // User Profile card
                   TUserProfileTile(
-                    onPressed: () => Get.to(() => const ProfileScreen())),
+                      onPressed: () => Get.to(() => const ProfileScreen())),
                   const SizedBox(height: TSizes.spaceBtwSections),
                 ],
               ),
@@ -100,7 +101,8 @@ class _SettingScreenState extends State<SettingScreen> {
                     icon: Iconsax.shopping_cart,
                     title: 'My Cart',
                     subtitle: 'Add, remove products and move to checkout',
-                    onTap: () => Get.to(() => const CartScreen(fromProfile: true)),
+                    onTap: () =>
+                        Get.to(() => const CartScreen(fromProfile: true)),
                   ),
                   TSettingsMenuTile(
                     icon: Iconsax.heart,
@@ -114,7 +116,8 @@ class _SettingScreenState extends State<SettingScreen> {
                     title: 'My Address',
                     subtitle: 'Set Ordering delivery Address',
                     onTap: () {
-                      _showUnderDevelopmentSnap(context); // Show "Under Development" Snap
+                      _showUnderDevelopmentSnap(
+                          context); // Show "Under Development" Snap
                     },
                   ),
                   // TSettingsMenuTile(

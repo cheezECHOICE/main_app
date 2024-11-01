@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food/bindings/general_bindings.dart';
-import 'package:food/phonepe_payment.dart';
 import 'package:food/routes/app_routes.dart';
 import 'package:food/utils/constants/colors.dart';
 import 'package:food/utils/theme/theme.dart';
@@ -16,6 +15,7 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
+      //bj
       debugShowCheckedModeBanner: false,
       initialBinding: GeneralBindings(),
       getPages: AppRoutes.pages,

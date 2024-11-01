@@ -45,7 +45,7 @@ class SignupController extends GetxController {
       }
 
       // Privacy Policy Check
-      if (privacyPolicy.value) {
+      if (!privacyPolicy.value) {
         TLoaders.warningSnackBar(
           title: 'Accept Privacy Policy',
           message:
