@@ -15,13 +15,14 @@ class SignupController extends GetxController {
 
   /// Variables
   final hidePassword = true.obs;
-  final privacyPolicy = true.obs;
   final email = TextEditingController();
   final lastName = TextEditingController();
   final username = TextEditingController();
   final password = TextEditingController();
   final firstName = TextEditingController();
   final phoneNumber = TextEditingController();
+  var privacyPolicy = false.obs;
+  bool get isSignupEnabled => privacyPolicy.value;
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // formValidation
 
   /// -- SIGNUP
@@ -39,18 +40,27 @@ class SignupController extends GetxController {
       }
 
       // Form Validation
-      if (!signupFormKey.currentState!.validate()) {
+      final trimmedUsername = username.text.trim();
+      final trimmedFirstName = firstName.text.trim();
+      final trimmedLastName = lastName.text.trim();
+
+      // Form Validation
+      if (!signupFormKey.currentState!.validate() ||
+          _isFieldEmpty(trimmedUsername) ||
+          _isFieldEmpty(trimmedFirstName) ||
+          _isFieldEmpty(trimmedLastName)) {
         TFullScreenLoader.stopLoading();
+        TLoaders.customToast(
+            message: "Please fill all required fields properly.");
         return;
       }
 
-      // Privacy Policy Check
+      // privacy aggrement
       if (!privacyPolicy.value) {
-        TLoaders.warningSnackBar(
-          title: 'Accept Privacy Policy',
-          message:
-              'In order to create an account you must have read and accept the Privacy Policy & Terms of Use.',
-        );
+        TLoaders.customToast(
+            message: "Please agree to the privacy policy to continue.");
+        TFullScreenLoader.stopLoading();
+        return;
       }
 
       // Register user in the Firebase Authentication & Save user data in the Firebase
@@ -92,5 +102,9 @@ class SignupController extends GetxController {
       TLoaders.errorSnackBar(
           title: 'Oh Snap!', message: "Sign Up failed, please retry again!");
     }
+  }
+
+  bool _isFieldEmpty(String value) {
+    return value.trim().isEmpty;
   }
 }

@@ -19,9 +19,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-      backgroundColor: 
-                dark ? TColors.dark
-                : Colors.white,
+      backgroundColor: dark ? TColors.dark : Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -31,15 +29,15 @@ class LoginScreen extends StatelessWidget {
             TLoginHeader(),
 
             ///Form
-            const SizedBox(height: TSizes.spaceBtwSections/10),
+            const SizedBox(height: TSizes.spaceBtwSections / 10),
             const TLoginForm(),
-            const SizedBox(height: TSizes.spaceBtwSections/2),
+            const SizedBox(height: TSizes.spaceBtwSections / 2),
 
             ///Divider
-            TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
-            const SizedBox(height: TSizes.spaceBtwSections/2),
+            // TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
+            // const SizedBox(height: TSizes.spaceBtwSections/2),
 
-            const TSocialButtons(),
+            // const TSocialButtons(),
 
             const SizedBox(height: 16),
 

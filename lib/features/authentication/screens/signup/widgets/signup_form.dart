@@ -1,8 +1,10 @@
 //import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:food/common/widgets/loaders/loaders.dart';
 import 'package:food/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:food/features/authentication/screens/signup/widgets/terms_and_conditions_checkbox.dart';
+import 'package:food/utils/constants/colors.dart';
 import 'package:food/utils/constants/sizes.dart';
 import 'package:food/utils/constants/text_strings.dart';
 import 'package:food/utils/helpers/helper_functions.dart';
@@ -113,10 +115,30 @@ class TSignupForm extends StatelessWidget {
           ///Signup button
           SizedBox(
             width: 300,
-            child: ElevatedButton(
-              onPressed: () => controller.signup(),
-              child: const Text(TTexts.createAccount),
-            ),
+            child: Obx(() => ElevatedButton(
+                  onPressed: controller.isSignupEnabled
+                      ? () => controller.signup()
+                      : () {
+                          TLoaders.customToast(
+                              message:
+                                  "Please agree to the policy to continue");
+                        },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(
+                      controller.isSignupEnabled
+                          ? TColors.primary
+                          : Colors.grey,
+                    ),
+                  ),
+                  child: Text(
+                    TTexts.createAccount,
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 16,
+                      color: dark ? TColors.white : TColors.white,
+                    ),
+                  ),
+                )),
           ),
         ],
       ),

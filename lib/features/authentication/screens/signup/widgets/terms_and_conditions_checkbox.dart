@@ -41,16 +41,14 @@ class _TTermsAndConditionsCheckBoxState
       // Load Privacy Policy
       final privacyPolicyData =
           await rootBundle.load('assets/docs/privacy_policy.pdf');
-      final privacyPolicyFile =
-          File('${directory.path}/privacy_policy.pdf');
-      await privacyPolicyFile.writeAsBytes(privacyPolicyData.buffer.asUint8List());
+      final privacyPolicyFile = File('${directory.path}/privacy_policy.pdf');
+      await privacyPolicyFile
+          .writeAsBytes(privacyPolicyData.buffer.asUint8List());
       localPrivacyPath = privacyPolicyFile.path;
 
       // Load Terms and Conditions
-      final termsData =
-          await rootBundle.load('assets/docs/T_C.pdf');
-      final termsFile =
-          File('${directory.path}/T_C.pdf');
+      final termsData = await rootBundle.load('assets/docs/T_C.pdf');
+      final termsFile = File('${directory.path}/T_C.pdf');
       await termsFile.writeAsBytes(termsData.buffer.asUint8List());
       localTermsPath = termsFile.path;
 
@@ -77,9 +75,9 @@ class _TTermsAndConditionsCheckBoxState
           height: 24,
           child: Obx(
             () => Checkbox(
-              value: !controller.privacyPolicy.value,
+              value: controller.privacyPolicy.value,
               onChanged: (value) =>
-                  controller.privacyPolicy.value = !controller.privacyPolicy.value,
+                  controller.privacyPolicy.value = value ?? false,
             ),
           ),
         ),
@@ -99,7 +97,8 @@ class _TTermsAndConditionsCheckBoxState
                       decorationColor: dark ? TColors.white : TColors.primary,
                     ),
                 recognizer: TapGestureRecognizer()
-                  ..onTap = () => _showFullScreenDocument(context, localPrivacyPath),
+                  ..onTap =
+                      () => _showFullScreenDocument(context, localPrivacyPath),
               ),
               TextSpan(
                 text: '${TTexts.and} ',
@@ -113,7 +112,8 @@ class _TTermsAndConditionsCheckBoxState
                       decorationColor: dark ? TColors.white : TColors.primary,
                     ),
                 recognizer: TapGestureRecognizer()
-                  ..onTap = () => _showFullScreenDocument(context, localTermsPath),
+                  ..onTap =
+                      () => _showFullScreenDocument(context, localTermsPath),
               ),
             ],
           ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/login_signup/form_divider.dart';
-import 'package:food/common/widgets/login_signup/social_buttons.dart';
+// import 'package:food/common/widgets/login_signup/form_divider.dart';
+// import 'package:food/common/widgets/login_signup/social_buttons.dart';
 import 'package:food/features/authentication/screens/signup/widgets/signup_form.dart';
 //import 'package:food/utils/constants/colors.dart';
 import 'package:food/utils/constants/sizes.dart';
 import 'package:food/utils/constants/text_strings.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 //import 'package:iconsax/iconsax.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -29,14 +29,14 @@ class SignupScreen extends StatelessWidget {
             const TSignupForm(),
             const SizedBox(height: TSizes.spaceBtwSections),
 
-            ///Divider
-            TFormDivider(dividerText: TTexts.orSignUpWith.capitalize!),
-            const SizedBox(height: TSizes.spaceBtwSections/1.5),
+            // ///Divider
+            // TFormDivider(dividerText: TTexts.orSignUpWith.capitalize!),
+            // const SizedBox(height: TSizes.spaceBtwSections / 1.5),
 
-            ///Social Buttons
-            const TSocialButtons(),
+            // ///Social Buttons
+            // const TSocialButtons(),
 
-            const SizedBox(height: 24),
+            // const SizedBox(height: 24),
             Center(
               child: Text(
                 "Powered By Appe Nexus",
