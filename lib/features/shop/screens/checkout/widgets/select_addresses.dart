@@ -13,21 +13,25 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
 
   // Sample data for rooms
   final Map<String, List<String>> roomOptions = {
-    "Men's": ["MH1", "MH2", "MH3", "MH4", "MH5", "MH6", "CB"], 
+    "Men's": ["MH1", "MH2", "MH3", "MH4", "MH5", "MH6", "CB"],
     "Ladies": ["LH1", "LH2", "LH3"],
   };
 
   // Function to determine if the section should be available
   bool isAvailable() {
     final now = DateTime.now();
-    final startAvailability = DateTime(now.year, now.month, now.day, 17); // Saturday 5:00 PM
-    final endAvailability = DateTime(now.year, now.month, now.day, 20); // Monday 8:00 PM
+    final startAvailability =
+        DateTime(now.year, now.month, now.day, 17); // Saturday 5:00 PM
+    final endAvailability =
+        DateTime(now.year, now.month, now.day, 20); // Monday 8:00 PM
 
     // Check if today is between Saturday 5:00 PM and Monday 8:00 PM
     final dayOfWeek = now.weekday;
-    final isSaturdayEvening = dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
+    final isSaturdayEvening =
+        dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
     final isSunday = dayOfWeek == DateTime.sunday;
-    final isMondayMorning = dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
+    final isMondayMorning =
+        dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
 
     return isSaturdayEvening || isSunday || isMondayMorning;
   }
@@ -39,7 +43,8 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 2), // Adding border
-        borderRadius: BorderRadius.circular(12), // Rounded corners for the border
+        borderRadius:
+            BorderRadius.circular(12), // Rounded corners for the border
       ),
       padding: const EdgeInsets.all(16.0), // Padding around the content
       child: Stack(
@@ -58,7 +63,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                     child: ListTile(
                       title: Text("Men's"),
                       leading: Radio<String>(
-                        value: "Men's", 
+                        value: "Men's",
                         groupValue: selectedGender,
                         onChanged: available
                             ? (String? value) {
@@ -75,7 +80,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                     child: ListTile(
                       title: Text("Ladies"),
                       leading: Radio<String>(
-                        value: "Ladies", 
+                        value: "Ladies",
                         groupValue: selectedGender,
                         onChanged: available
                             ? (String? value) {
@@ -105,7 +110,8 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                             selectedRoom = newValue;
                             // Save the selected address to OrderController
                             if (selectedRoom != null) {
-                              OrderController.instance.setSelectedAddress(selectedRoom!);
+                              OrderController.instance
+                                  .setSelectedAddress(selectedRoom!);
                             }
                           });
                         }
@@ -126,10 +132,12 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0), // Rounded edges
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Blur effect
+                  filter:
+                      ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Blur effect
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.56), // Dark transparent overlay
+                      color: Colors.black
+                          .withOpacity(0.56), // Dark transparent overlay
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     alignment: Alignment.center,

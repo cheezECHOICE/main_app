@@ -35,12 +35,14 @@ class OrderController extends GetxController {
   final RxString filterLabel = 'Recent Orders'.obs;
   var isLoading = false.obs;
   String? selectedAddress;
+  String? selectedPhoneNumber;
+  bool isPhoneNumberLocked = false;
 
-  final authRepo = Get.put(AuthenticationRepository()); 
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance; // Firebase Messaging instance
+  final authRepo = Get.put(AuthenticationRepository());
+  final FirebaseMessaging firebaseMessaging =
+      FirebaseMessaging.instance; // Firebase Messaging instance
 
-
-void setSelectedAddress(String address) {
+  void setSelectedAddress(String address) {
     selectedAddress = address;
   }
 
@@ -53,15 +55,80 @@ void setSelectedAddress(String address) {
   //   }
   // }
 
+  // Set selected phone number with confirmation dialog process
+  Future<void> setSelectedPhoneNumber(String phoneNumber) async {
+    if (isPhoneNumberLocked) return;
+
+    bool confirm = await showConfirmPhoneNumberPopup(phoneNumber);
+    if (confirm) {
+      selectedPhoneNumber = phoneNumber;
+      bool finalConfirm = await showFinalConfirmationPopup();
+      if (finalConfirm) {
+        isPhoneNumberLocked = true; // Lock the phone number
+        TLoaders.successSnackBar(
+          title: 'Phone Number Set',
+          message: 'The delivery person will contact you at this number.',
+        );
+      } else {
+        selectedPhoneNumber = null;
+      }
+    } else {
+      selectedPhoneNumber = null;
+    }
+  }
+
+  // Show initial confirmation popup for phone number
+  Future<bool> showConfirmPhoneNumberPopup(String phoneNumber) async {
+    return await Get.dialog<bool>(
+          AlertDialog(
+            title: Text('Confirm Phone Number'),
+            content: Text('Is this the correct phone number?\n\n$phoneNumber'),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(result: false),
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Get.back(result: true),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
+  // Show final confirmation popup after setting phone number
+  Future<bool> showFinalConfirmationPopup() async {
+    return await Get.dialog<bool>(
+          AlertDialog(
+            title: Text('Confirmation'),
+            content:
+                Text('The delivery person will contact you on this number.'),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(result: false),
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Get.back(result: true),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   // Method to fetch and save FCM token to Prisma when the user orders
   Future<void> saveFcmTokenToPrisma() async {
     try {
       String? fcmToken = await firebaseMessaging.getToken();
       print("FCM Token: $fcmToken");
-       // Fetch FCM token
+      // Fetch FCM token
       if (fcmToken != null) {
         String userId = authRepo.authUser!.uid;
-        await orderRepository.saveFcmTokenInPrisma(userId, fcmToken); 
+        await orderRepository.saveFcmTokenInPrisma(userId, fcmToken);
         print("FCM token saved successfully");
       } else {
         print("Failed to fetch FCM token");
@@ -70,7 +137,6 @@ void setSelectedAddress(String address) {
       print("Error fetching or saving FCM token: $e");
     }
   }
-
 
   // order status for OTP
   List<OrderModel> getOrdersByStatus(String status) {
@@ -125,7 +191,9 @@ void setSelectedAddress(String address) {
   List<OrderModel> getRecentOrders() {
     final DateTime now = DateTime.now();
     final DateTime filterDate = now.subtract(Duration(days: filterDays.value));
-    return orders.where((order) => order.orderDate.isAfter(filterDate)).toList();
+    return orders
+        .where((order) => order.orderDate.isAfter(filterDate))
+        .toList();
   }
 
   // Function to load all orders without filtering
@@ -133,7 +201,7 @@ void setSelectedAddress(String address) {
     return orders.toList(); // Simply returns the entire list of orders
   }
 
-   // Fetch OTP for a given order
+  // Fetch OTP for a given order
   Future<String?> fetchOtp(String orderId, String otp) async {
     try {
       // Call the repository method to get the order details with the OTP
@@ -149,15 +217,22 @@ void setSelectedAddress(String address) {
     }
   }
 
- 
-
   void razorPayment() {
-     if (selectedAddress == null) {
-    // Show a Snackbar message
-    TLoaders.warningSnackBar(
-      title:'Address Required',
-      message: 'Please select a delivery address before proceeding to payment.');return;
-  }
+    if (selectedAddress == null) {
+      // Show a Snackbar message
+      TLoaders.warningSnackBar(
+          title: 'Address Required',
+          message:
+              'Please select a delivery address before proceeding to payment.');
+      return;
+    }
+    if (selectedPhoneNumber == null) {
+      TLoaders.warningSnackBar(
+        title: 'Phone Number Required',
+        message: 'Please provide a phone number before proceeding to payment.',
+      );
+      return;
+    }
     Razorpay razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _onRazorPaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _onRazorPaymentError);
@@ -197,8 +272,6 @@ void setSelectedAddress(String address) {
       }
     }
 
-    
-
     await orderRepository.pushOrder(
       cartController.cartItems.first.brandId,
       // addressController.selectedAddress.value.toString(),
@@ -223,98 +296,114 @@ void setSelectedAddress(String address) {
     cartController.clearCart();
   }
 
-
   void _onRazorPaymentError(PaymentFailureResponse response) {
     Get.offAll(() => const NavigationMenu());
     TLoaders.errorSnackBar(
         title: 'Oh Snap!', message: 'Could not process payment.');
   }
 
-   // Method for processing Prisma order without Razorpay
+  // Method for processing Prisma order without Razorpay
   void processPrismaOrder() async {
     try {
       // Start Loader
       TFullScreenLoader.openLoadingDialog(
           'Processing your order', TImages.daceranimation);
+
       // Get user authentication Id
       final userId = AuthenticationRepository.instance.authUser?.uid;
-      if (userId!.isEmpty) return;
-      if (selectedAddress == null) {
-    // Show a Snackbar message
-    TLoaders.warningSnackBar(
-      title:'Address Required',
-      message: 'Please select a delivery address before proceeding to payment.');
-      TFullScreenLoader.stopLoading();
-      return;
-  }
-  if (await BrandRepository.isStoreClosed(
-            cartController.cartItems.first.brandId)) {
-          TLoaders.warningSnackBar(
-            title: 'Store Closed',
-            message: 'Store is closed. Please try again later.',
-          );
-      if (checkoutController.selectedPaymentMethod == paymentMethods[0]) {
-        
-          cartController.clearCart();
-          Get.offAll(() => const NavigationMenu());
-          return;
-        }
-      } else {
+      if (userId == null || userId.isEmpty) {
+        TFullScreenLoader.stopLoading();
         return;
       }
-      
-      // Add products and order details for Prisma
-      List<Map<String, dynamic>> products = [];
-      for (var item in cartController.cartItems) {
-        if (item.takeoutQuantity > 0) {
-          products.add({
-            'productId': int.parse(item.productId),
-            'quantity': item.takeoutQuantity,
-            'takeaway': true,
-          });
-        }
 
-        int remainingQuantity = item.quantity - item.takeoutQuantity;
-        if (remainingQuantity > 0) {
-          products.add({
-            'productId': int.parse(item.productId),
-            'quantity': remainingQuantity,
-            'takeaway': false,
-          });
-        }
+      // Check if address is provided
+      if (selectedAddress == null) {
+        TLoaders.warningSnackBar(
+            title: 'Address Required',
+            message:
+                'Please select a delivery address before proceeding to payment.');
+        TFullScreenLoader.stopLoading();
+        return;
       }
 
-      await orderRepository.pushOrder(
-        cartController.cartItems.first.brandId,
-        // addressController.selectedAddress.value.toString(),
-        selectedAddress!,
-        TPricingCalculator.calculateTotalPrice(
-            cartController.totalCartPrice.value, 'IND.'),
-        AuthenticationRepository.instance.authUser!.uid,
-        products,
-      );
+      // Check if the store is closed
+      if (await BrandRepository.isStoreClosed(
+          cartController.cartItems.first.brandId)) {
+        TLoaders.warningSnackBar(
+            title: 'Store Closed',
+            message: 'Store is closed. Please try again later.');
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+      if (selectedPhoneNumber == null) {
+        TLoaders.warningSnackBar(
+            title: 'Phone Number Required',
+            message: 'Please provide a phone number before proceeding.');
+        TFullScreenLoader.stopLoading();
+        return;
+      }
 
-      // Save FCM token to Prisma when the order is placed
-      await saveFcmTokenToPrisma();
+      // Check payment method
+      if (checkoutController.selectedPaymentMethod == paymentMethods[0]) {
+        // Prepare product details
+        List<Map<String, dynamic>> products = [];
+        for (var item in cartController.cartItems) {
+          if (item.takeoutQuantity > 0) {
+            products.add({
+              'productId': int.parse(item.productId),
+              'quantity': item.takeoutQuantity,
+              'takeaway': true,
+            });
+          }
 
-      Get.off(() => SuccessScreen(
-            image: TImages.successfulPaymentIcon,
-            title: 'Order Processed',
-            subtitle: 'Your item will be ready soon!',
-            onPressed: () => Get.offAll(() => const NavigationMenu()),
-          ));
+          int remainingQuantity = item.quantity - item.takeoutQuantity;
+          if (remainingQuantity > 0) {
+            products.add({
+              'productId': int.parse(item.productId),
+              'quantity': remainingQuantity,
+              'takeaway': false,
+            });
+          }
+        }
 
-      //Update the cart status
-      cartController.clearCart();
+        // Push the order to the database
+        await orderRepository.pushOrder(
+          cartController.cartItems.first.brandId,
+          selectedAddress!,
+          TPricingCalculator.calculateTotalPrice(
+              cartController.totalCartPrice.value, 'IND.'),
+          userId,
+          products,
+        );
+
+        // Save FCM token to Prisma when the order is placed
+        await saveFcmTokenToPrisma();
+
+        // Show success screen
+        Get.off(() => SuccessScreen(
+              image: TImages.successfulPaymentIcon,
+              title: 'Order Processed',
+              subtitle: 'Your item will be ready soon!',
+              onPressed: () => Get.offAll(() => const NavigationMenu()),
+            ));
+
+        // Clear the cart
+        cartController.clearCart();
+      } else {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
     } catch (e) {
+      TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 
-   void handleFcmTokenRefresh() {
+  void handleFcmTokenRefresh() {
     firebaseMessaging.onTokenRefresh.listen((newToken) async {
       String userId = authRepo.authUser!.uid;
-      await orderRepository.saveFcmTokenInPrisma(userId,newToken); // Save new token
+      await orderRepository.saveFcmTokenInPrisma(
+          userId, newToken); // Save new token
       print("FCM token refreshed and saved");
     });
   }

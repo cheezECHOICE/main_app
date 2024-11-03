@@ -16,7 +16,7 @@ class PopularProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isOutOfStock = product.stock <= 5; // Check stock status
+    bool isOutOfStock = product.stock < 5; // Check stock status
 
     return GestureDetector(
       onTap: () {
@@ -36,7 +36,8 @@ class PopularProductCard extends StatelessWidget {
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16)),
                       child: ShimmerImage(
                         imageUrl: product.thumbnail,
                         height: 125,
@@ -138,7 +139,6 @@ class PopularProductCard extends StatelessWidget {
   }
 }
 
-
 class AddToCartButton extends StatelessWidget {
   final ProductModel product;
   final Color? color;
@@ -186,7 +186,8 @@ class AddToCartButton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SplashEffect(
-                      onTap: () => cartController.removeOneProductFromCart(product),
+                      onTap: () =>
+                          cartController.removeOneProductFromCart(product),
                       child: Container(
                         color: Colors.transparent,
                         child: Padding(

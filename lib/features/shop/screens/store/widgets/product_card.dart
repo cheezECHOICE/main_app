@@ -18,12 +18,14 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Check if the product is out of stock
-    final bool isOutOfStock = product.stock <= 100; // Assuming stock is an integer field in ProductModel
+    final bool isOutOfStock =
+        product.stock < 5; // Assuming stock is an integer field in ProductModel
 
     return InkWell(
       onTap: () {
-        if(!isOutOfStock){
-        showProductDetailBottomSheet(context, product);}
+        if (!isOutOfStock) {
+          showProductDetailBottomSheet(context, product);
+        }
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -50,7 +52,7 @@ class ProductCard extends StatelessWidget {
                             product.title,
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w500, 
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -96,7 +98,8 @@ class ProductCard extends StatelessWidget {
                   bottom: 8,
                   right: 8,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.6),
                       borderRadius: BorderRadius.circular(10),
@@ -116,7 +119,8 @@ class ProductCard extends StatelessWidget {
                     top: 8,
                     left: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.6),
                         borderRadius: BorderRadius.circular(10),
