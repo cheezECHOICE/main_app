@@ -34,34 +34,66 @@ class _OrderCardState extends State<OrderCard> {
         children: [
           Row(
             children: [
-              const Icon(Iconsax.align_vertically),
+              const Icon(Icons.fastfood_outlined,color: TColors.accent),
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               Text("Order id: ",
-                  style: Theme.of(context).textTheme.headlineSmall),
+                  style: Theme.of(context).textTheme.headlineSmall!.apply(color: TColors.accent,)),
               Text(
                 widget.order.id,
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: Theme.of(context).textTheme.headlineMedium!.apply(color: TColors.accent,),
               ),
               const Spacer(),
               Text(
                 '\Rs.${widget.order.totalAmount.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.green.shade200),
               ),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
+
           Row(
             children: [
-              const Icon(Iconsax.shop),
+              const Icon(Icons.food_bank_outlined),
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               for (var item in widget.order.items)
                 if (item.brandName != null)
                   Text(
-                    item.brandName!, // Replace with actual brand name
+                    item.brandName!,// Replace with actual brand name
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
             ],
           ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+
+          Row(
+            children: [
+              const Icon(Icons.fmd_good_outlined),
+              const SizedBox(width: TSizes.spaceBtwItems / 2),
+              Text(
+                widget.order.address,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              const Spacer(),
+             TextButton(
+                    onPressed: () {
+                      Get.to(() => OrderOtpScreen(order: widget.order));
+                    }, // Navigate to OTP screen
+                    child: Row(
+                      children: [
+                        Icon(Iconsax.key, size: 18, color: TColors.accent),
+                        const SizedBox(width: 12),
+                        Text(
+                          'OTP',
+                          style: Theme.of(context).textTheme.bodyLarge!.apply(
+                                color: TColors.accent,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+            ],
+          ),
+
           const SizedBox(height: TSizes.spaceBtwItems),
           const Divider(thickness: 1),
           const SizedBox(height: TSizes.spaceBtwItems),
@@ -181,23 +213,23 @@ class _OrderCardState extends State<OrderCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Get.to(() => OrderOtpScreen(order: widget.order));
-                    }, // Navigate to OTP screen
-                    child: Row(
-                      children: [
-                        Icon(Iconsax.key, size: 18, color: TColors.accent),
-                        const SizedBox(width: 12),
-                        Text(
-                          'OTP',
-                          style: Theme.of(context).textTheme.bodyLarge!.apply(
-                                color: TColors.accent,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     Get.to(() => OrderOtpScreen(order: widget.order));
+                  //   }, // Navigate to OTP screen
+                  //   child: Row(
+                  //     children: [
+                  //       Icon(Iconsax.key, size: 18, color: TColors.accent),
+                  //       const SizedBox(width: 12),
+                  //       Text(
+                  //         'OTP',
+                  //         style: Theme.of(context).textTheme.bodyLarge!.apply(
+                  //               color: TColors.accent,
+                  //             ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   TextButton(
                     onPressed: () {
                       CartController.instance.repeatOrder(widget.order);

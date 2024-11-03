@@ -17,13 +17,21 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Check if the product is out of stock
+    final bool isOutOfStock = product.stock <= 100; // Assuming stock is an integer field in ProductModel
+
     return InkWell(
       onTap: () {
-        showProductDetailBottomSheet(context, product);
+        if(!isOutOfStock){
+        showProductDetailBottomSheet(context, product);}
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 160,
+        decoration: BoxDecoration(
+          //color: isOutOfStock ? Colors.black : Colors.white, // Set background color based on stock
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -40,9 +48,9 @@ class ProductCard extends StatelessWidget {
                         children: [
                           Text(
                             product.title,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w500, 
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -50,14 +58,26 @@ class ProductCard extends StatelessWidget {
                             product.description ?? 'No description found.',
                             style: const TextStyle(
                               fontSize: 12,
-                              color: Colors.grey,
                             ),
                           ),
                         ],
                       ),
                     ),
                     const Spacer(),
-                    AddToCartButton(product: product),
+                    if (isOutOfStock) // Show 'Out of Stock' message if stock is 0
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        color: Colors.red,
+                        child: const Text(
+                          'Out of Stock',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    if (!isOutOfStock) // Show AddToCartButton only if in stock
+                      AddToCartButton(product: product),
                   ],
                 ),
               ),
@@ -76,8 +96,7 @@ class ProductCard extends StatelessWidget {
                   bottom: 8,
                   right: 8,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.6),
                       borderRadius: BorderRadius.circular(10),
@@ -97,8 +116,7 @@ class ProductCard extends StatelessWidget {
                     top: 8,
                     left: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.6),
                         borderRadius: BorderRadius.circular(10),

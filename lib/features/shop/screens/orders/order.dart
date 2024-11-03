@@ -4,7 +4,6 @@ import 'package:food/features/shop/controllers/product/order_controller.dart';
 import 'package:food/features/shop/screens/orders/widgets/order_list.dart';
 import 'package:food/utils/constants/sizes.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
@@ -12,12 +11,6 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OrderController());
-    final List<String> filterOptions = [
-      'Recent Orders',
-      'Last 10 Days',
-      'Last 30 Days'
-    ];
-    final List<int> filterDays = [5, 10, 30];
 
     return Scaffold(
       appBar: TAppBar(
@@ -32,30 +25,20 @@ class OrderScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Filter Row
+            // Order History Button
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Obx(() => Text(
-                      controller.filterLabel.value,
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    )),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Theme.of(context).primaryColor, // Border color
-                      width: 1, // Border width
-                    ),
-                    borderRadius: BorderRadius.circular(20), // Border radius
-                  ),
-                  child: IconButton(
-                    icon: Icon(Iconsax.filter),
-                    onPressed: () {
-                      _showFilterBottomSheet(
-                          context, controller, filterOptions, filterDays);
-                    },
-                    color: Theme.of(context).primaryColor, // Icon color
-                  ),
+                Text(
+                  'Recent Orders',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Navigate to Order History page
+                    Get.to(() => OrderHistoryScreen());
+                  },
+                  child: Icon(Icons.history_rounded),
                 ),
               ],
             ),
@@ -66,6 +49,7 @@ class OrderScreen extends StatelessWidget {
                 if (controller.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
                 } else {
+                  // Display recent orders
                   return TOrderListItems();
                 }
               }),
@@ -75,43 +59,37 @@ class OrderScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  void _showFilterBottomSheet(BuildContext context, OrderController controller,
-      List<String> filterOptions, List<int> filterDays) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+
+// New Order History Screen
+class OrderHistoryScreen extends StatelessWidget {
+  const OrderHistoryScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<OrderController>();
+    // Load all orders for Order History page
+    controller.getAllOrders();
+
+    return Scaffold(
+      appBar: TAppBar(
+        title: Text(
+          'Order History',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
+        showBackArrow: true,
       ),
-      builder: (BuildContext context) {
-        return Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Filter Orders',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              SizedBox(height: 16.0),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: filterOptions.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(filterOptions[index]),
-                    onTap: () {
-                      controller.filterOrdersByDays(
-                          filterDays[index], filterOptions[index]);
-                      Navigator.pop(context); // Close bottom sheet on selection
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
+      body: Padding(
+        padding: const EdgeInsets.all(TSizes.defaultSpace),
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return TOrderListItems();
+          }
+        }),
+      ),
     );
   }
 }

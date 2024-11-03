@@ -10,6 +10,7 @@ import 'package:food/features/shop/controllers/product/cart_controller.dart';
 import 'package:food/features/shop/controllers/product/checkout_controller.dart';
 import 'package:food/features/shop/models/order_model.dart';
 import 'package:food/features/shop/models/payment_method_model.dart';
+import 'package:food/features/shop/screens/checkout/checkout.dart';
 import 'package:food/features/shop/screens/checkout/widgets/order_type.dart';
 import 'package:food/navigation_menu.dart';
 import 'package:food/utils/constants/enums.dart';
@@ -33,10 +34,15 @@ class OrderController extends GetxController {
   final RxInt filterDays = 5.obs;
   final RxString filterLabel = 'Recent Orders'.obs;
   var isLoading = false.obs;
+  String? selectedAddress;
 
   final authRepo = Get.put(AuthenticationRepository()); 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance; // Firebase Messaging instance
 
+
+void setSelectedAddress(String address) {
+    selectedAddress = address;
+  }
 
   // Method to update store status in Prisma
   // Future<void> updateStoreStatus(String storeId, bool isOpen) async {
@@ -109,11 +115,22 @@ class OrderController extends GetxController {
     isLoading.value = true;
     try {
       orders.value = await orderRepository.fetchUserOrdersPrisma();
-      // Initially set the recent orders filter
-      filterOrdersByDays(5, 'Recent Orders');
+      getRecentOrders();
     } finally {
       isLoading.value = false;
     }
+  }
+
+  // Function to retrieve recent orders
+  List<OrderModel> getRecentOrders() {
+    final DateTime now = DateTime.now();
+    final DateTime filterDate = now.subtract(Duration(days: filterDays.value));
+    return orders.where((order) => order.orderDate.isAfter(filterDate)).toList();
+  }
+
+  // Function to load all orders without filtering
+  List<OrderModel> getAllOrders() {
+    return orders.toList(); // Simply returns the entire list of orders
   }
 
    // Fetch OTP for a given order
@@ -132,22 +149,15 @@ class OrderController extends GetxController {
     }
   }
 
-  void filterOrdersByDays(int days, String label) {
-    filterDays.value = days;
-    filterLabel.value = label;
-  }
-
-  List<OrderModel> getRecentOrders() {
-    final DateTime now = DateTime.now();
-    final DateTime filterDate = now.subtract(Duration(days: filterDays.value));
-    return orders
-        .where((order) => order.orderDate.isAfter(filterDate))
-        .toList();
-  }
-
-  
+ 
 
   void razorPayment() {
+     if (selectedAddress == null) {
+    // Show a Snackbar message
+    TLoaders.warningSnackBar(
+      title:'Address Required',
+      message: 'Please select a delivery address before proceeding to payment.');return;
+  }
     Razorpay razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _onRazorPaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _onRazorPaymentError);
@@ -187,9 +197,12 @@ class OrderController extends GetxController {
       }
     }
 
+    
+
     await orderRepository.pushOrder(
       cartController.cartItems.first.brandId,
-      addressController.selectedAddress.value.toString(),
+      // addressController.selectedAddress.value.toString(),
+      selectedAddress!,
       TPricingCalculator.calculateTotalPrice(
           cartController.totalCartPrice.value, 'IND.'),
       AuthenticationRepository.instance.authUser!.uid,
@@ -226,13 +239,22 @@ class OrderController extends GetxController {
       // Get user authentication Id
       final userId = AuthenticationRepository.instance.authUser?.uid;
       if (userId!.isEmpty) return;
-      if (checkoutController.selectedPaymentMethod == paymentMethods[0]) {
-        if (await BrandRepository.isStoreClosed(
+      if (selectedAddress == null) {
+    // Show a Snackbar message
+    TLoaders.warningSnackBar(
+      title:'Address Required',
+      message: 'Please select a delivery address before proceeding to payment.');
+      TFullScreenLoader.stopLoading();
+      return;
+  }
+  if (await BrandRepository.isStoreClosed(
             cartController.cartItems.first.brandId)) {
           TLoaders.warningSnackBar(
             title: 'Store Closed',
             message: 'Store is closed. Please try again later.',
           );
+      if (checkoutController.selectedPaymentMethod == paymentMethods[0]) {
+        
           cartController.clearCart();
           Get.offAll(() => const NavigationMenu());
           return;
@@ -264,7 +286,8 @@ class OrderController extends GetxController {
 
       await orderRepository.pushOrder(
         cartController.cartItems.first.brandId,
-        addressController.selectedAddress.value.toString(),
+        // addressController.selectedAddress.value.toString(),
+        selectedAddress!,
         TPricingCalculator.calculateTotalPrice(
             cartController.totalCartPrice.value, 'IND.'),
         AuthenticationRepository.instance.authUser!.uid,

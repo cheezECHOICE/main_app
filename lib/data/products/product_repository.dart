@@ -11,6 +11,7 @@ class ProductRepository extends GetxController {
   static ProductRepository get instance => Get.find();
   final _allProductsEndPoint = '$dbLink/products';
   final _popularProductsEndPoint = '$dbLink/products';
+  final String _productStockEndPoint = '$dbLink/products?stock';
 
   // FireStore instance for database interaction
   final _db = FirebaseFirestore.instance;
@@ -30,8 +31,21 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<List<ProductModel>> getAllLocalFavourites(
-      List<String> productIds) async {
+  // Function to check product stock
+  // Future<bool> checkProductStock(String productId) async {
+  //   try {
+  //     Dio dio = Dio();
+  //     final response = await dio.get('$_productStockEndPoint');
+  //     final int stock = response.data['stock']; // Adjust this based on the actual response structure
+
+  //     // Check stock availability
+  //     return stock == 1; // Available if stock is 1, else not available
+  //   } catch (e) {
+  //     throw 'Error checking product stock. Please try again.';
+  //   }
+  // }
+
+  Future<List<ProductModel>> getAllLocalFavourites(List<String> productIds) async {
     try {
       if (productIds.isEmpty) return [];
       List<ProductModel> favouriteProducts = [];
@@ -95,8 +109,7 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<List<ProductModel>> getFavouriteProducts(
-      List<String> productIds) async {
+  Future<List<ProductModel>> getFavouriteProducts(List<String> productIds) async {
     try {
       final snapshot = await _db
           .collection('Products')
@@ -114,3 +127,4 @@ class ProductRepository extends GetxController {
     }
   }
 }
+

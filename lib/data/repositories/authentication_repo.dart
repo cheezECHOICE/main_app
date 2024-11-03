@@ -30,9 +30,7 @@ class AuthenticationRepository extends GetxController {
   /// Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
-  //final controller = UserController.instance;
 
-  // Get Authenticated User Data
   User? get authUser => _auth.currentUser;
 
   /// Called from main.dart on app launch
@@ -45,7 +43,7 @@ class AuthenticationRepository extends GetxController {
   Future<void> createPrismaUser(String uid, String name, String email, String phoneNumber) async {
     try {
       await Dio().post('$dbLink/user',
-          data: {"id": uid, "name": name, "email": email, "phoneno":phoneNumber,"image": ""});
+          data: {"id": uid, "name": name, "email": email, "phoneno": phoneNumber});
     } catch (e) {
       if (kDebugMode) print('Prisma Error: $e');
     }
@@ -101,7 +99,8 @@ class AuthenticationRepository extends GetxController {
         userCredential.user!.uid,
         //'${controller.user.value.fullName}',
         '${userCredential.user!.displayName ?? 'User'}',
-        email,userCredential.user!.phoneNumber ?? '',
+        email,
+        '${userCredential.user!.phoneNumber ?? 578}',
       );
 
       return userCredential;

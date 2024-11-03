@@ -15,7 +15,6 @@ class OrderRepository extends GetxController {
   final userOrderEndpoint = '$dbLink/orders?userId=';
 
 
-
   /// Get the FCM Token
   Future<String?> getFcmToken() async {
     try {
@@ -89,10 +88,7 @@ class OrderRepository extends GetxController {
       });
       // // Update FCM token when placing an order
       String? fcmToken = await getFcmToken();
-      await saveFcmTokenInPrisma(userId,fcmToken);
-      
-      
-      
+      await saveFcmTokenInPrisma(userId,fcmToken);  
     } catch (e) {
       throw 'Something went wrong while saving Order Information. Try again later';
     }
@@ -142,11 +138,11 @@ Future<OrderModel?> GetOtp(String orderId, String otp) async {
         return OrderModel.fromJson(matchingOrder as Map<String, dynamic>);
       } else {
         print('No matching order found for orderId: $orderId');
-        return null; // No matching order found
+        return null;
       }
     } else {
       print('No valid data found in response');
-      return null; // No valid data
+      return null;
     }
   } catch (e) {
     print('Error fetching OTP: $e');

@@ -8,6 +8,7 @@ import 'package:food/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:food/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:food/features/shop/screens/checkout/widgets/billing_payment_section.dart';
 import 'package:food/features/shop/screens/checkout/widgets/select_address.dart';
+import 'package:food/features/shop/screens/checkout/widgets/select_addresses.dart';
 import 'package:food/utils/constants/colors.dart';
 import 'package:food/utils/constants/sizes.dart';
 import 'package:food/utils/helpers/helper_functions.dart';
@@ -49,7 +50,7 @@ class CheckOutScreen extends StatelessWidget {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               ///Delivery Address Section
-              const DeliveryAddressSection(),
+              DeliveryAddressSection2(),
               const SizedBox(height: TSizes.spaceBtwSections),
 
               ///Billing

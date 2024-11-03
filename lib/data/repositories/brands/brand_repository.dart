@@ -54,13 +54,24 @@ class BrandRepository extends GetxController {
   }
 
   static Future<bool> isStoreClosed(int brandId) async {
-    try {
-      return ((await Dio().get('$_brandByIdEndPoint$brandId')).data['data']
-              ['isOpen'] == false);
-    } catch (e) {
-      return false;
+  try {
+    final response = await Dio().get('$_brandByIdEndPoint$brandId');
+    
+    // Check if the response contains the necessary data
+    if (response.data != null && response.data['data'] != null) {
+      // Return true if the store is closed
+      return !(response.data['data']['isOpen'] ?? true);
     }
+    
+    // In case of unexpected data structure, assume store is closed
+    return true; // or false depending on your application logic
+  } catch (e) {
+    // Optionally log the error for debugging
+    print('Error fetching store status: $e');
+    // Return false as a safe default on error
+    return false;
   }
+}
 
   static Future<Map<String, dynamic>> getParcelCharges(int brandId) async {
     try {

@@ -64,20 +64,4 @@ class BrandController extends GetxController {
   void setCurrentBrand(BrandModel brand) {
     currentBrand = brand;
   }
-
-  // Check Store Open Status (API call)
-  Future<RxBool> checkStoreOpenStatus(int brandId) async {
-    isLoading.value = true;
-    try {
-      final storeOpen = await BrandRepository.isStoreClosed(brandId);
-      storeStatus.value =
-          !storeOpen; // If the store is closed, storeStatus is false
-    } catch (e) {
-      TLoaders.errorSnackBar(title: 'Error', message: e.toString());
-      storeStatus.value = false; // Default to closed if an error occurs
-    } finally {
-      isLoading.value = false;
-    }
-    return storeStatus;
-  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food/common/widgets/favourite_button.dart';
+import 'package:food/data/products/product_repository.dart';
 import 'package:food/features/shop/controllers/product/cart_controller.dart';
 import 'package:food/features/shop/models/product_model.dart';
 import 'package:food/features/shop/screens/home/widgets/product_details_page.dart';
@@ -15,103 +16,128 @@ class PopularProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isOutOfStock = product.stock <= 5; // Check stock status
+
     return GestureDetector(
       onTap: () {
-        showProductDetailBottomSheet(context, product);
+        if (!isOutOfStock) {
+          showProductDetailBottomSheet(context, product);
+        }
       },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Stack(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                  child: ShimmerImage(
-                    imageUrl: product.thumbnail,
-                    height: 100,
-                    width: double.infinity,
-                  ),
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      child: ShimmerImage(
+                        imageUrl: product.thumbnail,
+                        height: 125,
+                        width: double.infinity,
+                      ),
+                    ),
+                    // Wishlist button
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: FavouriteButton(
+                        prodId: product.id,
+                        size: 30,
+                      ),
+                    ),
+                  ],
                 ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: FavouriteButton(
-                    prodId: product.id,
-                    size: 30,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      if (product.brand != null)
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                              size: 14,
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                product.brand!.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Rs. ${product.salePrice.round()}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                          ),
+                          AddToCartButton(
+                            product: product,
+                            color: TColors.primary.withOpacity(0.8),
+                            fontColor: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
+            // Overlay for out of stock
+            if (isOutOfStock)
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: Text(
+                    'Out of Stock',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  if (product.brand != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.location_on,
-                            color: Colors.grey,
-                            size: 14,
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              product.brand!.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Rs. ${product.salePrice.round()}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                      AddToCartButton(
-                        product: product,
-                        color: TColors.primary.withOpacity(0.8),
-                        fontColor: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
           ],
         ),
       ),
     );
   }
 }
+
 
 class AddToCartButton extends StatelessWidget {
   final ProductModel product;
@@ -160,8 +186,7 @@ class AddToCartButton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SplashEffect(
-                      onTap: () =>
-                          cartController.removeOneProductFromCart(product),
+                      onTap: () => cartController.removeOneProductFromCart(product),
                       child: Container(
                         color: Colors.transparent,
                         child: Padding(

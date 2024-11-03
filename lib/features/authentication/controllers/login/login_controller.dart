@@ -49,7 +49,7 @@ class LoginController extends GetxController {
       }
 
       // Save Data if Remember Me is Selected
-      if (!rememberMe.value) {
+      if (rememberMe.value) {
         localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
         localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
       } else {

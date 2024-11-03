@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food/features/personalisation/screens/address/widgets/addressmodel.dart';
+import 'package:food/features/shop/models/brand_model.dart';
 import 'package:food/features/shop/models/cart_item_model.dart';
 import 'package:food/utils/helpers/helper_functions.dart';
 
@@ -11,7 +12,7 @@ class OrderModel {
   final DateTime orderDate;
   final String paymentMethod;
   final String otp;
-  final AddressModel? address;
+  final String address;
   final DateTime? deliveryDate;
   final List<CartItemModel> items;
 
@@ -23,7 +24,7 @@ class OrderModel {
     required this.totalAmount,
     required this.orderDate,
     this.paymentMethod = 'Paytm',
-    this.address,
+    required this.address,
     this.deliveryDate,
     required this.otp,
   });
@@ -46,7 +47,7 @@ class OrderModel {
       'totalAmount': totalAmount,
       'orderDate': formattedOrderDate,
       'paymentMethod': paymentMethod,
-      'address': address?.toJson(), // Convert Address Model to map
+      'address': address, // Convert Address Model to map
       'deliveryDate': deliveryDate,
       'items': items
           .map((item) => item.toJson())
@@ -64,7 +65,8 @@ class OrderModel {
       orderDate: (data['orderDate'] as Timestamp).toDate(),
       paymentMethod: data['payment Method'] as String,
       otp: data['otp'] as String,
-      address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
+      address: data['address'] as String,
+      //address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
       deliveryDate: data['deliveryDate'] == null
           ? null
           : (data['deliveryDate'] as Timestamp).toDate(),
@@ -83,7 +85,8 @@ class OrderModel {
       totalAmount: json['totalAmount'].toDouble(),
       orderDate: DateTime.parse(json['orderedAt']),
       paymentMethod: '',
-      address: AddressModel.empty().copyWith(street: json['address']),
+      address: json['address'],
+      //address: AddressModel.empty().copyWith(street: json['address']),
       otp: json['otp'].toString(),
       deliveryDate: json['deliveryDate'] == null
           ? null
@@ -101,6 +104,7 @@ class OrderModel {
       userId: data['userId'] ?? '',
       status: data['orderStatus'] ?? '',
       otp: data['otp'], 
+      address: data['address'] ?? '',
       items: [], 
       totalAmount: data['totalAmount'].toDouble(),
        orderDate: data['orderedAt'].DateTime(),

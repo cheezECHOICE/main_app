@@ -68,4 +68,6 @@ class BrandModel {
       isOpen: data['isOpen'] ?? false,
     );
   }
+
+  copyWith({required street}) {}
 }
