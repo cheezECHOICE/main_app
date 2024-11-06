@@ -165,15 +165,19 @@ class _SettingScreenState extends State<SettingScreen> {
 
                   const SizedBox(height: 16),
 
-                  Center(
-                    child: Text(
-                      "Powered By Appe Nexus PVT LTD",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
+                  Column(
+                    children: [
+                      Center(
+                        child: Text(
+                          "Powered By Appe Nexus PVT LTD",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   const SizedBox(height: 16),
                 ],
