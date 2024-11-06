@@ -20,7 +20,6 @@ import 'dart:io';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
 
@@ -140,18 +139,18 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                   ),
                   TSettingsMenuTile(
-  icon: Iconsax.building,
-  title: 'About Us',
-  subtitle: 'Get more info about our team APPE NEXUS',
-  onTap: () async {
-    const url = 'https://appenexus.tech';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  },
-),
+                    icon: Iconsax.building,
+                    title: 'About Us',
+                    subtitle: 'Get more info about our team APPE NEXUS',
+                    onTap: () async {
+                      const url = 'https://appenexus.tech';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                  ),
                   const SizedBox(height: TSizes.spaceBtwInputFields),
                   SizedBox(
                     height: 55,

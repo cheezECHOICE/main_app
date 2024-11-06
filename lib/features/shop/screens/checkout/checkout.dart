@@ -7,6 +7,7 @@ import 'package:food/features/shop/controllers/product/order_controller.dart';
 import 'package:food/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:food/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:food/features/shop/screens/checkout/widgets/billing_payment_section.dart';
+import 'package:food/features/shop/screens/checkout/widgets/checkout_billing_page.dart';
 import 'package:food/features/shop/screens/checkout/widgets/phone_number_input.dart';
 import 'package:food/features/shop/screens/checkout/widgets/select_addresses.dart';
 import 'package:food/utils/constants/colors.dart';
@@ -56,42 +57,49 @@ class CheckOutScreen extends StatelessWidget {
               PhoneNumberSection(),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              ///Billing
-              TRoundedContainer(
-                showBorder: true,
-                padding: const EdgeInsets.all(TSizes.md),
-                backgroundColor: dark ? TColors.black : TColors.white,
-                child: const Column(
-                  children: [
-                    ///Pricing
-                    TBillingAmountSection(),
-                    SizedBox(height: TSizes.spaceBtwSections),
+              // ///Billing
+              // TRoundedContainer(
+              //   showBorder: true,
+              //   padding: const EdgeInsets.all(TSizes.md),
+              //   backgroundColor: dark ? TColors.black : TColors.white,
+              //   child: const Column(
+              //     children: [
+              //       ///Pricing
+              //       TBillingAmountSection(),
+              //       SizedBox(height: TSizes.spaceBtwSections),
 
-                    ///Divider
-                    Divider(),
+              //       ///Divider
+              //       Divider(),
 
-                    ///Payment Method
-                    TBillingPaymentSection(),
-                    SizedBox(height: TSizes.spaceBtwItems),
-                  ],
-                ),
-              ),
+              //       ///Payment Method
+              //       TBillingPaymentSection(),
+              //       SizedBox(height: TSizes.spaceBtwItems),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
       ),
 
-      ///Checkout Button
+      // ///Checkout Button
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.all(TSizes.defaultSpace),
+      //   child: ElevatedButton(
+      //     onPressed: subtotal > 0
+      //         ? () => orderController.processPrismaOrder()
+      //         : () => TLoaders.warningSnackBar(
+      //             title: 'Empty Cart',
+      //             message: 'Add items in the cart in order to proceed.'),
+      //     child: Obx(() => Text(
+      //         'Checkout ₹${TPricingCalculator.calculateTotalPrice(subtotal, 'IND')}')),
+      //   ),
+      // ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: subtotal > 0
-              ? () => orderController.processPrismaOrder()
-              : () => TLoaders.warningSnackBar(
-                  title: 'Empty Cart',
-                  message: 'Add items in the cart in order to proceed.'),
-          child: Obx(() => Text(
-              'Checkout ₹${TPricingCalculator.calculateTotalPrice(subtotal, 'IND')}')),
+          onPressed: () => {Get.to(() => BillingPage())},
+          child: Text('next'),
         ),
       ),
     );
