@@ -100,7 +100,7 @@ class AuthenticationRepository extends GetxController {
         //'${controller.user.value.fullName}',
         '${userCredential.user!.displayName ?? 'User'}',
         email,
-        '${userCredential.user!.phoneNumber ?? 578}',
+        userCredential.user!.phoneNumber ?? '',
       );
 
       return userCredential;

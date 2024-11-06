@@ -18,6 +18,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -111,15 +113,15 @@ class _SettingScreenState extends State<SettingScreen> {
                     onTap: () => Get.to(() => const FavouriteScreen()),
                   ),
                   //Divider(color: TColors.grey),
-                  TSettingsMenuTile(
-                    icon: Iconsax.safe_home,
-                    title: 'My Address',
-                    subtitle: 'Set Ordering delivery Address',
-                    onTap: () {
-                      _showUnderDevelopmentSnap(
-                          context); // Show "Under Development" Snap
-                    },
-                  ),
+                  // TSettingsMenuTile(
+                  //   icon: Iconsax.safe_home,
+                  //   title: 'My Address',
+                  //   subtitle: 'Set Ordering delivery Address',
+                  //   onTap: () {
+                  //     _showUnderDevelopmentSnap(
+                  //         context); // Show "Under Development" Snap
+                  //   },
+                  // ),
                   // TSettingsMenuTile(
                   //   icon: Iconsax.heart,
                   //   title: 'My Notifications',
@@ -138,11 +140,18 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                   ),
                   TSettingsMenuTile(
-                    icon: Iconsax.building,
-                    title: 'About Us',
-                    subtitle: 'Get more info about our team APPE NEXUS',
-                    onTap: () {},
-                  ),
+  icon: Iconsax.building,
+  title: 'About Us',
+  subtitle: 'Get more info about our team APPE NEXUS',
+  onTap: () async {
+    const url = 'https://appenexus.tech';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  },
+),
                   const SizedBox(height: TSizes.spaceBtwInputFields),
                   SizedBox(
                     height: 55,

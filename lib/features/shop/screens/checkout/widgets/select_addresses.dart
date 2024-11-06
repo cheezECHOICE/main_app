@@ -21,17 +21,17 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
   bool isAvailable() {
     final now = DateTime.now();
     final startAvailability =
-        DateTime(now.year, now.month, now.day, 17); // Saturday 5:00 PM
+        DateTime(now.year, now.month, now.day, 8); // Saturday 5:00 PM
     final endAvailability =
         DateTime(now.year, now.month, now.day, 20); // Monday 8:00 PM
 
     // Check if today is between Saturday 5:00 PM and Monday 8:00 PM
     final dayOfWeek = now.weekday;
     final isSaturdayEvening =
-        dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
+        dayOfWeek == DateTime.tuesday && now.isAfter(startAvailability);
     final isSunday = dayOfWeek == DateTime.sunday;
     final isMondayMorning =
-        dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
+        dayOfWeek == DateTime.saturday && now.isBefore(endAvailability);
 
     return isSaturdayEvening || isSunday || isMondayMorning;
   }

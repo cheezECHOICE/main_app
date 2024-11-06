@@ -35,7 +35,7 @@ class OrderController extends GetxController {
   final RxString filterLabel = 'Recent Orders'.obs;
   var isLoading = false.obs;
   String? selectedAddress;
-  String? selectedPhoneNumber;
+  //String? selectedPhoneNumber;
   bool isPhoneNumberLocked = false;
 
   final authRepo = Get.put(AuthenticationRepository());
@@ -46,79 +46,71 @@ class OrderController extends GetxController {
     selectedAddress = address;
   }
 
-  // Method to update store status in Prisma
-  // Future<void> updateStoreStatus(String storeId, bool isOpen) async {
-  //   try {
-  //     await orderRepository.updateStoreStatus(storeId, isOpen);
-  //   } catch (e) {
-  //     print("Error updating store status: $e");
+
+  // Set selected phone number with confirmation dialog process
+  // Future<void> setSelectedPhoneNumber(String phoneNumber) async {
+  //   if (isPhoneNumberLocked) return;
+
+  //   bool confirm = await showConfirmPhoneNumberPopup(phoneNumber);
+  //   if (confirm) {
+  //     selectedPhoneNumber = phoneNumber;
+  //     bool finalConfirm = await showFinalConfirmationPopup();
+  //     if (finalConfirm) {
+  //       isPhoneNumberLocked = true; // Lock the phone number
+  //       TLoaders.successSnackBar(
+  //         title: 'Phone Number Set',
+  //         message: 'The delivery person will contact you at this number.',
+  //       );
+  //     } else {
+  //       selectedPhoneNumber = null;
+  //     }
+  //   } else {
+  //     selectedPhoneNumber = null;
   //   }
   // }
 
-  // Set selected phone number with confirmation dialog process
-  Future<void> setSelectedPhoneNumber(String phoneNumber) async {
-    if (isPhoneNumberLocked) return;
+  // // Show initial confirmation popup for phone number
+  // Future<bool> showConfirmPhoneNumberPopup(String phoneNumber) async {
+  //   return await Get.dialog<bool>(
+  //         AlertDialog(
+  //           title: Text('Confirm Phone Number'),
+  //           content: Text('Is this the correct phone number?\n\n$phoneNumber'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () => Get.back(result: false),
+  //               child: Text('Cancel'),
+  //             ),
+  //             TextButton(
+  //               onPressed: () => Get.back(result: true),
+  //               child: Text('OK'),
+  //             ),
+  //           ],
+  //         ),
+  //       ) ??
+  //       false;
+  // }
 
-    bool confirm = await showConfirmPhoneNumberPopup(phoneNumber);
-    if (confirm) {
-      selectedPhoneNumber = phoneNumber;
-      bool finalConfirm = await showFinalConfirmationPopup();
-      if (finalConfirm) {
-        isPhoneNumberLocked = true; // Lock the phone number
-        TLoaders.successSnackBar(
-          title: 'Phone Number Set',
-          message: 'The delivery person will contact you at this number.',
-        );
-      } else {
-        selectedPhoneNumber = null;
-      }
-    } else {
-      selectedPhoneNumber = null;
-    }
-  }
-
-  // Show initial confirmation popup for phone number
-  Future<bool> showConfirmPhoneNumberPopup(String phoneNumber) async {
-    return await Get.dialog<bool>(
-          AlertDialog(
-            title: Text('Confirm Phone Number'),
-            content: Text('Is this the correct phone number?\n\n$phoneNumber'),
-            actions: [
-              TextButton(
-                onPressed: () => Get.back(result: false),
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Get.back(result: true),
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
-
-  // Show final confirmation popup after setting phone number
-  Future<bool> showFinalConfirmationPopup() async {
-    return await Get.dialog<bool>(
-          AlertDialog(
-            title: Text('Confirmation'),
-            content:
-                Text('The delivery person will contact you on this number.'),
-            actions: [
-              TextButton(
-                onPressed: () => Get.back(result: false),
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Get.back(result: true),
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
+  // // Show final confirmation popup after setting phone number
+  // Future<bool> showFinalConfirmationPopup() async {
+  //   return await Get.dialog<bool>(
+  //         AlertDialog(
+  //           title: Text('Confirmation'),
+  //           content:
+  //               Text('The delivery person will contact you on this number.'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () => Get.back(result: false),
+  //               child: Text('Cancel'),
+  //             ),
+  //             TextButton(
+  //               onPressed: () => Get.back(result: true),
+  //               child: Text('OK'),
+  //             ),
+  //           ],
+  //         ),
+  //       ) ??
+  //       false;
+  // }
 
   // Method to fetch and save FCM token to Prisma when the user orders
   Future<void> saveFcmTokenToPrisma() async {
@@ -226,13 +218,13 @@ class OrderController extends GetxController {
               'Please select a delivery address before proceeding to payment.');
       return;
     }
-    if (selectedPhoneNumber == null) {
-      TLoaders.warningSnackBar(
-        title: 'Phone Number Required',
-        message: 'Please provide a phone number before proceeding to payment.',
-      );
-      return;
-    }
+    // if (selectedPhoneNumber == null) {
+    //   TLoaders.warningSnackBar(
+    //     title: 'Phone Number Required',
+    //     message: 'Please provide a phone number before proceeding to payment.',
+    //   );
+    //   return;
+    // }
     Razorpay razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _onRazorPaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _onRazorPaymentError);
@@ -335,13 +327,13 @@ class OrderController extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
-      if (selectedPhoneNumber == null) {
-        TLoaders.warningSnackBar(
-            title: 'Phone Number Required',
-            message: 'Please provide a phone number before proceeding.');
-        TFullScreenLoader.stopLoading();
-        return;
-      }
+      // if (selectedPhoneNumber != null) {
+      //   TLoaders.warningSnackBar(
+      //       title: 'Phone Number Required',
+      //       message: 'Please provide a phone number before proceeding.');
+      //   TFullScreenLoader.stopLoading();
+      //   return;
+      // }
 
       // Check payment method
       if (checkoutController.selectedPaymentMethod == paymentMethods[0]) {
