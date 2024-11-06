@@ -22,9 +22,9 @@ class StoreInfoCards extends StatelessWidget {
       children: [
         Expanded(
           child: _buildInfoCard(
-            icon: Icons.access_time,
+            icon: Icons.production_quantity_limits,
             label: 'Min Order value',
-            value: 'Rs. 200',
+            value: '₹ 200',
             iconColor: iconColor,
             labelStyle: labelStyle,
             valueStyle: valueStyle,
@@ -34,7 +34,7 @@ class StoreInfoCards extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _buildInfoCard(
-            icon: Icons.directions_walk,
+            icon: Icons.delivery_dining,
             label: 'Delivery time',
             value: '25-35 min',
             iconColor: iconColor,
@@ -48,7 +48,7 @@ class StoreInfoCards extends StatelessWidget {
           child: _buildInfoCard(
             icon: Icons.attach_money,
             label: 'Delivery price',
-            value: 'Rs.60',
+            value: '₹ 60',
             iconColor: iconColor,
             labelStyle: labelStyle,
             valueStyle: valueStyle,
@@ -79,6 +79,7 @@ class StoreInfoCards extends StatelessWidget {
         border: Border.all(color: borderColor, width: 1),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: iconColor),
           const SizedBox(height: 8),
