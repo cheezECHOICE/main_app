@@ -16,7 +16,8 @@ class TImages {
   static const String facebook = "assets/logos/facebook-icon.png";
 
   // -- Animations
-  static const String mailanimation = "assets/images/animations/processing.json";
+  static const String mailanimation =
+      "assets/images/animations/processing.json";
   static const String cartanimation =
       "assets/images/animations/empty_cart.json";
   static const String daceranimation =
@@ -43,8 +44,8 @@ class TImages {
       "assets/images/on_boarding_images/sammy-line-delivery.gif";
 
   // -- Products
-  static const String productImage1 =
-      "assets/images/products/chicken pizza.png";
+  // static const String productImage1 =
+  //     "assets/images/products/chicken pizza.png";
 
   //Banners
   static const String promoBanner1 =
