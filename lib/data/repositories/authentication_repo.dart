@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:food/data/repositories/user/user_repo.dart';
+import 'package:food/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:food/features/authentication/screens/login/login.dart';
 import 'package:food/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:food/features/authentication/screens/signup/verify_email.dart';
@@ -95,13 +96,20 @@ class AuthenticationRepository extends GetxController {
           email: email, password: password);
 
       // Create Prisma user
+      // await createPrismaUser(
+      //   userCredential.user!.uid,
+      //   //'${controller.user.value.fullName}',
+      //   '${userCredential.user!.displayName ?? 'User'}',
+      //   email,
+      //   userCredential.user!.phoneNumber ?? '',
+      // );
+      var signupController = SignupController.instance;
       await createPrismaUser(
-        userCredential.user!.uid,
-        //'${controller.user.value.fullName}',
-        '${userCredential.user!.displayName ?? 'User'}',
-        email,
-        userCredential.user!.phoneNumber ?? '',
-      );
+  userCredential.user!.uid,
+  '${signupController.username.text.trim()}', // Accessing username through the controller
+  email,
+  signupController.phoneNumber.text.trim(), // Accessing phone number through the controller
+);
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
