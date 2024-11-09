@@ -28,12 +28,12 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
     // Check if today is between Saturday 5:00 PM and Monday 8:00 PM
     final dayOfWeek = now.weekday;
     final isSaturdayEvening =
-        dayOfWeek == DateTime.thursday && now.isAfter(startAvailability);
-    // final isSunday = dayOfWeek == DateTime.sunday;
+        dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
+    final isSunday = dayOfWeek == DateTime.sunday;
     final isMondayMorning =
-        dayOfWeek == DateTime.saturday && now.isBefore(endAvailability);
+        dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
 
-    return isSaturdayEvening || isMondayMorning;
+    return isSaturdayEvening || isSunday || isMondayMorning;
   }
 
   @override

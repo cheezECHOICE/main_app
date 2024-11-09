@@ -46,7 +46,6 @@ class OrderController extends GetxController {
     selectedAddress = address;
   }
 
-
   // Set selected phone number with confirmation dialog process
   // Future<void> setSelectedPhoneNumber(String phoneNumber) async {
   //   if (isPhoneNumberLocked) return;
@@ -281,7 +280,11 @@ class OrderController extends GetxController {
           image: TImages.successfulPaymentIcon,
           title: 'Payment Success',
           subtitle: 'Your item will be ready!',
-          onPressed: () => Get.offAll(() => const NavigationMenu()),
+          onPressed: () {
+            // Navigate to 'My Orders' inside the Profile Tab
+            Get.offAll(() => const NavigationMenu());
+            NavigationController.instance.goToMyOrders();
+          },
         ));
 
     //Update the cart status
@@ -376,7 +379,11 @@ class OrderController extends GetxController {
               image: TImages.successfulPaymentIcon,
               title: 'Order Processed',
               subtitle: 'Your item will be ready soon!',
-              onPressed: () => Get.offAll(() => const NavigationMenu()),
+              onPressed: () {
+                // Navigate to 'My Orders' inside the Profile Tab
+                Get.offAll(() => const NavigationMenu());
+                NavigationController.instance.goToMyOrders();
+              },
             ));
 
         // Clear the cart

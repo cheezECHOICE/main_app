@@ -54,54 +54,54 @@ class CheckOutScreen extends StatelessWidget {
               DeliveryAddressSection2(),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              PhoneNumberSection(),
-              const SizedBox(height: TSizes.spaceBtwSections),
+              // PhoneNumberSection(),
+              // const SizedBox(height: TSizes.spaceBtwSections),
 
-              // ///Billing
-              // TRoundedContainer(
-              //   showBorder: true,
-              //   padding: const EdgeInsets.all(TSizes.md),
-              //   backgroundColor: dark ? TColors.black : TColors.white,
-              //   child: const Column(
-              //     children: [
-              //       ///Pricing
-              //       TBillingAmountSection(),
-              //       SizedBox(height: TSizes.spaceBtwSections),
+              ///Billing
+              TRoundedContainer(
+                showBorder: true,
+                padding: const EdgeInsets.all(TSizes.md),
+                backgroundColor: dark ? TColors.black : TColors.white,
+                child: const Column(
+                  children: [
+                    ///Pricing
+                    TBillingAmountSection(),
+                    SizedBox(height: TSizes.spaceBtwSections),
 
-              //       ///Divider
-              //       Divider(),
+                    ///Divider
+                    Divider(),
 
-              //       ///Payment Method
-              //       TBillingPaymentSection(),
-              //       SizedBox(height: TSizes.spaceBtwItems),
-              //     ],
-              //   ),
-              // ),
+                    ///Payment Method
+                    TBillingPaymentSection(),
+                    SizedBox(height: TSizes.spaceBtwItems),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
 
-      // ///Checkout Button
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.all(TSizes.defaultSpace),
-      //   child: ElevatedButton(
-      //     onPressed: subtotal > 0
-      //         ? () => orderController.processPrismaOrder()
-      //         : () => TLoaders.warningSnackBar(
-      //             title: 'Empty Cart',
-      //             message: 'Add items in the cart in order to proceed.'),
-      //     child: Obx(() => Text(
-      //         'Checkout ₹${TPricingCalculator.calculateTotalPrice(subtotal, 'IND')}')),
-      //   ),
-      // ),
+      ///Checkout Button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: () => {Get.to(() => BillingPage())},
-          child: Text('next'),
+          onPressed: subtotal > 0
+              ? () => orderController.processPrismaOrder()
+              : () => TLoaders.warningSnackBar(
+                  title: 'Empty Cart',
+                  message: 'Add items in the cart in order to proceed.'),
+          child: Obx(() => Text(
+              'Checkout ₹${TPricingCalculator.calculateTotalPrice(subtotal, 'IND')}')),
         ),
       ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.all(TSizes.defaultSpace),
+      //   child: ElevatedButton(
+      //     onPressed: () => {Get.to(() => BillingPage())},
+      //     child: Text('next'),
+      //   ),
+      // ),
     );
   }
 }

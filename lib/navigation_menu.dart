@@ -4,6 +4,7 @@ import 'package:food/features/shop/controllers/brand_controller.dart';
 import 'package:food/features/shop/controllers/product/cart_controller.dart';
 import 'package:food/features/shop/screens/cart/cart.dart';
 import 'package:food/features/shop/screens/home/home.dart';
+import 'package:food/features/shop/screens/orders/order.dart';
 import 'package:food/features/shop/screens/store/store.dart';
 import 'package:food/utils/constants/colors.dart';
 import 'package:food/utils/helpers/helper_functions.dart';
@@ -69,4 +70,11 @@ class NavigationController extends GetxController {
     const CartScreen(),
     const SettingScreen(),
   ];
+  // Method to navigate to "My Orders" in the Settings screen
+  void goToMyOrders() {
+    selectedIndex.value = 3; // Index for 'Profile' Tab
+    Future.delayed(Duration(milliseconds: 100), () {
+      Get.to(() => const OrderScreen());
+    });
+  }
 }

@@ -162,13 +162,14 @@ class CartController extends GetxController {
 
     final variation = variationController.selectedVariation.value;
     final isVariation = variation.id.isNotEmpty;
-    final price = isVariation
-        ? variation.salePrice > 0.0
-            ? variation.salePrice
-            : variation.price
-        : product.salePrice > 0.0
-            ? product.salePrice
-            : product.price;
+    // final price = isVariation
+    //     ? variation.salePrice > 0.0
+    //         ? variation.salePrice
+    //         : variation.price
+    //     : product.salePrice > 0.0
+    //         ? product.salePrice
+    //         : product.price;
+    final price = product.price;
 
     return CartItemModel(
       productId: product.id,
@@ -178,7 +179,7 @@ class CartController extends GetxController {
       variationId: variation.id,
       image: isVariation ? variation.image : product.thumbnail,
       brandId: product.brand != null ? int.parse(product.brand!.id) : 0,
-      brandName: product.brand !=null ? product.brand!.name : ' ',
+      brandName: product.brand != null ? product.brand!.name : ' ',
       selectedVariation: isVariation ? variation.attributeValues : null,
     );
   }
