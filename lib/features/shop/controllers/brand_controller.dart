@@ -55,6 +55,25 @@ class BrandController extends GetxController {
     }
   }
 
+  // is closed or open
+  Future<void> filterStoresByStatus(bool showOnlyOpen) async {
+    isLoading.value = true;
+
+    // Filter based on store status
+    if (showOnlyOpen) {
+      final openStores = allBrands
+          .where((brand) =>
+              brand.isOpen ==
+              true) // Assuming `isOpen` is a field in BrandModel
+          .toList();
+      brandsToShow.assignAll(openStores);
+    } else {
+      brandsToShow.assignAll(allBrands);
+    }
+
+    isLoading.value = false;
+  }
+
   Future<void> resetBrands() async {
     isLoading.value = true;
     brandsToShow.assignAll(allBrands);

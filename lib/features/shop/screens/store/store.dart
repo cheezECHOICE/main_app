@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:food/features/shop/controllers/brand_controller.dart';
 import 'package:food/features/shop/screens/store/widgets/search_bar.dart';
 import 'package:food/features/shop/screens/store/widgets/store_card.dart';
-import 'package:food/utils/constants/sizes.dart';
 import 'package:food/utils/shimmers/store_shimmer.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +16,10 @@ class StoreScreen extends StatefulWidget {
 class _StoreScreenState extends State<StoreScreen> {
   final brandController = Get.put(BrandController());
   final TextEditingController searchController = TextEditingController();
-  String filterOption = 'Food Street';
+  String filterOption = 'All Restaurants';
+
+  // Variable to track whether the user wants open stores only
+  bool showOpenStoresOnly = true;
 
   @override
   Widget build(BuildContext context) {
@@ -26,44 +28,69 @@ class _StoreScreenState extends State<StoreScreen> {
         appBar: AppBar(
           title: Padding(
             padding: const EdgeInsets.only(left: 10),
-            child: Text(filterOption,
-                style: Theme.of(context).textTheme.headlineSmall),
+            child: Text(
+              filterOption,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
           ),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: PopupMenuButton(
-                onSelected: (value) {
+              child: TextButton(
+                onPressed: () {
                   setState(() {
-                    filterOption = value;
+                    // Toggle between showing open and closed stores
+                    showOpenStoresOnly = !showOpenStoresOnly;
+
+                    // Filter brands based on the open/closed status
+                    if (showOpenStoresOnly) {
+                      brandController.brandsToShow.assignAll(
+                        brandController.allBrands.where((store) {
+                          // Filter only open stores
+                          return store.isOpen == true;
+                        }).toList(),
+                      );
+                    } else {
+                      brandController.brandsToShow.assignAll(
+                        brandController.allBrands.where((store) {
+                          // Filter only closed stores
+                          return store.isOpen == false || store.isOpen == null;
+                        }).toList(),
+                      );
+                    }
                   });
                 },
-                itemBuilder: (BuildContext context) => [
-                  PopupMenuItem(
-                    value: 'In campus',
-                    child: Text('In campus'),
+                style: TextButton.styleFrom(
+                  backgroundColor: showOpenStoresOnly
+                      ? const Color(0xFF72D175) // Green for open stores
+                      : const Color(0xFFEE7067), // Red for closed stores
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  PopupMenuItem(
-                    value: 'Deliveries',
-                    child: Text('Deliveries'),
-                  ),
-                  PopupMenuItem(
-                    value: 'Night canteen',
-                    child: Text('Night canteen'),
-                  ),
-                ],
+                ),
+                child: Text(
+                  showOpenStoresOnly ? 'Opened Stores' : 'Closed Stores',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(70.0),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MySearchBar(
-                searchController: searchController,
-                searchHint: 'Search for your favourite store',
-                filterFunction: brandController.filterBrands,
-              ),
+            preferredSize: const Size.fromHeight(90.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MySearchBar(
+                    searchController: searchController,
+                    searchHint: 'Search for your favourite store',
+                    filterFunction: brandController.filterBrands,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -76,13 +103,12 @@ class _StoreScreenState extends State<StoreScreen> {
                   onRefresh: brandController.getAllBrands,
                   child: Obx(() {
                     if (brandController.isLoading.value) {
-                      return SingleChildScrollView(
-                        child: const TStoreShimmer(),
+                      return const SingleChildScrollView(
+                        child: TStoreShimmer(),
                       );
                     }
 
                     if (brandController.brandsToShow.isEmpty) {
-                      brandController.getAllBrands();
                       return const Center(
                         child: Text('No stores found.'),
                       );
@@ -95,7 +121,7 @@ class _StoreScreenState extends State<StoreScreen> {
                         return Column(
                           children: [
                             StoreCard(store: store),
-                            const SizedBox(height: 1.25 * TSizes.spaceBtwItems),
+                            const SizedBox(height: 10),
                           ],
                         );
                       },
