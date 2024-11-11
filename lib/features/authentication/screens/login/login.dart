@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/login_signup/form_divider.dart';
-import 'package:food/common/widgets/login_signup/social_buttons.dart';
-import 'package:food/features/authentication/screens/login/widgets/login_form.dart';
-import 'package:food/features/authentication/screens/login/widgets/login_header.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/constants/text_strings.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/widgets/login_signup/form_divider.dart';
+import 'package:cheezechoice/common/widgets/login_signup/social_buttons.dart';
+import 'package:cheezechoice/features/authentication/screens/login/widgets/login_form.dart';
+import 'package:cheezechoice/features/authentication/screens/login/widgets/login_header.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -34,9 +34,9 @@ class LoginScreen extends StatelessWidget {
             Column(
               children: [
                 Image.asset(
-                  'assets/logos/logo.png', 
-                  height: 70,  
-                  width: 70,     
+                  'assets/logos/logo.png',
+                  height: 70,
+                  width: 70,
                 ),
                 const SizedBox(height: 0),
                 Text(

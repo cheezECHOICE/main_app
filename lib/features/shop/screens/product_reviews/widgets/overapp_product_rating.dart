@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/screens/product_reviews/widgets/rating_progress_indicator.dart';
+import 'package:cheezechoice/features/shop/screens/product_reviews/widgets/rating_progress_indicator.dart';
 
 class OverAllProductRatings extends StatelessWidget {
   const OverAllProductRatings({

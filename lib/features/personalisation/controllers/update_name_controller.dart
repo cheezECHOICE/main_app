@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/data/repositories/user/user_repo.dart';
-import 'package:food/features/authentication/controllers/signup/network_manager.dart';
-import 'package:food/features/personalisation/controllers/user_controller.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/popups/full_screen_loader.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/data/repositories/user/user_repo.dart';
+import 'package:cheezechoice/features/authentication/controllers/signup/network_manager.dart';
+import 'package:cheezechoice/features/personalisation/controllers/user_controller.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/popups/full_screen_loader.dart';
 import 'package:get/get.dart';
 
 class UpdateNameController extends GetxController {

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/features/personalisation/screens/address/widgets/addressmodel.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/features/personalisation/screens/address/widgets/addressmodel.dart';
 import 'package:get/get.dart';
 
 class AddressRepository extends GetxController {

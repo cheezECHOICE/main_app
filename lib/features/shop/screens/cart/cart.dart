@@ -1,15 +1,15 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/loaders/animation_loader.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/screens/cart/widgets/cart_items.dart';
-import 'package:food/features/shop/screens/checkout/checkout.dart';
-import 'package:food/features/shop/screens/home/home.dart';
-import 'package:food/navigation_menu.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/loaders/animation_loader.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/screens/cart/widgets/cart_items.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/checkout.dart';
+import 'package:cheezechoice/features/shop/screens/home/home.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
 class CartScreen extends StatelessWidget {
@@ -25,9 +25,9 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           leading: BackButton(
-      color: isDarkMode ? Colors.white : Colors.black,
-    ),
-          title:Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
           centerTitle: true),
       body: Obx(
         () {

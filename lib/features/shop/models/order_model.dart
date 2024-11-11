@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food/features/personalisation/screens/address/widgets/addressmodel.dart';
-import 'package:food/features/shop/models/brand_model.dart';
-import 'package:food/features/shop/models/cart_item_model.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/features/personalisation/screens/address/widgets/addressmodel.dart';
+import 'package:cheezechoice/features/shop/models/brand_model.dart';
+import 'package:cheezechoice/features/shop/models/cart_item_model.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class OrderModel {
   final String id;
@@ -103,11 +103,11 @@ class OrderModel {
       id: data['id'].toString(),
       userId: data['userId'] ?? '',
       status: data['orderStatus'] ?? '',
-      otp: data['otp'], 
+      otp: data['otp'],
       address: data['address'] ?? '',
-      items: [], 
+      items: [],
       totalAmount: data['totalAmount'].toDouble(),
-       orderDate: data['orderedAt'].DateTime(),
+      orderDate: data['orderedAt'].DateTime(),
     );
   }
 }

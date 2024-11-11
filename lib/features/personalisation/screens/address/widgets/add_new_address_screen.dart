@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/features/personalisation/controllers/address_controller.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/validators/validation.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/features/personalisation/controllers/address_controller.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/validators/validation.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AddNewAddressScreen extends StatelessWidget {

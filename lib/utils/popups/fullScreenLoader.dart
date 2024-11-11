@@ -1,8 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/loaders/animation_loader.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/widgets/loaders/animation_loader.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 
 import '../constants/colors.dart';

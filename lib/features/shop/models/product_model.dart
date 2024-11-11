@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food/features/shop/models/brand_model.dart';
-import 'package:food/features/shop/models/product_attribute_model.dart';
-import 'package:food/features/shop/models/product_variation_model.dart';
+import 'package:cheezechoice/features/shop/models/brand_model.dart';
+import 'package:cheezechoice/features/shop/models/product_attribute_model.dart';
+import 'package:cheezechoice/features/shop/models/product_variation_model.dart';
 
 class ProductModel {
   String id;

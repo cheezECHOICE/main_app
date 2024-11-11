@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/banner_controller.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/features/shop/controllers/banner_controller.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 import 'package:get/get.dart';
 
 import '../../../../../common/widgets/custom_shapes/container/circular_container.dart';

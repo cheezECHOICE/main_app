@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:food/features/authentication/controllers_onboarding/onboarding_controller.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/device/device_utility.dart';
+//import 'package:cheezechoice/features/authentication/controllers_onboarding/onboarding_controller.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/device/device_utility.dart';
 
 class OnBoardingSkip extends StatelessWidget {
   const OnBoardingSkip({

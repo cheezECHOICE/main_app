@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/features/shop/screens/store/widgets/splash_effect.dart';
-import 'package:food/utils/constants/colors.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/splash_effect.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
 import 'package:get/get.dart';
 
 class AddToCartButton extends StatelessWidget {

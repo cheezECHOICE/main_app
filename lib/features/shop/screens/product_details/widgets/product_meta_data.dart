@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/styles/TRoundedContainer.dart';
-import 'package:food/common/widgets/images/t_circular_image.dart';
-import 'package:food/common/widgets/texts/product_price_text.dart';
-import 'package:food/common/widgets/texts/product_title_text.dart';
-import 'package:food/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
-import 'package:food/features/shop/controllers/product/product_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/enums.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/enums/enums.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/common/widgets/images/t_circular_image.dart';
+import 'package:cheezechoice/common/widgets/texts/product_price_text.dart';
+import 'package:cheezechoice/common/widgets/texts/product_title_text.dart';
+import 'package:cheezechoice/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
+import 'package:cheezechoice/features/shop/controllers/product/product_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/enums.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/enums/enums.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class TProductMetaData extends StatelessWidget {
   const TProductMetaData({super.key, required this.product});

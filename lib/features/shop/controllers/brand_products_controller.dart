@@ -1,8 +1,8 @@
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/data/repositories/brands/brand_repository.dart';
-import 'package:food/features/shop/controllers/brand_controller.dart';
-import 'package:food/features/shop/models/brand_model.dart';
-import 'package:food/features/shop/models/product_model.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/data/repositories/brands/brand_repository.dart';
+import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
+import 'package:cheezechoice/features/shop/models/brand_model.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
 import 'package:get/get.dart';
 
 class BrandProductsController extends GetxController {

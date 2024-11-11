@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/layouts/gird_layout.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/common/widgets/layouts/gird_layout.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 
 class TBrandsShimmer extends StatelessWidget {
   const TBrandsShimmer({super.key, this.itemCount = 4});

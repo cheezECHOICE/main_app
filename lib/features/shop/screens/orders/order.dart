@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/features/shop/controllers/product/order_controller.dart';
-import 'package:food/features/shop/screens/orders/widgets/order_list.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
+import 'package:cheezechoice/features/shop/screens/orders/widgets/order_list.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
 class OrderScreen extends StatelessWidget {
@@ -60,7 +60,6 @@ class OrderScreen extends StatelessWidget {
     );
   }
 }
-
 
 // New Order History Screen
 class OrderHistoryScreen extends StatelessWidget {

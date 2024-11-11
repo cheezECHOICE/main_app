@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_core/firebase_core.dart';
-import 'package:food/common/widgets/success_screen.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/text_strings.dart';
-import 'package:food/utils/popups/loaders.dart';
+import 'package:cheezechoice/common/widgets/success_screen.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
+import 'package:cheezechoice/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class VerifyEmailController extends GetxController {

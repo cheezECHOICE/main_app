@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/constants/api_constants.dart';
-import 'package:food/utils/exceptions/firebase_exception.dart';
-import 'package:food/utils/exceptions/paltform_exception.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/constants/api_constants.dart';
+import 'package:cheezechoice/utils/exceptions/firebase_exception.dart';
+import 'package:cheezechoice/utils/exceptions/paltform_exception.dart';
 import 'package:get/get.dart';
 
 class ProductRepository extends GetxController {
@@ -45,7 +45,8 @@ class ProductRepository extends GetxController {
   //   }
   // }
 
-  Future<List<ProductModel>> getAllLocalFavourites(List<String> productIds) async {
+  Future<List<ProductModel>> getAllLocalFavourites(
+      List<String> productIds) async {
     try {
       if (productIds.isEmpty) return [];
       List<ProductModel> favouriteProducts = [];
@@ -109,7 +110,8 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<List<ProductModel>> getFavouriteProducts(List<String> productIds) async {
+  Future<List<ProductModel>> getFavouriteProducts(
+      List<String> productIds) async {
     try {
       final snapshot = await _db
           .collection('Products')
@@ -127,4 +129,3 @@ class ProductRepository extends GetxController {
     }
   }
 }
-

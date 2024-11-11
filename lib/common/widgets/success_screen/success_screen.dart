@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/styles/spacing_styles.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/constants/text_strings.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/styles/spacing_styles.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen(

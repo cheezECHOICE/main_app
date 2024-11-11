@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/global_search_controller.dart';
-import 'package:food/features/shop/screens/store/widgets/dotted_divider.dart';
-import 'package:food/features/shop/screens/store/widgets/product_card.dart';
-import 'package:food/features/shop/screens/store/widgets/search_bar.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
-import 'package:food/utils/shimmers/brand_products_shimmer.dart';
+import 'package:cheezechoice/features/shop/controllers/global_search_controller.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/dotted_divider.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/product_card.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/search_bar.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/shimmers/brand_products_shimmer.dart';
 import 'package:get/get.dart';
 
 class SearchScreen extends StatelessWidget {

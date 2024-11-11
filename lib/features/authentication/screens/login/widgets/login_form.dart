@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/authentication/controllers/login/login_controller.dart';
-import 'package:food/features/authentication/screens/password_configuration/forgot_password.dart';
-import 'package:food/features/authentication/screens/signup/signup.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/constants/text_strings.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
-import 'package:food/utils/validators/validation.dart';
+import 'package:cheezechoice/features/authentication/controllers/login/login_controller.dart';
+import 'package:cheezechoice/features/authentication/screens/password_configuration/forgot_password.dart';
+import 'package:cheezechoice/features/authentication/screens/signup/signup.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/validators/validation.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -29,7 +29,9 @@ class TLoginForm extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: dark ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.3),
+              color: dark
+                  ? Colors.black.withOpacity(0.5)
+                  : Colors.black.withOpacity(0.3),
               //dark ? TColors.primary.withOpacity(0.1) : TColors.primary.withOpacity(0.1),
               blurRadius: 30,
               offset: Offset(0, 0),
@@ -49,47 +51,56 @@ class TLoginForm extends StatelessWidget {
                   prefixIcon: const Icon(Iconsax.message_search4),
                   labelText: TTexts.email,
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: dark ? Colors.white : Colors.black),
+                    borderSide:
+                        BorderSide(color: dark ? Colors.white : Colors.black),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: dark ? Colors.white : Colors.black, width: 2.0),
+                    borderSide: BorderSide(
+                        color: dark ? Colors.white : Colors.black, width: 2.0),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwInputFields/1.5),
+            const SizedBox(height: TSizes.spaceBtwInputFields / 1.5),
             // Password
             Container(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: Obx(
                 () => TextFormField(
-                  validator: (value) => TValidator.validateEmptyText('Password', value),
+                  validator: (value) =>
+                      TValidator.validateEmptyText('Password', value),
                   controller: controller.password,
                   obscureText: controller.hidePassword.value,
                   decoration: InputDecoration(
                     labelText: TTexts.password,
                     prefixIcon: const Icon(Iconsax.password_check),
                     suffixIcon: IconButton(
-                      onPressed: () => controller.hidePassword.value = !controller.hidePassword.value,
+                      onPressed: () => controller.hidePassword.value =
+                          !controller.hidePassword.value,
                       icon: Icon(
-                        controller.hidePassword.value ? Iconsax.eye_slash : Iconsax.eye,
+                        controller.hidePassword.value
+                            ? Iconsax.eye_slash
+                            : Iconsax.eye,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: dark ? Colors.white : Colors.black),
+                      borderSide:
+                          BorderSide(color: dark ? Colors.white : Colors.black),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: dark ? Colors.white : Colors.black, width: 2.0),
+                      borderSide: BorderSide(
+                          color: dark ? Colors.white : Colors.black,
+                          width: 2.0),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: TSizes.spaceBtwInputFields/4),
+            const SizedBox(height: TSizes.spaceBtwInputFields / 4),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,9 +109,10 @@ class TLoginForm extends StatelessWidget {
                   children: [
                     // Remember Me
                     Obx(() => Checkbox(
-                      value: controller.rememberMe.value,
-                      onChanged: (value) => controller.rememberMe.value = !controller.rememberMe.value,
-                    )),
+                          value: controller.rememberMe.value,
+                          onChanged: (value) => controller.rememberMe.value =
+                              !controller.rememberMe.value,
+                        )),
                     const Text(TTexts.rememberMe),
                   ],
                 ),
@@ -124,7 +136,8 @@ class TLoginForm extends StatelessWidget {
             ),
             const SizedBox(height: TSizes.spaceBtwItems * 1.5),
 
-            const Text("Don't have an account?", style: TextStyle(fontSize: 14)),
+            const Text("Don't have an account?",
+                style: TextStyle(fontSize: 14)),
             TextButton(
               onPressed: () => Get.to(const SignupScreen()),
               clipBehavior: Clip.antiAliasWithSaveLayer,

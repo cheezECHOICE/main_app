@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/screens/store/widgets/dotted_divider.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/dotted_divider.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 
 class TBrandProductsShimmer extends StatelessWidget {
   const TBrandProductsShimmer({super.key, this.itemCount = 4});

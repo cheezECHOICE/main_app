@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/products/ratings/rating_indicator.dart';
-import 'package:food/features/shop/screens/product_reviews/widgets/overapp_product_rating.dart';
-import 'package:food/features/shop/screens/product_reviews/widgets/user_review_card.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/products/ratings/rating_indicator.dart';
+import 'package:cheezechoice/features/shop/screens/product_reviews/widgets/overapp_product_rating.dart';
+import 'package:cheezechoice/features/shop/screens/product_reviews/widgets/user_review_card.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 
 class ProductReviewScreen extends StatelessWidget {
   const ProductReviewScreen({super.key});

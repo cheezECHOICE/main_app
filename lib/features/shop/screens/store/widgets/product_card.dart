@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/features/shop/screens/home/widgets/product_details_page.dart';
-import 'package:food/features/shop/screens/store/widgets/add_to_cart_button.dart';
-import 'package:food/features/shop/screens/store/widgets/shimmer_image.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/product_details_page.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/add_to_cart_button.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/shimmer_image.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;

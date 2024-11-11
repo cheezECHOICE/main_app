@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:food/features/shop/models/banner_model.dart';
-import 'package:food/utils/exceptions/firebase_auth_exceptions.dart';
-import 'package:food/utils/exceptions/firebase_exception.dart';
-import 'package:food/utils/exceptions/format_exception.dart';
-import 'package:food/utils/exceptions/paltform_exception.dart';
+import 'package:cheezechoice/features/shop/models/banner_model.dart';
+import 'package:cheezechoice/utils/exceptions/firebase_auth_exceptions.dart';
+import 'package:cheezechoice/utils/exceptions/firebase_exception.dart';
+import 'package:cheezechoice/utils/exceptions/format_exception.dart';
+import 'package:cheezechoice/utils/exceptions/paltform_exception.dart';
 import 'package:get/get.dart';
 
 class BannerRepository extends GetxController {

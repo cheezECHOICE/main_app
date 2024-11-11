@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/products/cart/cart_menu_icon.dart';
-import 'package:food/features/personalisation/controllers/user_controller.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/text_strings.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/products/cart/cart_menu_icon.dart';
+import 'package:cheezechoice/features/personalisation/controllers/user_controller.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 import 'package:get/get.dart';
 
 class THomeAppBar extends StatelessWidget {

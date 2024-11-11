@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/layouts/gird_layout.dart';
-import 'package:food/common/widgets/loaders/animation_loader.dart';
-import 'package:food/common/widgets/products/prodect_cards/product_card_vertical.dart';
-import 'package:food/features/shop/controllers/product/favourite_controller.dart';
-import 'package:food/navigation_menu.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/cloud_helper_function.dart';
-import 'package:food/utils/shimmers/popular_products_shimmer.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/layouts/gird_layout.dart';
+import 'package:cheezechoice/common/widgets/loaders/animation_loader.dart';
+import 'package:cheezechoice/common/widgets/products/prodect_cards/product_card_vertical.dart';
+import 'package:cheezechoice/features/shop/controllers/product/favourite_controller.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/cloud_helper_function.dart';
+import 'package:cheezechoice/utils/shimmers/popular_products_shimmer.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/constants/image_strings.dart';

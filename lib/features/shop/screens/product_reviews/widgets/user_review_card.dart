@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/styles/TRoundedContainer.dart';
-import 'package:food/common/widgets/products/ratings/rating_indicator.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/common/widgets/products/ratings/rating_indicator.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:readmore/readmore.dart';
 
 class UserReviewCard extends StatelessWidget {

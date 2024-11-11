@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/features/shop/models/order_model.dart';
-import 'package:food/utils/constants/api_constants.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/features/shop/models/order_model.dart';
+import 'package:cheezechoice/utils/constants/api_constants.dart';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -13,7 +13,6 @@ class OrderRepository extends GetxController {
 
   final orderEndpoint = '$dbLink/orders';
   final userOrderEndpoint = '$dbLink/orders?userId=';
-
 
   /// Get the FCM Token
   Future<String?> getFcmToken() async {
@@ -69,7 +68,6 @@ class OrderRepository extends GetxController {
           .doc(userId)
           .collection('Orders')
           .add(order.toJson());
-      
     } catch (e) {
       throw 'Something went wrong while saving Order Information. Try again later';
     }
@@ -77,7 +75,7 @@ class OrderRepository extends GetxController {
 
   // Prisma order
   Future<void> pushOrder(int brandId, String address, double totalAmount,
-      String userId,List<Map<String, dynamic>> products) async {
+      String userId, List<Map<String, dynamic>> products) async {
     try {
       await Dio().post(orderEndpoint, data: {
         'brandId': brandId,
@@ -88,23 +86,22 @@ class OrderRepository extends GetxController {
       });
       // // Update FCM token when placing an order
       String? fcmToken = await getFcmToken();
-      await saveFcmTokenInPrisma(userId,fcmToken);  
+      await saveFcmTokenInPrisma(userId, fcmToken);
     } catch (e) {
       throw 'Something went wrong while saving Order Information. Try again later';
     }
   }
-  
+
   // Fetch user orders
   Future<List<OrderModel>> fetchUserOrdersPrisma() async {
     List<OrderModel> orders = [];
     try {
       var data = await Dio().get(
           '${userOrderEndpoint}${AuthenticationRepository.instance.authUser?.uid}');
-      
+
       for (var item in data.data['data']) {
         orders.add(OrderModel.fromJson(item));
       }
-      
     } catch (e) {
       print(e);
       throw 'Something went wrong while fetching Order Information. Try again later';
@@ -112,44 +109,40 @@ class OrderRepository extends GetxController {
     return orders;
   }
 
+  Future<OrderModel?> GetOtp(String orderId, String otp) async {
+    try {
+      var response = await Dio().get(orderEndpoint, queryParameters: {
+        'orderId': orderId,
+        'otp': otp,
+      });
 
-Future<OrderModel?> GetOtp(String orderId, String otp) async {
-  try {
-    var response = await Dio().get(orderEndpoint, queryParameters: {
-      'orderId': orderId,
-      'otp': otp,
-    });
+      // Print the API response for debugging
+      print('API Response: ${response.data}');
 
-    // Print the API response for debugging
-    print('API Response: ${response.data}');
+      // Check if the response contains a list of orders
+      if (response.data != null && response.data['data'] is List) {
+        var dataList = response.data['data'] as List;
 
-    // Check if the response contains a list of orders
-    if (response.data != null && response.data['data'] is List) {
-      var dataList = response.data['data'] as List;
+        // Find the matching order by orderId
+        var matchingOrder = dataList.firstWhere(
+          (order) => order['orderId'].toString() == orderId,
+          orElse: () => null,
+        );
 
-      // Find the matching order by orderId
-      var matchingOrder = dataList.firstWhere(
-        (order) => order['orderId'].toString() == orderId, 
-        orElse: () => null,
-      );
-
-      if (matchingOrder != null) {
-        // Return the order details
-        return OrderModel.fromJson(matchingOrder as Map<String, dynamic>);
+        if (matchingOrder != null) {
+          // Return the order details
+          return OrderModel.fromJson(matchingOrder as Map<String, dynamic>);
+        } else {
+          print('No matching order found for orderId: $orderId');
+          return null;
+        }
       } else {
-        print('No matching order found for orderId: $orderId');
+        print('No valid data found in response');
         return null;
       }
-    } else {
-      print('No valid data found in response');
-      return null;
+    } catch (e) {
+      print('Error fetching OTP: $e');
+      throw 'Something went wrong while fetching the OTP for the order.';
     }
-  } catch (e) {
-    print('Error fetching OTP: $e');
-    throw 'Something went wrong while fetching the OTP for the order.';
   }
 }
-
-
-}
-

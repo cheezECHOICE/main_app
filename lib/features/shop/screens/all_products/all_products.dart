@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/products/sortable/sortable_products.dart';
-import 'package:food/features/shop/controllers/all_products_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/cloud_helper_function.dart';
-import 'package:food/utils/shimmers/vertical_product_shimmer.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/products/sortable/sortable_products.dart';
+import 'package:cheezechoice/features/shop/controllers/all_products_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/cloud_helper_function.dart';
+import 'package:cheezechoice/utils/shimmers/vertical_product_shimmer.dart';
 import 'package:get/get.dart';
 
 class AllProducts extends StatelessWidget {

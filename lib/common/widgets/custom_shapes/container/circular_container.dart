@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
 
 class TCircularContainer extends StatelessWidget {
   const TCircularContainer({

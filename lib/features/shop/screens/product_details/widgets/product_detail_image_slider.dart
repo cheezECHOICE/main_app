@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/custom_shapes/curved_edges/curved_edge_widget.dart';
-import 'package:food/common/widgets/images/t_rounded_images.dart';
-import 'package:food/common/widgets/products/favourite_icon/favourite_icon.dart';
-import 'package:food/features/shop/controllers/product/images_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/custom_shapes/curved_edges/curved_edge_widget.dart';
+import 'package:cheezechoice/common/widgets/images/t_rounded_images.dart';
+import 'package:cheezechoice/common/widgets/products/favourite_icon/favourite_icon.dart';
+import 'package:cheezechoice/features/shop/controllers/product/images_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 
 class TProductImageSlider extends StatelessWidget {

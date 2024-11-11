@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
-import 'package:food/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
 import 'package:get/get.dart';
 
 class NetworkManager extends GetxController {

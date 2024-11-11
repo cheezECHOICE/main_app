@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/custom_shapes/container/primary_header_container.dart';
-import 'package:food/features/shop/screens/home/widgets/home_appbar.dart';
-import 'package:food/features/shop/screens/home/widgets/home_categories.dart';
-import 'package:food/features/shop/screens/home/widgets/popular_products.dart';
-import 'package:food/features/shop/screens/home/widgets/promo_slider.dart';
-import 'package:food/features/shop/screens/home/widgets/search_container.dart';
-import 'package:food/features/shop/screens/home/widgets/title_divider.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/custom_shapes/container/primary_header_container.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/home_appbar.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/home_categories.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/popular_products.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/promo_slider.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/search_container.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/title_divider.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

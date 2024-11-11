@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/authentication/controllers/onboarding/onboarding_controller.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/device/device_utility.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/features/authentication/controllers/onboarding/onboarding_controller.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/device/device_utility.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:iconsax/iconsax.dart';
 
 class OnBoardingNextButton extends StatelessWidget {

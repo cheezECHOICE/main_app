@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/styles/TRoundedContainer.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/models/order_model.dart';
-import 'package:food/features/shop/screens/checkout/checkout.dart';
-import 'package:food/features/shop/screens/orders/widgets/orders_otp.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/models/order_model.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/checkout.dart';
+import 'package:cheezechoice/features/shop/screens/orders/widgets/orders_otp.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -34,23 +34,29 @@ class _OrderCardState extends State<OrderCard> {
         children: [
           Row(
             children: [
-              const Icon(Icons.fastfood_outlined,color: TColors.accent),
+              const Icon(Icons.fastfood_outlined, color: TColors.accent),
               const SizedBox(width: TSizes.spaceBtwItems / 2),
               Text("Order id: ",
-                  style: Theme.of(context).textTheme.headlineSmall!.apply(color: TColors.accent,)),
+                  style: Theme.of(context).textTheme.headlineSmall!.apply(
+                        color: TColors.accent,
+                      )),
               Text(
                 widget.order.id,
-                style: Theme.of(context).textTheme.headlineMedium!.apply(color: TColors.accent,),
+                style: Theme.of(context).textTheme.headlineMedium!.apply(
+                      color: TColors.accent,
+                    ),
               ),
               const Spacer(),
               Text(
                 '\Rs.${widget.order.totalAmount.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.headlineSmall!.apply(color: Colors.green.shade200),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .apply(color: Colors.green.shade200),
               ),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
-
           Row(
             children: [
               const Icon(Icons.food_bank_outlined),
@@ -58,13 +64,12 @@ class _OrderCardState extends State<OrderCard> {
               for (var item in widget.order.items)
                 if (item.brandName != null)
                   Text(
-                    item.brandName!,// Replace with actual brand name
+                    item.brandName!, // Replace with actual brand name
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
-
           Row(
             children: [
               const Icon(Icons.fmd_good_outlined),
@@ -74,26 +79,25 @@ class _OrderCardState extends State<OrderCard> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const Spacer(),
-             TextButton(
-                    onPressed: () {
-                      Get.to(() => OrderOtpScreen(order: widget.order));
-                    }, // Navigate to OTP screen
-                    child: Row(
-                      children: [
-                        Icon(Iconsax.key, size: 18, color: TColors.accent),
-                        const SizedBox(width: 12),
-                        Text(
-                          'OTP',
-                          style: Theme.of(context).textTheme.bodyLarge!.apply(
-                                color: TColors.accent,
-                              ),
-                        ),
-                      ],
+              TextButton(
+                onPressed: () {
+                  Get.to(() => OrderOtpScreen(order: widget.order));
+                }, // Navigate to OTP screen
+                child: Row(
+                  children: [
+                    Icon(Iconsax.key, size: 18, color: TColors.accent),
+                    const SizedBox(width: 12),
+                    Text(
+                      'OTP',
+                      style: Theme.of(context).textTheme.bodyLarge!.apply(
+                            color: TColors.accent,
+                          ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
             ],
           ),
-
           const SizedBox(height: TSizes.spaceBtwItems),
           const Divider(thickness: 1),
           const SizedBox(height: TSizes.spaceBtwItems),

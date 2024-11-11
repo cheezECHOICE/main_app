@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For Clipboard
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/images/t_circular_image.dart';
-import 'package:food/common/widgets/texts/section_heading.dart';
-import 'package:food/features/personalisation/controllers/user_controller.dart';
-import 'package:food/features/personalisation/screens/profile/widgets/changeName.dart';
-import 'package:food/features/personalisation/screens/profile/widgets/profile_menu.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/images/t_circular_image.dart';
+import 'package:cheezechoice/common/widgets/texts/section_heading.dart';
+import 'package:cheezechoice/features/personalisation/controllers/user_controller.dart';
+import 'package:cheezechoice/features/personalisation/screens/profile/widgets/changeName.dart';
+import 'package:cheezechoice/features/personalisation/screens/profile/widgets/profile_menu.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -38,9 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Obx(() {
                       final networkImage = controller.user.value.profilePicture;
-                      final image = networkImage.isNotEmpty
-                          ? networkImage
-                          : TImages.user;
+                      final image =
+                          networkImage.isNotEmpty ? networkImage : TImages.user;
                       return controller.imageUploading.value
                           ? const TShimmerEffect(width: 80, height: 80)
                           : TCircularImage(
@@ -98,7 +97,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     text: controller.user.value.id,
                   ));
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('User ID copied to clipboard')),
+                    const SnackBar(
+                        content: Text('User ID copied to clipboard')),
                   );
                 },
               ),

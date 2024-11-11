@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 
 class TVerticalImageText extends StatelessWidget {
   const TVerticalImageText({

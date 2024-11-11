@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/features/authentication/controllers/signup/network_manager.dart';
-import 'package:food/features/personalisation/controllers/user_controller.dart';
-import 'package:food/navigation_menu.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/local_storage/storage_utility.dart';
-import 'package:food/utils/popups/full_screen_loader.dart';
-import 'package:food/utils/popups/loaders.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/features/authentication/controllers/signup/network_manager.dart';
+import 'package:cheezechoice/features/personalisation/controllers/user_controller.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
+import 'package:cheezechoice/utils/popups/full_screen_loader.dart';
+import 'package:cheezechoice/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

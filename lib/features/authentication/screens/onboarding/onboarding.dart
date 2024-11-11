@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/authentication/controllers/onboarding/onboarding_controller.dart';
-import 'package:food/features/authentication/screens/onboarding/widgets/onboarding_dot_navigation.dart';
-import 'package:food/features/authentication/screens/onboarding/widgets/onboarding_next_button.dart';
-import 'package:food/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
-import 'package:food/utils/constants/text_strings.dart';
+import 'package:cheezechoice/features/authentication/controllers/onboarding/onboarding_controller.dart';
+import 'package:cheezechoice/features/authentication/screens/onboarding/widgets/onboarding_dot_navigation.dart';
+import 'package:cheezechoice/features/authentication/screens/onboarding/widgets/onboarding_next_button.dart';
+import 'package:cheezechoice/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
 import 'package:get/get.dart';
 
 class OnBoardingScreen extends StatelessWidget {

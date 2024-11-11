@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
 //import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/data/repositories/user/usermodel.dart';
-import 'package:food/utils/exceptions/firebase_exception.dart';
-import 'package:food/utils/exceptions/paltform_exception.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/data/repositories/user/usermodel.dart';
+import 'package:cheezechoice/utils/exceptions/firebase_exception.dart';
+import 'package:cheezechoice/utils/exceptions/paltform_exception.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/bindings/general_bindings.dart';
-import 'package:food/routes/app_routes.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/theme/theme.dart';
+import 'package:cheezechoice/bindings/general_bindings.dart';
+import 'package:cheezechoice/routes/app_routes.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/theme/theme.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 class App extends StatelessWidget {

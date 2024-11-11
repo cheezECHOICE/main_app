@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class TFormDivider extends StatelessWidget {
   const TFormDivider({super.key, required this.dividerText});
@@ -19,7 +19,11 @@ class TFormDivider extends StatelessWidget {
                 thickness: 1.5,
                 indent: 60,
                 endIndent: 5)),
-        Text(dividerText, style: Theme.of(context).textTheme.labelLarge, textAlign: TextAlign.center,),
+        Text(
+          dividerText,
+          style: Theme.of(context).textTheme.labelLarge,
+          textAlign: TextAlign.center,
+        ),
         Flexible(
             child: Divider(
                 color: dark ? TColors.darkGrey : TColors.grey,

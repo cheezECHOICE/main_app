@@ -1,7 +1,7 @@
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/data/repositories/categories/category_repo.dart';
-import 'package:food/features/shop/models/category_model.dart';
-import 'package:food/features/shop/models/product_model.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/data/repositories/categories/category_repo.dart';
+import 'package:cheezechoice/features/shop/models/category_model.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController {

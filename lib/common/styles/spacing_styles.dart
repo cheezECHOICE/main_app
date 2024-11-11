@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 
 class TSpacingStyle {
   static const EdgeInsetsGeometry paddingWithAppBarHeight = EdgeInsets.only(

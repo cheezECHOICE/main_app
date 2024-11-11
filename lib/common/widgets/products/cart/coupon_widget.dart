@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/styles/TRoundedContainer.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class TCouponCode extends StatelessWidget {
   const TCouponCode({

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/styles/TRoundedContainer.dart';
-import 'package:food/features/personalisation/controllers/address_controller.dart';
-import 'package:food/features/personalisation/screens/address/widgets/addressmodel.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/features/personalisation/controllers/address_controller.dart';
+import 'package:cheezechoice/features/personalisation/screens/address/widgets/addressmodel.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 

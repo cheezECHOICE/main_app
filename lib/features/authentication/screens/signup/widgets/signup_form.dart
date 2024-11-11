@@ -1,17 +1,17 @@
 //import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/features/authentication/controllers/signup/signup_controller.dart';
-import 'package:food/features/authentication/screens/signup/widgets/terms_and_conditions_checkbox.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/constants/text_strings.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
-import 'package:food/utils/validators/validation.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/features/authentication/controllers/signup/signup_controller.dart';
+import 'package:cheezechoice/features/authentication/screens/signup/widgets/terms_and_conditions_checkbox.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/validators/validation.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-//import 'package:food/features/authentication/screens/signup/verify_email.dart';
+//import 'package:cheezechoice/features/authentication/screens/signup/verify_email.dart';
 
 class TSignupForm extends StatelessWidget {
   const TSignupForm({

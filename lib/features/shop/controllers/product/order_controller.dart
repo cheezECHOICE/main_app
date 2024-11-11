@@ -1,22 +1,22 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/common/widgets/success_screen/success_screen.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/data/repositories/brands/brand_repository.dart';
-import 'package:food/data/repositories/order/order_repo.dart';
-import 'package:food/features/personalisation/controllers/address_controller.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/controllers/product/checkout_controller.dart';
-import 'package:food/features/shop/models/order_model.dart';
-import 'package:food/features/shop/models/payment_method_model.dart';
-import 'package:food/features/shop/screens/checkout/checkout.dart';
-import 'package:food/features/shop/screens/checkout/widgets/order_type.dart';
-import 'package:food/navigation_menu.dart';
-import 'package:food/utils/constants/enums.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/helpers/pricing_calculator.dart';
-import 'package:food/utils/popups/fullScreenLoader.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/common/widgets/success_screen/success_screen.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/data/repositories/brands/brand_repository.dart';
+import 'package:cheezechoice/data/repositories/order/order_repo.dart';
+import 'package:cheezechoice/features/personalisation/controllers/address_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/checkout_controller.dart';
+import 'package:cheezechoice/features/shop/models/order_model.dart';
+import 'package:cheezechoice/features/shop/models/payment_method_model.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/checkout.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/widgets/order_type.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/utils/constants/enums.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
+import 'package:cheezechoice/utils/popups/fullScreenLoader.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -171,7 +171,7 @@ class OrderController extends GetxController {
               100)
           .toInt(),
       'name': 'Chuck-E-Cheez.',
-      'description': 'Food Order',
+      'description': 'cheezechoice Order',
       'prefill': {'email': AuthenticationRepository.instance.authUser!.email}
     };
 
@@ -426,22 +426,22 @@ class OrderController extends GetxController {
 
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter/material.dart';
-// import 'package:food/common/widgets/loaders/loaders.dart';
-// import 'package:food/common/widgets/success_screen/success_screen.dart';
-// import 'package:food/data/repositories/authentication_repo.dart';
-// import 'package:food/data/repositories/brands/brand_repository.dart';
-// import 'package:food/data/repositories/order/order_repo.dart';
-// import 'package:food/features/personalisation/controllers/address_controller.dart';
-// import 'package:food/features/shop/controllers/product/cart_controller.dart';
-// import 'package:food/features/shop/controllers/product/checkout_controller.dart';
-// import 'package:food/features/shop/models/order_model.dart';
-// import 'package:food/features/shop/models/payment_method_model.dart';
-// import 'package:food/features/shop/screens/checkout/widgets/order_type.dart';
-// import 'package:food/navigation_menu.dart';
-// import 'package:food/utils/constants/enums.dart';
-// import 'package:food/utils/constants/image_strings.dart';
-// import 'package:food/utils/helpers/pricing_calculator.dart';
-// import 'package:food/utils/popups/fullScreenLoader.dart';
+// import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+// import 'package:cheezechoice/common/widgets/success_screen/success_screen.dart';
+// import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+// import 'package:cheezechoice/data/repositories/brands/brand_repository.dart';
+// import 'package:cheezechoice/data/repositories/order/order_repo.dart';
+// import 'package:cheezechoice/features/personalisation/controllers/address_controller.dart';
+// import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+// import 'package:cheezechoice/features/shop/controllers/product/checkout_controller.dart';
+// import 'package:cheezechoice/features/shop/models/order_model.dart';
+// import 'package:cheezechoice/features/shop/models/payment_method_model.dart';
+// import 'package:cheezechoice/features/shop/screens/checkout/widgets/order_type.dart';
+// import 'package:cheezechoice/navigation_menu.dart';
+// import 'package:cheezechoice/utils/constants/enums.dart';
+// import 'package:cheezechoice/utils/constants/image_strings.dart';
+// import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
+// import 'package:cheezechoice/utils/popups/fullScreenLoader.dart';
 // import 'package:get/get.dart';
 // import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -567,7 +567,7 @@ class OrderController extends GetxController {
   // //             100)
   // //         .toInt(),
   // //     'name': 'Chuck-E-Cheez.',
-  // //     'description': 'Food Order',
+  // //     'description': 'cheezechoice Order',
   // //     'prefill': {'email': AuthenticationRepository.instance.authUser!.email}
   // //   };
 

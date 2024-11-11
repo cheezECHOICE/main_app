@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/custom_shapes/container/circular_container.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/common/widgets/custom_shapes/container/circular_container.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class TChoiceChip extends StatelessWidget {
   const TChoiceChip({

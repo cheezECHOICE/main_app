@@ -1,6 +1,6 @@
-import 'package:food/features/shop/models/banner_model.dart';
-import 'package:food/routes/routes.dart';
-import 'package:food/utils/constants/image_strings.dart';
+import 'package:cheezechoice/features/shop/models/banner_model.dart';
+import 'package:cheezechoice/routes/routes.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
 
 class TDummyData {
   // Banners

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/texts/section_heading.dart';
-import 'package:food/features/shop/models/payment_method_model.dart';
-import 'package:food/features/shop/screens/checkout/widgets/payment_tile.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/texts/section_heading.dart';
+import 'package:cheezechoice/features/shop/models/payment_method_model.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/widgets/payment_tile.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
 class CheckoutController extends GetxController {

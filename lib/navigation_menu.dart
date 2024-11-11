@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/personalisation/screens/settings/settings.dart';
-import 'package:food/features/shop/controllers/brand_controller.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/screens/cart/cart.dart';
-import 'package:food/features/shop/screens/home/home.dart';
-import 'package:food/features/shop/screens/orders/order.dart';
-import 'package:food/features/shop/screens/store/store.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/features/personalisation/screens/settings/settings.dart';
+import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/screens/cart/cart.dart';
+import 'package:cheezechoice/features/shop/screens/home/home.dart';
+import 'package:cheezechoice/features/shop/screens/orders/order.dart';
+import 'package:cheezechoice/features/shop/screens/store/store.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 

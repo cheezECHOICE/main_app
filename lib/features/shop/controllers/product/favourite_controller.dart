@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/data/products/product_repository.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/local_storage/storage_utility.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/data/products/product_repository.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
 import 'package:get/get.dart';
 
 class FavouriteController extends GetxController {

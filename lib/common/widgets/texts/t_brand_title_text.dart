@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/enums.dart';
+import 'package:cheezechoice/utils/constants/enums.dart';
 
 class TBrandTitleText extends StatelessWidget {
   const TBrandTitleText(

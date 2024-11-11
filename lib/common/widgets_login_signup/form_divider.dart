@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class TFormDivider extends StatelessWidget {
   const TFormDivider({super.key, required this.dividerText});

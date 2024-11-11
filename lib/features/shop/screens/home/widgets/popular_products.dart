@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/home_controller.dart';
-import 'package:food/features/shop/screens/home/widgets/popular_product_card.dart';
-import 'package:food/utils/shimmers/popular_products_shimmer.dart';
+import 'package:cheezechoice/features/shop/controllers/home_controller.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/popular_product_card.dart';
+import 'package:cheezechoice/utils/shimmers/popular_products_shimmer.dart';
 import 'package:get/get.dart';
 
 class PopularProducts extends StatelessWidget {

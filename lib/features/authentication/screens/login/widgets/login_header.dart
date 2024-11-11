@@ -1,8 +1,8 @@
 // import 'package:flutter/material.dart';
-// import 'package:food/utils/constants/image_strings.dart';
-// import 'package:food/utils/constants/sizes.dart';
-// import 'package:food/utils/constants/text_strings.dart';
-// import 'package:food/utils/helpers/helper_functions.dart';
+// import 'package:cheezechoice/utils/constants/image_strings.dart';
+// import 'package:cheezechoice/utils/constants/sizes.dart';
+// import 'package:cheezechoice/utils/constants/text_strings.dart';
+// import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 // class TLoginHeader extends StatelessWidget {
 //   const TLoginHeader({
@@ -40,8 +40,7 @@
 // ),
 
 // const SizedBox(height: TSizes.appBarHeight),
-          
-          
+
 //           Text(
 //             TTexts.loginTitle,
 //             style: Theme.of(context).textTheme.headlineMedium,
@@ -59,8 +58,8 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class TLoginHeader extends StatelessWidget {
   const TLoginHeader({super.key});
@@ -72,7 +71,8 @@ class TLoginHeader extends StatelessWidget {
       children: [
         // Image covering less than half the screen height
         Container(
-          height: MediaQuery.of(context).size.height * 0.4, // 40% of screen height
+          height:
+              MediaQuery.of(context).size.height * 0.4, // 40% of screen height
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(

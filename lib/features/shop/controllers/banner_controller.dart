@@ -1,6 +1,6 @@
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/data/repositories/banners/banner_repository.dart';
-import 'package:food/features/shop/models/banner_model.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/data/repositories/banners/banner_repository.dart';
+import 'package:cheezechoice/features/shop/models/banner_model.dart';
 import 'package:get/get.dart';
 
 class BannerController extends GetxController {

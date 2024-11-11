@@ -1,11 +1,11 @@
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/features/shop/controllers/product/variation_controller.dart';
-import 'package:food/features/shop/models/brand_model.dart';
-import 'package:food/features/shop/models/cart_item_model.dart';
-import 'package:food/features/shop/models/order_model.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/enums/enums.dart';
-import 'package:food/utils/local_storage/storage_utility.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/features/shop/controllers/product/variation_controller.dart';
+import 'package:cheezechoice/features/shop/models/brand_model.dart';
+import 'package:cheezechoice/features/shop/models/cart_item_model.dart';
+import 'package:cheezechoice/features/shop/models/order_model.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/enums/enums.dart';
+import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {

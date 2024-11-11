@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/loaders/circular_loader.dart';
-import 'package:food/common/widgets/texts/section_heading.dart';
-import 'package:food/data/repositories/address/address_repo.dart';
-import 'package:food/features/authentication/controllers/signup/network_manager.dart';
-import 'package:food/features/personalisation/screens/address/widgets/add_new_address_screen.dart';
-import 'package:food/features/personalisation/screens/address/widgets/addressmodel.dart';
-import 'package:food/features/personalisation/screens/address/widgets/single_address.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/cloud_helper_function.dart';
-import 'package:food/utils/popups/full_screen_loader.dart';
-import 'package:food/utils/popups/loaders.dart';
+import 'package:cheezechoice/common/widgets/loaders/circular_loader.dart';
+import 'package:cheezechoice/common/widgets/texts/section_heading.dart';
+import 'package:cheezechoice/data/repositories/address/address_repo.dart';
+import 'package:cheezechoice/features/authentication/controllers/signup/network_manager.dart';
+import 'package:cheezechoice/features/personalisation/screens/address/widgets/add_new_address_screen.dart';
+import 'package:cheezechoice/features/personalisation/screens/address/widgets/addressmodel.dart';
+import 'package:cheezechoice/features/personalisation/screens/address/widgets/single_address.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/cloud_helper_function.dart';
+import 'package:cheezechoice/utils/popups/full_screen_loader.dart';
+import 'package:cheezechoice/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class AddressController extends GetxController {

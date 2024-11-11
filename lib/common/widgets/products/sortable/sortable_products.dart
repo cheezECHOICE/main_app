@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/layouts/gird_layout.dart';
-import 'package:food/common/widgets/products/prodect_cards/product_card_vertical.dart';
-import 'package:food/features/shop/controllers/all_products_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/layouts/gird_layout.dart';
+import 'package:cheezechoice/common/widgets/products/prodect_cards/product_card_vertical.dart';
+import 'package:cheezechoice/features/shop/controllers/all_products_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 

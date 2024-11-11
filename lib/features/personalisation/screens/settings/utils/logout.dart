@@ -1,6 +1,6 @@
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/routes/routes.dart';
-import 'package:food/utils/local_storage/storage_utility.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/routes/routes.dart';
+import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
 import 'package:get/get.dart';
 
 Future<void> logout() async {

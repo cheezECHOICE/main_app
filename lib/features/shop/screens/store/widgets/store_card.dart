@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/data/repositories/brands/brand_repository.dart';
-import 'package:food/features/shop/controllers/brand_controller.dart';
-import 'package:food/features/shop/controllers/product/order_controller.dart';
-import 'package:food/features/shop/models/brand_model.dart';
-import 'package:food/features/shop/screens/store/widgets/shimmer_image.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/data/repositories/brands/brand_repository.dart';
+import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
+import 'package:cheezechoice/features/shop/models/brand_model.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/shimmer_image.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 
 class StoreCard extends StatelessWidget {
@@ -19,8 +19,10 @@ class StoreCard extends StatelessWidget {
   // Check if the store is currently open based on local time
   bool getStoreOpenStatus() {
     final now = DateTime.now();
-    final openingTime = DateTime(now.year, now.month, now.day, 11, 0); // 11:00 AM
-    final closingTime = DateTime(now.year, now.month, now.day, 19, 30); // 6:30 PM
+    final openingTime =
+        DateTime(now.year, now.month, now.day, 11, 0); // 11:00 AM
+    final closingTime =
+        DateTime(now.year, now.month, now.day, 19, 30); // 6:30 PM
 
     return now.isAfter(openingTime) && now.isBefore(closingTime);
   }
@@ -49,16 +51,18 @@ class StoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int brandId = int.parse(store.id);
-    
+
     // Using FutureBuilder to get the store's open status asynchronously
     return FutureBuilder<bool>(
-      future: BrandRepository.isStoreClosed(brandId), // Call to check if the store is closed
+      future: BrandRepository.isStoreClosed(
+          brandId), // Call to check if the store is closed
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         // Handle loading state
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
             height: 200, // Height to keep the layout consistent
-            child: Center(child: CircularProgressIndicator()), // Show loading indicator
+            child: Center(
+                child: CircularProgressIndicator()), // Show loading indicator
           );
         }
 
@@ -71,7 +75,8 @@ class StoreCard extends StatelessWidget {
         }
 
         // Determine if the store is open based on both local and server data
-        final bool storeClosedFromApi = snapshot.data ?? false; // Store status from API
+        final bool storeClosedFromApi =
+            snapshot.data ?? false; // Store status from API
         final bool storeOpen = getStoreOpenStatus() || !storeClosedFromApi;
 
         return GestureDetector(
@@ -87,7 +92,9 @@ class StoreCard extends StatelessWidget {
             width: THelperFunctions.screenWidth() * 0.85,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: THelperFunctions.isDarkMode(context) ? Colors.black54 : Colors.white,
+              color: THelperFunctions.isDarkMode(context)
+                  ? Colors.black54
+                  : Colors.white,
               boxShadow: THelperFunctions.isDarkMode(context)
                   ? null
                   : const [
@@ -107,19 +114,23 @@ class StoreCard extends StatelessWidget {
                   ),
                   child: ColorFiltered(
                     colorFilter: storeOpen
-                        ? const ColorFilter.mode(Colors.transparent, BlendMode.multiply)
-                        : const ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                        ? const ColorFilter.mode(
+                            Colors.transparent, BlendMode.multiply)
+                        : const ColorFilter.mode(
+                            Colors.grey, BlendMode.saturation),
                     child: ShimmerImage(
                       height: 175,
                       width: THelperFunctions.screenWidth() * 0.85,
-                      imageUrl: store.image.isEmpty ? _fallbackimg : store.image,
+                      imageUrl:
+                          store.image.isEmpty ? _fallbackimg : store.image,
                     ),
                   ),
                 ),
                 SizedBox(
                   width: THelperFunctions.screenWidth() * 0.85,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -140,7 +151,8 @@ class StoreCard extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: storeOpen
                                 ? const Color.fromARGB(255, 114, 209, 117)

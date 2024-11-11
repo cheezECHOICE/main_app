@@ -1,5 +1,5 @@
-import 'package:food/data/products/product_repository.dart';
-import 'package:food/features/shop/models/product_model.dart';
+import 'package:cheezechoice/data/products/product_repository.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {

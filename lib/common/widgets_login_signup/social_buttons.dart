@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 
 class TSocialButtons extends StatelessWidget {
   const TSocialButtons({

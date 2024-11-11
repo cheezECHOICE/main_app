@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/screens/wishlist/wishlist.dart';
+import 'package:cheezechoice/features/shop/screens/wishlist/wishlist.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 

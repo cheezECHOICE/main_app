@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/favourite_button.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/features/shop/screens/store/widgets/add_to_cart_button.dart';
-import 'package:food/features/shop/screens/store/widgets/shimmer_image.dart';
+import 'package:cheezechoice/common/widgets/favourite_button.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/add_to_cart_button.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/shimmer_image.dart';
 
 class PopularProductBigCard extends StatelessWidget {
   final ProductModel productModel;

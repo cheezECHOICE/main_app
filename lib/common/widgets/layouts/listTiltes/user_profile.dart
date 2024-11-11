@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/images/t_circular_image.dart';
-import 'package:food/features/personalisation/controllers/user_controller.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/common/widgets/images/t_circular_image.dart';
+import 'package:cheezechoice/features/personalisation/controllers/user_controller.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
 

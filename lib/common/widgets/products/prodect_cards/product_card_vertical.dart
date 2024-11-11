@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/favourite_button.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/features/shop/screens/home/widgets/product_details_page.dart';
-import 'package:food/features/shop/screens/store/widgets/shimmer_image.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/favourite_button.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/product_details_page.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/shimmer_image.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
 import '../../texts/product_price_text.dart';

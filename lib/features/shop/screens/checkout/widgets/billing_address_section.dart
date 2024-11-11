@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/texts/section_heading.dart';
-import 'package:food/features/personalisation/controllers/address_controller.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/texts/section_heading.dart';
+import 'package:cheezechoice/features/personalisation/controllers/address_controller.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 
 class TBillingAddressSection extends StatelessWidget {
   const TBillingAddressSection({super.key});

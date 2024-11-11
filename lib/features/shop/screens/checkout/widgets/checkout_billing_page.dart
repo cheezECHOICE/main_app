@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/styles/TRoundedContainer.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/common/widgets/loaders/loaders.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/controllers/product/order_controller.dart';
-import 'package:food/features/shop/screens/checkout/widgets/billing_amount_section.dart';
-import 'package:food/features/shop/screens/checkout/widgets/billing_payment_section.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
-import 'package:food/utils/helpers/pricing_calculator.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/widgets/billing_amount_section.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/widgets/billing_payment_section.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart'; // Import carousel_slider
 

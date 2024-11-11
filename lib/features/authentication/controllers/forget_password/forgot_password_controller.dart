@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/features/authentication/controllers/signup/network_manager.dart';
-import 'package:food/features/authentication/screens/password_configuration/reset_password.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/popups/full_screen_loader.dart';
-import 'package:food/utils/popups/loaders.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/features/authentication/controllers/signup/network_manager.dart';
+import 'package:cheezechoice/features/authentication/screens/password_configuration/reset_password.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/popups/full_screen_loader.dart';
+import 'package:cheezechoice/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 
 class ForgotPasswordController extends GetxController {

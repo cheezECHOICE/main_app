@@ -1,11 +1,11 @@
 //import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/controllers/product/order_controller.dart';
-import 'package:food/features/shop/screens/checkout/widgets/order_type.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/pricing_calculator.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/widgets/order_type.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
 import 'package:get/get.dart';
 
 class TBillingAmountSection extends StatelessWidget {

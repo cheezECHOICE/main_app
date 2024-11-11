@@ -1,7 +1,7 @@
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/controllers/product/images_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/features/shop/models/product_variation_model.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/images_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/features/shop/models/product_variation_model.dart';
 import 'package:get/get.dart';
 
 class VariationController extends GetxController {

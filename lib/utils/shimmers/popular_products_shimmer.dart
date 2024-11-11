@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 
 class TPopularProductsShimmer extends StatelessWidget {
   const TPopularProductsShimmer({super.key});

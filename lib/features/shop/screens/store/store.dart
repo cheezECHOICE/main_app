@@ -1,9 +1,9 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/brand_controller.dart';
-import 'package:food/features/shop/screens/store/widgets/search_bar.dart';
-import 'package:food/features/shop/screens/store/widgets/store_card.dart';
-import 'package:food/utils/shimmers/store_shimmer.dart';
+import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/search_bar.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/store_card.dart';
+import 'package:cheezechoice/utils/shimmers/store_shimmer.dart';
 import 'package:get/get.dart';
 
 class StoreScreen extends StatefulWidget {

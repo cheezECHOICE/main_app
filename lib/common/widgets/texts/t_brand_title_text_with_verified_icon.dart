@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/texts/t_brand_title_text.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/enums.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/texts/t_brand_title_text.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/enums.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TBrandTitleWithVerifiedIcon extends StatelessWidget {

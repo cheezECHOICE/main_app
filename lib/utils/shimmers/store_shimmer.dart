@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 
 class TStoreShimmer extends StatelessWidget {
   const TStoreShimmer({super.key, this.itemCount = 4});

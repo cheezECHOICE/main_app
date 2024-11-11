@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:food/common/styles/TRoundedContainer.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/features/shop/screens/cart/widgets/cart_items.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/features/shop/screens/cart/widgets/cart_items.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 
 class CartDetailsWithOtpScreen extends StatelessWidget {
   const CartDetailsWithOtpScreen({super.key});

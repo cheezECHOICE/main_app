@@ -6,20 +6,20 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:food/data/repositories/user/user_repo.dart';
-import 'package:food/features/authentication/controllers/signup/signup_controller.dart';
-import 'package:food/features/authentication/screens/login/login.dart';
-import 'package:food/features/authentication/screens/onboarding/onboarding.dart';
-import 'package:food/features/authentication/screens/signup/verify_email.dart';
-import 'package:food/features/personalisation/controllers/user_controller.dart';
-import 'package:food/navigation_menu.dart';
-import 'package:food/phonepe_payment.dart';
-import 'package:food/utils/constants/api_constants.dart';
-import 'package:food/utils/exceptions/firebase_auth_exceptions.dart';
-import 'package:food/utils/exceptions/firebase_exception.dart';
-import 'package:food/utils/exceptions/format_exception.dart';
-import 'package:food/utils/exceptions/paltform_exception.dart';
-import 'package:food/utils/local_storage/storage_utility.dart';
+import 'package:cheezechoice/data/repositories/user/user_repo.dart';
+import 'package:cheezechoice/features/authentication/controllers/signup/signup_controller.dart';
+import 'package:cheezechoice/features/authentication/screens/login/login.dart';
+import 'package:cheezechoice/features/authentication/screens/onboarding/onboarding.dart';
+import 'package:cheezechoice/features/authentication/screens/signup/verify_email.dart';
+import 'package:cheezechoice/features/personalisation/controllers/user_controller.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/phonepe_payment.dart';
+import 'package:cheezechoice/utils/constants/api_constants.dart';
+import 'package:cheezechoice/utils/exceptions/firebase_auth_exceptions.dart';
+import 'package:cheezechoice/utils/exceptions/firebase_exception.dart';
+import 'package:cheezechoice/utils/exceptions/format_exception.dart';
+import 'package:cheezechoice/utils/exceptions/paltform_exception.dart';
+import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -41,10 +41,15 @@ class AuthenticationRepository extends GetxController {
     screenRedirect();
   }
 
-  Future<void> createPrismaUser(String uid, String name, String email, String phoneNumber) async {
+  Future<void> createPrismaUser(
+      String uid, String name, String email, String phoneNumber) async {
     try {
-      await Dio().post('$dbLink/user',
-          data: {"id": uid, "name": name, "email": email, "phoneno": phoneNumber});
+      await Dio().post('$dbLink/user', data: {
+        "id": uid,
+        "name": name,
+        "email": email,
+        "phoneno": phoneNumber
+      });
     } catch (e) {
       if (kDebugMode) print('Prisma Error: $e');
     }
@@ -105,11 +110,12 @@ class AuthenticationRepository extends GetxController {
       // );
       var signupController = SignupController.instance;
       await createPrismaUser(
-  userCredential.user!.uid,
-  '${signupController.username.text.trim()}', // Accessing username through the controller
-  email,
-  signupController.phoneNumber.text.trim(), // Accessing phone number through the controller
-);
+        userCredential.user!.uid,
+        '${signupController.username.text.trim()}', // Accessing username through the controller
+        email,
+        signupController.phoneNumber.text
+            .trim(), // Accessing phone number through the controller
+      );
 
       return userCredential;
     } on FirebaseAuthException catch (e) {

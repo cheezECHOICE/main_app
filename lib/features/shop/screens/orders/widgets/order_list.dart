@@ -1,12 +1,12 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/loaders/animation_loader.dart';
-import 'package:food/features/shop/controllers/product/order_controller.dart';
-import 'package:food/features/shop/screens/orders/widgets/order_card.dart';
-import 'package:food/navigation_menu.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/cloud_helper_function.dart';
+import 'package:cheezechoice/common/widgets/loaders/animation_loader.dart';
+import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
+import 'package:cheezechoice/features/shop/screens/orders/widgets/order_card.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/cloud_helper_function.dart';
 import 'package:get/get.dart';
 
 class TOrderListItems extends StatelessWidget {
@@ -15,7 +15,7 @@ class TOrderListItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OrderController());
-    
+
     return Obx(() {
       final orders = controller.orders;
       final emptyWidget = TAnimationLoaderWidget(
@@ -40,7 +40,8 @@ class TOrderListItems extends StatelessWidget {
         child: ListView.separated(
           shrinkWrap: true,
           itemCount: recentOrders.length,
-          separatorBuilder: (_, index) => const SizedBox(height: TSizes.spaceBtwItems),
+          separatorBuilder: (_, index) =>
+              const SizedBox(height: TSizes.spaceBtwItems),
           itemBuilder: (_, index) {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 500),

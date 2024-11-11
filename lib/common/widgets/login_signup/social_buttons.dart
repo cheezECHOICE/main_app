@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/authentication/controllers/login/login_controller.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/features/authentication/controllers/login/login_controller.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 
 class TSocialButtons extends StatelessWidget {
@@ -22,7 +22,7 @@ class TSocialButtons extends StatelessWidget {
       children: [
         InkWell(
           onTap: () => controller.googleSignIn(),
-          borderRadius: BorderRadius.circular(20), 
+          borderRadius: BorderRadius.circular(20),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(

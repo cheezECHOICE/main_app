@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/favourite_button.dart';
-import 'package:food/data/products/product_repository.dart';
-import 'package:food/features/shop/controllers/product/cart_controller.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/features/shop/screens/home/widgets/product_details_page.dart';
-import 'package:food/features/shop/screens/store/widgets/shimmer_image.dart';
-import 'package:food/features/shop/screens/store/widgets/splash_effect.dart';
-import 'package:food/utils/constants/colors.dart';
+import 'package:cheezechoice/common/widgets/favourite_button.dart';
+import 'package:cheezechoice/data/products/product_repository.dart';
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/product_details_page.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/shimmer_image.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/splash_effect.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
 import 'package:get/get.dart';
 
 class PopularProductCard extends StatelessWidget {

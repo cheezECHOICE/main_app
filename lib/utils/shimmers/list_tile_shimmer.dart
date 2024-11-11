@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 
 class TListTileShimmer extends StatelessWidget {
   const TListTileShimmer({super.key});

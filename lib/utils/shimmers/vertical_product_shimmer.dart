@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:food/common/widgets/layouts/gird_layout.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/common/widgets/layouts/gird_layout.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 
 class TVerticalProductShimmer extends StatelessWidget {
   const TVerticalProductShimmer({

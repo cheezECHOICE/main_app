@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class TSectionHeading extends StatelessWidget {
   const TSectionHeading({

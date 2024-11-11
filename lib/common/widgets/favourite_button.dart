@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/product/favourite_controller.dart';
+import 'package:cheezechoice/features/shop/controllers/product/favourite_controller.dart';
 import 'package:get/get.dart';
 
 class FavouriteButton extends StatelessWidget {

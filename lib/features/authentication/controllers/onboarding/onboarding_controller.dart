@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:food/features/authentication/screens/login/login.dart';
-//import 'package:food/features/authentication/screens/login/login.dart';
-// import 'package:food/features/authentication/screens/new_login/loginpage.dart';
+import 'package:cheezechoice/features/authentication/screens/login/login.dart';
+//import 'package:cheezechoice/features/authentication/screens/login/login.dart';
+// import 'package:cheezechoice/features/authentication/screens/new_login/loginpage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

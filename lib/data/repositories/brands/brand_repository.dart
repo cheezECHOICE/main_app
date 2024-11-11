@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:food/features/shop/models/brand_model.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/constants/api_constants.dart';
+import 'package:cheezechoice/features/shop/models/brand_model.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/constants/api_constants.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -54,24 +54,24 @@ class BrandRepository extends GetxController {
   }
 
   static Future<bool> isStoreClosed(int brandId) async {
-  try {
-    final response = await Dio().get('$_brandByIdEndPoint$brandId');
-    
-    // Check if the response contains the necessary data
-    if (response.data != null && response.data['data'] != null) {
-      // Return true if the store is closed
-      return !(response.data['data']['isOpen'] ?? true);
+    try {
+      final response = await Dio().get('$_brandByIdEndPoint$brandId');
+
+      // Check if the response contains the necessary data
+      if (response.data != null && response.data['data'] != null) {
+        // Return true if the store is closed
+        return !(response.data['data']['isOpen'] ?? true);
+      }
+
+      // In case of unexpected data structure, assume store is closed
+      return true; // or false depending on your application logic
+    } catch (e) {
+      // Optionally log the error for debugging
+      print('Error fetching store status: $e');
+      // Return false as a safe default on error
+      return false;
     }
-    
-    // In case of unexpected data structure, assume store is closed
-    return true; // or false depending on your application logic
-  } catch (e) {
-    // Optionally log the error for debugging
-    print('Error fetching store status: $e');
-    // Return false as a safe default on error
-    return false;
   }
-}
 
   static Future<Map<String, dynamic>> getParcelCharges(int brandId) async {
     try {

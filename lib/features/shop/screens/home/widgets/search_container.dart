@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/screens/search/search_screen.dart';
-import 'package:food/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/features/shop/screens/search/search_screen.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:get/get.dart';
 
 class SearchContainer extends StatelessWidget {

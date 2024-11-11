@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/category_controller.dart';
-import 'package:food/features/shop/models/category_model.dart';
-import 'package:food/features/shop/screens/home/widgets/category_products.dart';
-import 'package:food/utils/shimmers/shimmer.dart';
+import 'package:cheezechoice/features/shop/controllers/category_controller.dart';
+import 'package:cheezechoice/features/shop/models/category_model.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/category_products.dart';
+import 'package:cheezechoice/utils/shimmers/shimmer.dart';
 import 'package:get/get.dart';
 
 class CategoryCard extends StatelessWidget {

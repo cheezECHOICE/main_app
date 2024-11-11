@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:food/features/shop/models/category_model.dart';
-import 'package:food/features/shop/models/product_model.dart';
-import 'package:food/utils/constants/api_constants.dart';
+import 'package:cheezechoice/features/shop/models/category_model.dart';
+import 'package:cheezechoice/features/shop/models/product_model.dart';
+import 'package:cheezechoice/utils/constants/api_constants.dart';
 import 'package:get/get.dart';
 
 class CategoryRepository extends GetxController {

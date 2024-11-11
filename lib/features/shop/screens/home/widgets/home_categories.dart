@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/shop/controllers/category_controller.dart';
-import 'package:food/features/shop/screens/home/widgets/category_card.dart';
-import 'package:food/utils/shimmers/category_shimmer.dart';
+import 'package:cheezechoice/features/shop/controllers/category_controller.dart';
+import 'package:cheezechoice/features/shop/screens/home/widgets/category_card.dart';
+import 'package:cheezechoice/utils/shimmers/category_shimmer.dart';
 import 'package:get/get.dart';
 
 class THomeCategories extends StatelessWidget {

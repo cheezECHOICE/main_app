@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/features/authentication/controllers/forget_password/forgot_password_controller.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/constants/text_strings.dart';
-import 'package:food/utils/validators/validation.dart';
+import 'package:cheezechoice/features/authentication/controllers/forget_password/forgot_password_controller.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/constants/text_strings.dart';
+import 'package:cheezechoice/utils/validators/validation.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 

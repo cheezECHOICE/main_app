@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food/common/widgets/appbar/appbar.dart';
-import 'package:food/features/shop/controllers/product/order_controller.dart';
-import 'package:food/features/shop/models/order_model.dart';
-import 'package:food/utils/constants/colors.dart';
-import 'package:food/utils/constants/sizes.dart';
+import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
+import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
+import 'package:cheezechoice/features/shop/models/order_model.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
 
 class OrderOtpScreen extends StatelessWidget {
   final OrderModel order;
@@ -50,9 +50,11 @@ class OrderOtpScreen extends StatelessWidget {
                 // Check if the order is in 'ready' status
                 order.status == 'ready'
                     ? FutureBuilder<String?>(
-                        future: OrderController.instance.fetchOtp(order.id, order.otp), // Use appropriate OTP
+                        future: OrderController.instance.fetchOtp(
+                            order.id, order.otp), // Use appropriate OTP
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return const CircularProgressIndicator(); // Show loading indicator while fetching OTP
                           } else if (snapshot.hasError) {
                             return Text(
@@ -62,7 +64,8 @@ class OrderOtpScreen extends StatelessWidget {
                                   .bodyLarge!
                                   .apply(color: Colors.red),
                             );
-                          } else if (snapshot.hasData && snapshot.data != null) {
+                          } else if (snapshot.hasData &&
+                              snapshot.data != null) {
                             return Text(
                               'OTP: ${snapshot.data}',
                               style: Theme.of(context)

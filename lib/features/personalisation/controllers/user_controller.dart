@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food/data/repositories/authentication_repo.dart';
-import 'package:food/data/repositories/user/user_repo.dart';
-import 'package:food/data/repositories/user/usermodel.dart';
-import 'package:food/features/authentication/controllers/signup/network_manager.dart';
-import 'package:food/features/authentication/screens/login/login.dart';
-import 'package:food/features/personalisation/screens/profile/widgets/re_authenticate_user_login.dart';
-import 'package:food/utils/constants/image_strings.dart';
-import 'package:food/utils/constants/sizes.dart';
-import 'package:food/utils/popups/full_screen_loader.dart';
-import 'package:food/utils/popups/loaders.dart';
+import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:cheezechoice/data/repositories/user/user_repo.dart';
+import 'package:cheezechoice/data/repositories/user/usermodel.dart';
+import 'package:cheezechoice/features/authentication/controllers/signup/network_manager.dart';
+import 'package:cheezechoice/features/authentication/screens/login/login.dart';
+import 'package:cheezechoice/features/personalisation/screens/profile/widgets/re_authenticate_user_login.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/popups/full_screen_loader.dart';
+import 'package:cheezechoice/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

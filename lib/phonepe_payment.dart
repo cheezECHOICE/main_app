@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:food/upi_app.dart';
+import 'package:cheezechoice/upi_app.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
 class PhonepePayment extends StatefulWidget {
@@ -228,12 +228,8 @@ class _PhonepePaymentState extends State<PhonepePayment> {
       "mobileNumber": "7013491067",
       "callbackUrl":
           "https://webhook.site/95290922-ca19-4c76-a89d-fb15a93b1dc6",
-      "paymentInstrument": {
-        "type": "PAY_PAGE",
-        "targetApp": "com.phonepe.app"
-      }
+      "paymentInstrument": {"type": "PAY_PAGE", "targetApp": "com.phonepe.app"}
     };
-
 
     String base64Body = base64.encode(utf8.encode(json.encode(requestData)));
 
