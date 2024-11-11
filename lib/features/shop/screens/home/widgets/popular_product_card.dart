@@ -95,7 +95,7 @@ class PopularProductCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Rs. ${product.salePrice.round()}',
+                            'Rs. ${product.price.round()}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,

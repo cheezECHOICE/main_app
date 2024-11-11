@@ -7,6 +7,7 @@ import 'package:food/features/shop/screens/store/widgets/filter_button.dart';
 import 'package:food/features/shop/screens/store/widgets/product_card.dart';
 import 'package:food/features/shop/screens/store/widgets/search_bar.dart';
 import 'package:food/features/shop/screens/store/widgets/store_info_cards.dart';
+import 'package:food/utils/constants/colors.dart';
 import 'package:food/utils/constants/sizes.dart';
 import 'package:food/utils/shimmers/brand_products_shimmer.dart';
 import 'package:get/get.dart';
@@ -37,10 +38,21 @@ class StoreProductsScreen extends StatelessWidget {
               backgroundColor: isDarkMode
                   ? Colors.black.withOpacity(0.7)
                   : Colors.white.withOpacity(0.9),
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                color: isDarkMode ? Colors.white : Colors.black,
-                onPressed: () => Navigator.of(context).pop(),
+              leading: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: isDarkMode
+                        ? Colors.black.withOpacity(0.3)
+                        : Colors.black.withOpacity(0.3),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    color: isDarkMode ? TColors.white : TColors.black,
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ),
               ),
               flexibleSpace: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
@@ -68,10 +80,21 @@ class StoreProductsScreen extends StatelessWidget {
                 },
               ),
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.shopping_cart),
-                  color: isDarkMode ? Colors.white : Colors.black,
-                  onPressed: () => Get.to(() => const CartScreen()),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: isDarkMode
+                          ? Colors.black.withOpacity(0.3)
+                          : Colors.black.withOpacity(0.3),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.shopping_cart),
+                      color: isDarkMode ? Colors.white : Colors.black,
+                      onPressed: () => Get.to(() => const CartScreen()),
+                    ),
+                  ),
                 ),
               ],
             ),
