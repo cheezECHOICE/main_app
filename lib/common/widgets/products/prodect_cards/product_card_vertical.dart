@@ -88,7 +88,7 @@ class TProductCardVertical extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TProductPriceText(
-                          price: ' ${product.salePrice.round()}',
+                          price: ' ${product.price.round()}',
                         ),
                       ),
                       AddToCartButton(

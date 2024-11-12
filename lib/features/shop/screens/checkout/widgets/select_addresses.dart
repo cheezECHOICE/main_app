@@ -21,7 +21,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
   bool isAvailable() {
     final now = DateTime.now();
     final startAvailability =
-        DateTime(now.year, now.month, now.day, 1); // Saturday 5:00 PM
+        DateTime(now.year, now.month, now.day, 18); // Saturday 5:00 PM
     final endAvailability =
         DateTime(now.year, now.month, now.day, 20); // Monday 8:00 PM
 

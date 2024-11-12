@@ -83,7 +83,7 @@ class ProductDetailBottomSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Rs. ${product.salePrice}',
+                        'Rs. ${product.price}',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,

@@ -1,3 +1,4 @@
+import 'package:cheezechoice/features/shop/screens/checkout/widgets/select_addresses.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
@@ -67,6 +68,25 @@ class OrderController extends GetxController {
     return orders
         .where((order) => order.status.toLowerCase() == status.toLowerCase())
         .toList();
+  }
+
+  // Function to determine if the section should be available
+  bool isAvailable() {
+    final now = DateTime.now();
+    final startAvailability =
+        DateTime(now.year, now.month, now.day, 18); // Saturday 5:00 PM
+    final endAvailability =
+        DateTime(now.year, now.month, now.day, 20); // Monday 8:00 PM
+
+    // Check if today is between Saturday 5:00 PM and Monday 8:00 PM
+    final dayOfWeek = now.weekday;
+    final isSaturdayEvening =
+        dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
+    final isSunday = dayOfWeek == DateTime.sunday;
+    final isMondayMorning =
+        dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
+
+    return isSaturdayEvening || isSunday || isMondayMorning;
   }
 
   Future<void> calculateParcelCharges() async {
@@ -248,25 +268,27 @@ class OrderController extends GetxController {
       }
 
       // Check if address is provided
-      if (selectedAddress == null) {
-        TLoaders.warningSnackBar(
-            title: 'Address Required',
-            message:
-                'Please select a delivery address before proceeding to payment.');
-        TFullScreenLoader.stopLoading();
-        return;
+      if (isAvailable()) {
+        if (selectedAddress == null) {
+          TLoaders.warningSnackBar(
+              title: 'Address Required',
+              message:
+                  'Please select a delivery address before proceeding to payment.');
+          TFullScreenLoader.stopLoading();
+          return;
+        }
       }
       // Check if the cart value is less than ₹200
-      // double cartTotalPrice = TPricingCalculator.calculateTotalPrice(
-      //     cartController.totalCartPrice.value, 'IND.');
+      double cartTotalPrice = TPricingCalculator.calculateTotalPrice(
+          cartController.totalCartPrice.value, 'IND.');
 
-      // if (cartTotalPrice < 200) {
-      //   TLoaders.warningSnackBar(
-      //     title: 'Minimum Order Value',
-      //     message: 'Your order value must be at least ₹200 to proceed.',
-      //   );
-      //   return; // Exit the function early if the total is less than ₹200
-      // }
+      if (cartTotalPrice.isLowerThan(180)) {
+        TLoaders.warningSnackBar(
+          title: 'Minimum Order Value',
+          message: 'Your order value must be at least ₹180 to proceed.',
+        );
+        return; // Exit the function early if the total is less than ₹200
+      }
 
       // Check if the store is closed
       if (await BrandRepository.isStoreClosed(
