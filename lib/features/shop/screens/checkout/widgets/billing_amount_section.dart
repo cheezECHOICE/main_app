@@ -27,28 +27,30 @@ class TBillingAmountSection extends StatelessWidget {
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),
 
-        ///Shipping fee
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Text('Shipping Fee', style: Theme.of(context).textTheme.bodyMedium),
-        //     Text(
-        //         '₹${TPricingCalculator.calculateShippingCost(subTotal, 'IND')}',
-        //         style: Theme.of(context).textTheme.labelLarge)
-        //   ],
-        // ),
-        // const SizedBox(height: TSizes.spaceBtwItems / 2),
-
-        ///Tax fee
+        Column(
+          children: [
+            ///Tax fee
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Platform Fee', style: Theme.of(context).textTheme.bodyMedium),
-            Text('₹${TPricingCalculator.calculateTax(subTotal, 'IND')}',
+            Text('CGST(%)Amt', style: Theme.of(context).textTheme.labelSmall),
+            Text('₹${TPricingCalculator.getCGST(subTotal, 'IND')}',
                 style: Theme.of(context).textTheme.labelLarge)
           ],
         ),
-        const SizedBox(height: TSizes.spaceBtwItems / 2),
+        const SizedBox(height: TSizes.spaceBtwItems / 3),
+            //Delivery
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('SGST(%)Amt', style: Theme.of(context).textTheme.labelSmall),
+            Text('₹${TPricingCalculator.getSGST(subTotal, 'IND')}',
+                style: Theme.of(context).textTheme.labelLarge)
+          ],
+        ),
+          ],
+        ),
+
 
         Obx(() {
           if (OrderController.instance.orderType.value == OrderType.takeout ||
@@ -80,22 +82,53 @@ class TBillingAmountSection extends StatelessWidget {
 
         const SizedBox(height: TSizes.spaceBtwItems / 2),
 
+        ///Total
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Total', style: Theme.of(context).textTheme.bodyLarge),
+            Text('₹${TPricingCalculator.TotalPrice(subTotal, 'IND')}'),
+          ],
+        ),
+
+        const SizedBox(height: TSizes.spaceBtwItems / 2),
+        ///Divider
+        Divider(),
+        const SizedBox(height: TSizes.spaceBtwItems / 2),
+      
+        Column(
+          children: [
+            ///Tax fee
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Platform Fee', style: Theme.of(context).textTheme.bodyMedium),
+            Text('₹${TPricingCalculator.getTaxRateForLocation(subTotal, 'IND')}',
+                style: Theme.of(context).textTheme.labelLarge)
+          ],
+        ),
+        const SizedBox(height: TSizes.spaceBtwItems / 3),
+            //Delivery
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Delivery Charge', style: Theme.of(context).textTheme.bodyMedium),
+            Text('₹${TPricingCalculator.getDeliveryForLocation(subTotal, 'IND')}',
+                style: Theme.of(context).textTheme.labelLarge)
+          ],
+        ),
+          ],
+        ),
+        const SizedBox(height: TSizes.spaceBtwItems / 2),
+
         ///Order Total
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Order Total', style: Theme.of(context).textTheme.bodyMedium),
-            Obx(
-              () {
-                if (OrderController.instance.parcelChargeProcessing.value) {
-                  return const LinearProgressIndicator();
-                }
-                return Text(
-                  '₹${TPricingCalculator.calculateTotalPrice(subTotal, 'IND')}',
+            Text('Order Total', style: Theme.of(context).textTheme.headlineMedium),
+            Text('₹${TPricingCalculator.finalTotalPrice(subTotal, 'IND')}',
                   style: Theme.of(context).textTheme.titleMedium,
-                );
-              },
-            )
+                ),
           ],
         ),
       ],

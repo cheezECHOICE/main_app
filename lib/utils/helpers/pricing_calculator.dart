@@ -5,7 +5,8 @@ class TPricingCalculator {
   /// -- Calculate Price based on tax and shipping
   static double calculateTotalPrice(double productPrice, String location) {
     double taxRate = getTaxRateForLocation(productPrice, location);
-    double taxAmount = productPrice * taxRate;
+    double deliveryPrice = getDeliveryForLocation(productPrice, location);
+    //double taxAmount = productPrice * taxRate;
 
     int parcelCharge =
         (OrderController.instance.orderType == OrderType.takeout ||
@@ -13,31 +14,63 @@ class TPricingCalculator {
             ? OrderController.instance.parcelCharge.value
             : 0;
 
-    double totalPrice = productPrice + parcelCharge + taxRate.round();
+    double totalPrice = productPrice;
     return totalPrice;
   }
 
-  /// -- Calculate tax
-  static String calculateTax(double productPrice, String location) {
-    double taxRate = getTaxRateForLocation(productPrice, location);
-    if (productPrice > 85) {
-      double taxAmount = (productPrice * 0.0195).roundToDouble();
-      return taxAmount.toStringAsFixed(2);
-    } else {
-      double taxAmount = 0.0;
-      return taxAmount.toStringAsFixed(2);
-    }
+
+
+  /// -- Calculate Price based on tax and shipping
+  static double TotalPrice(double productPrice, String location) {
+    double CGST = getCGST(productPrice, location);
+    double SGST = getSGST(productPrice, location);
+
+
+    double totalPrice = productPrice + CGST + SGST;
+    return double.parse(totalPrice.toStringAsFixed(2));
   }
 
   static double getTaxRateForLocation(double productPrice, String location) {
     // Lookup the tax rate for the given location from a tax rate database or API.
     // Return the appropriate tax rate.
-    if (productPrice > 80) {
-      return productPrice * 0.0195;
-    } else {
-      return 0.0;
-    } // Example tax rate of 10%
+    return 2;// Example tax rate of 10%
   }
+
+  static double getDeliveryForLocation(double productPrice, String location) {
+    // Lookup the tax rate for the given location from a tax rate database or API.
+    // Return the appropriate tax rate.
+    return 61;// Example tax rate of 10%
+  }
+
+  static double getCGST(double productPrice, String location) {
+    // Lookup the tax rate for the given location from a tax rate database or API.
+    // Return the appropriate tax rate.
+    return double.parse((calculateTotalPrice(productPrice, location) * 0.025).toStringAsFixed(2));
+  }
+
+  static double getSGST(double productPrice, String location) {
+    // Lookup the tax rate for the given location from a tax rate database or API.
+    // Return the appropriate tax rate.
+    return double.parse((calculateTotalPrice(productPrice, location) * 0.025).toStringAsFixed(2));
+  }
+
+  static double finalTotalPrice(double productPrice, String location) {
+    double taxRate = getTaxRateForLocation(productPrice, location);
+    double deliveryPrice = getDeliveryForLocation(productPrice, location);
+    double CGST = getCGST(productPrice, location);
+    double SGST = getSGST(productPrice, location);
+    //double taxAmount = productPrice * taxRate;
+
+    int parcelCharge =
+        (OrderController.instance.orderType == OrderType.takeout ||
+                OrderController.instance.orderType == OrderType.choose)
+            ? OrderController.instance.parcelCharge.value
+            : 0;
+
+    double totalPrice = productPrice + parcelCharge + taxRate + deliveryPrice + CGST + SGST;
+    return double.parse(totalPrice.toStringAsFixed(2));
+  }
+
 
   /// -- Sum all cart values and return total amount
 // static double calculateCartTotal(CartModel cart) {

@@ -19,7 +19,10 @@ import 'package:cheezechoice/utils/constants/image_strings.dart';
 import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
 import 'package:cheezechoice/utils/popups/fullScreenLoader.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+
+
 
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
@@ -46,22 +49,21 @@ class OrderController extends GetxController {
   }
 
   // Method to fetch and save FCM token to Prisma when the user orders
-  Future<void> saveFcmTokenToPrisma() async {
-    try {
-      String? fcmToken = await firebaseMessaging.getToken();
-      print("FCM Token: $fcmToken");
-      // Fetch FCM token
-      if (fcmToken != null) {
-        String userId = authRepo.authUser!.uid;
-        await orderRepository.saveFcmTokenInPrisma(userId, fcmToken);
-        print("FCM token saved successfully");
-      } else {
-        print("Failed to fetch FCM token");
-      }
-    } catch (e) {
-      print("Error fetching or saving FCM token: $e");
-    }
-  }
+  // Future<void> saveFcmTokenToPrisma() async {
+  //   try {
+  //     String? fcmToken = await firebaseMessaging.getToken();
+  //     print("FCM Token: $fcmToken");
+  //     if (fcmToken != null) {
+  //       String userId = authRepo.authUser!.uid;
+  //       await orderRepository.saveFcmTokenInPrisma(userId, fcmToken);
+  //       print("FCM token saved successfully");
+  //     } else {
+  //       print("Failed to fetch FCM token");
+  //     }
+  //   } catch (e) {
+  //     print("Error fetching or saving FCM token: $e");
+  //   }
+  // }
 
   // order status for OTP
   List<OrderModel> getOrdersByStatus(String status) {
@@ -74,11 +76,10 @@ class OrderController extends GetxController {
   bool isAvailable() {
     final now = DateTime.now();
     final startAvailability =
-        DateTime(now.year, now.month, now.day, 18); // Saturday 5:00 PM
+        DateTime(now.year, now.month, now.day, 18); 
     final endAvailability =
-        DateTime(now.year, now.month, now.day, 20); // Monday 8:00 PM
+        DateTime(now.year, now.month, now.day, 20); 
 
-    // Check if today is between Saturday 5:00 PM and Monday 8:00 PM
     final dayOfWeek = now.weekday;
     final isSaturdayEvening =
         dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
@@ -114,6 +115,7 @@ class OrderController extends GetxController {
     parcelChargeProcessing.value = false;
   }
 
+
   @override
   void onInit() {
     super.onInit();
@@ -142,17 +144,16 @@ class OrderController extends GetxController {
 
   // Function to load all orders without filtering
   List<OrderModel> getAllOrders() {
-    return orders.toList(); // Simply returns the entire list of orders
+    return orders.toList();
   }
 
   // Fetch OTP for a given order
   Future<String?> fetchOtp(String orderId, String otp) async {
     try {
-      // Call the repository method to get the order details with the OTP
       OrderModel? order = await orderRepository.GetOtp(orderId, otp);
 
       if (order != null) {
-        return order.otp; // Return the OTP
+        return order.otp;
       } else {
         throw 'No order found with the given Order ID and OTP.';
       }
@@ -227,10 +228,15 @@ class OrderController extends GetxController {
           cartController.totalCartPrice.value, 'IND.'),
       AuthenticationRepository.instance.authUser!.uid,
       products,
+      TPricingCalculator.getDeliveryForLocation(cartController.totalCartPrice.value, 'IND.'),
+      TPricingCalculator.getTaxRateForLocation(cartController.totalCartPrice.value, 'IND.'),
+      TPricingCalculator.finalTotalPrice(cartController.totalCartPrice.value, 'IND.'),
+      TPricingCalculator.getCGST(cartController.totalCartPrice.value, 'IND.'),
+      TPricingCalculator.getSGST(cartController.totalCartPrice.value, 'IND.'),
     );
 
     // Save FCM token to Prisma when the order is placed
-    await saveFcmTokenToPrisma();
+    // await saveFcmTokenToPrisma();
 
     Get.off(() => SuccessScreen(
           image: TImages.successfulPaymentIcon,
@@ -268,25 +274,25 @@ class OrderController extends GetxController {
       }
 
       // Check if address is provided
-      if (isAvailable()) {
-        if (selectedAddress == null) {
-          TLoaders.warningSnackBar(
-              title: 'Address Required',
-              message:
-                  'Please select a delivery address before proceeding to payment.');
-          TFullScreenLoader.stopLoading();
-          return;
-        }
-      }
+      // if (isAvailable()) {
+      //   if (selectedAddress == null) {
+      //     TLoaders.warningSnackBar(
+      //         title: 'Address Required',
+      //         message:
+      //             'Please select a delivery address before proceeding to payment.');
+      //     TFullScreenLoader.stopLoading();
+      //     return;
+      //   }
+      // }
       // Check if the cart value is less than ₹200
-      double cartTotalPrice = TPricingCalculator.calculateTotalPrice(
-          cartController.totalCartPrice.value, 'IND.');
+      final cartController = CartController.instance;
 
-      if (cartTotalPrice.isLowerThan(180)) {
+      if (cartController.totalCartPrice.value<150) {
         TLoaders.warningSnackBar(
           title: 'Minimum Order Value',
-          message: 'Your order value must be at least ₹180 to proceed.',
+          message: 'Your SubTotal value must be at least ₹180 to proceed.',
         );
+        TFullScreenLoader.stopLoading();
         return; // Exit the function early if the total is less than ₹200
       }
 
@@ -327,14 +333,19 @@ class OrderController extends GetxController {
         await orderRepository.pushOrder(
           cartController.cartItems.first.brandId,
           selectedAddress!,
-          TPricingCalculator.calculateTotalPrice(
+          TPricingCalculator.TotalPrice(
               cartController.totalCartPrice.value, 'IND.'),
           userId,
           products,
+          TPricingCalculator.getDeliveryForLocation(cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.getTaxRateForLocation(cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.finalTotalPrice(cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.getCGST(cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.getSGST(cartController.totalCartPrice.value, 'IND.'),
         );
 
         // Save FCM token to Prisma when the order is placed
-        await saveFcmTokenToPrisma();
+        // await saveFcmTokenToPrisma();
 
         // Show success screen
         Get.off(() => SuccessScreen(

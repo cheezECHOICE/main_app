@@ -1,3 +1,4 @@
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
 import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
@@ -7,12 +8,9 @@ import 'package:cheezechoice/features/shop/controllers/product/order_controller.
 import 'package:cheezechoice/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:cheezechoice/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:cheezechoice/features/shop/screens/checkout/widgets/billing_payment_section.dart';
-import 'package:cheezechoice/features/shop/screens/checkout/widgets/checkout_billing_page.dart';
-import 'package:cheezechoice/features/shop/screens/checkout/widgets/phone_number_input.dart';
 import 'package:cheezechoice/features/shop/screens/checkout/widgets/select_addresses.dart';
 import 'package:cheezechoice/utils/constants/colors.dart';
 import 'package:cheezechoice/utils/constants/sizes.dart';
-import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
 import 'package:get/get.dart';
 
@@ -39,39 +37,33 @@ class CheckOutScreen extends StatelessWidget {
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
-              ///Items in cart
+              /// Displaying Items in Cart (without add/remove buttons)
               const TCartItems(showAddRemoveButtons: false),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              // OrderTypeButton(),
-              // const SizedBox(height: TSizes.spaceBtwSections),
-
-              ///Coupon Text
+              /// Coupon Section
               const TCouponCode(),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              ///Delivery Address Section
+              /// Delivery Address Section
               DeliveryAddressSection2(),
               const SizedBox(height: TSizes.spaceBtwSections),
 
-              // PhoneNumberSection(),
-              // const SizedBox(height: TSizes.spaceBtwSections),
-
-              ///Billing
+              /// Billing Information
               TRoundedContainer(
                 showBorder: true,
                 padding: const EdgeInsets.all(TSizes.md),
                 backgroundColor: dark ? TColors.black : TColors.white,
                 child: const Column(
                   children: [
-                    ///Pricing
+                    /// Pricing Details
                     TBillingAmountSection(),
                     SizedBox(height: TSizes.spaceBtwSections),
 
-                    ///Divider
+                    /// Divider
                     Divider(),
 
-                    ///Payment Method
+                    /// Payment Method
                     TBillingPaymentSection(),
                     SizedBox(height: TSizes.spaceBtwItems),
                   ],
@@ -82,7 +74,7 @@ class CheckOutScreen extends StatelessWidget {
         ),
       ),
 
-      ///Checkout Button
+      /// Checkout Button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
@@ -95,13 +87,6 @@ class CheckOutScreen extends StatelessWidget {
               'Checkout ₹${TPricingCalculator.calculateTotalPrice(subtotal, 'IND')}')),
         ),
       ),
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.all(TSizes.defaultSpace),
-      //   child: ElevatedButton(
-      //     onPressed: () => {Get.to(() => BillingPage())},
-      //     child: Text('next'),
-      //   ),
-      // ),
     );
   }
 }

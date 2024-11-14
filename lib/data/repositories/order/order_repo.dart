@@ -74,8 +74,10 @@ class OrderRepository extends GetxController {
   }
 
   // Prisma order
-  Future<void> pushOrder(int brandId, String address, double totalAmount,
-      String userId, List<Map<String, dynamic>> products) async {
+  Future<void> pushOrder(int brandId, String address, 
+  double totalAmount,
+      String userId, List<Map<String, dynamic>> products,double deliveryPrice, double platformFee, double finalTotalAmount, double CGST, double SGST) async {
+        
     try {
       await Dio().post(orderEndpoint, data: {
         'brandId': brandId,
@@ -83,6 +85,11 @@ class OrderRepository extends GetxController {
         'totalamount': totalAmount,
         'userId': userId,
         'products': products,
+        'deliveryPrice':deliveryPrice,
+        'platformFee':platformFee,
+        'finalTotalAmount': finalTotalAmount,
+        'cGST':CGST,
+        'sGST':SGST,
       });
       // // Update FCM token when placing an order
       String? fcmToken = await getFcmToken();
