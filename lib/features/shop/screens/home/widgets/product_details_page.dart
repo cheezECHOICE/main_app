@@ -65,12 +65,15 @@ class ProductDetailBottomSheet extends StatelessWidget {
                         width: 24,
                       ),
                       SizedBox(width: 8),
-                      Text(
-                        product.title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.fade,
+                      Expanded(
+                        child: Text(
+                          product.title,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          maxLines: 2,
                         ),
                       ),
                       const Spacer(),

@@ -5,6 +5,10 @@ import 'package:cheezechoice/features/shop/screens/store/widgets/search_bar.dart
 import 'package:cheezechoice/features/shop/screens/store/widgets/store_card.dart';
 import 'package:cheezechoice/utils/shimmers/store_shimmer.dart';
 import 'package:get/get.dart';
+import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
+import 'package:cheezechoice/utils/constants/colors.dart';
+import 'package:cheezechoice/utils/constants/sizes.dart';
+import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({Key? key}) : super(key: key);
@@ -16,74 +20,105 @@ class StoreScreen extends StatefulWidget {
 class _StoreScreenState extends State<StoreScreen> {
   final brandController = Get.put(BrandController());
   final TextEditingController searchController = TextEditingController();
-  String filterOption = 'All Restaurants';
 
-  // Variable to track whether the user wants open stores only
-  bool showOpenStoresOnly = true;
+  // Default dropdown value
+  String filterOption = 'Show All';
+
+  // Available options for the dropdown
+  final List<String> filterOptions = [
+    'Show All',
+    'Opened Stores',
+    'Closed Stores'
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              filterOption,
+              'All Restaurants',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    // Toggle between showing open and closed stores
-                    showOpenStoresOnly = !showOpenStoresOnly;
-
-                    // Filter brands based on the open/closed status
-                    if (showOpenStoresOnly) {
-                      brandController.brandsToShow.assignAll(
-                        brandController.allBrands.where((store) {
-                          // Filter only open stores
-                          return store.isOpen == true;
-                        }).toList(),
-                      );
-                    } else {
-                      brandController.brandsToShow.assignAll(
-                        brandController.allBrands.where((store) {
-                          // Filter only closed stores
-                          return store.isOpen == false || store.isOpen == null;
-                        }).toList(),
-                      );
+              child: TRoundedContainer(
+                showBorder: true,
+                backgroundColor: dark ? TColors.dark : TColors.white,
+                padding: const EdgeInsets.only(right: 4, left: 4),
+                child: DropdownButton<String>(
+                  value: filterOption,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  underline: SizedBox.shrink(),
+                  borderRadius:
+                      BorderRadius.circular(2), // Narrower border radius
+                  dropdownColor: dark ? TColors.dark : TColors.white,
+                  items: filterOptions.map((String option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: Text(
+                        option,
+                        style: TextStyle(
+                          color: dark ? TColors.white : TColors.dark,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      setState(() {
+                        filterOption = newValue;
+                        // Update the list based on selection
+                        if (filterOption == 'Opened Stores') {
+                          brandController.brandsToShow.assignAll(
+                            brandController.allBrands
+                                .where((store) => store.isOpen == true)
+                                .toList(),
+                          );
+                        } else if (filterOption == 'Closed Stores') {
+                          brandController.brandsToShow.assignAll(
+                            brandController.allBrands
+                                .where((store) =>
+                                    store.isOpen == false ||
+                                    store.isOpen == null)
+                                .toList(),
+                          );
+                        } else {
+                          // Show All Stores
+                          brandController.brandsToShow
+                              .assignAll(brandController.allBrands);
+                        }
+                      });
                     }
-                  });
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: showOpenStoresOnly
-                      ? const Color(0xFF72D175) // Green for open stores
-                      : const Color(0xFFEE7067), // Red for closed stores
-                  foregroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  },
+                  style: TextStyle(
+                    color: dark ? TColors.white : TColors.dark,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
                   ),
-                ),
-                child: Text(
-                  showOpenStoresOnly ? 'Opened Stores' : 'Closed Stores',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  iconSize: 20,
                 ),
               ),
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(90.0),
+            preferredSize: const Size.fromHeight(80.0),
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(
+                    bottom: 8,
+                    left: 8,
+                    right: 8,
+                  ),
                   child: MySearchBar(
                     searchController: searchController,
                     searchHint: 'Search for your favourite store',
