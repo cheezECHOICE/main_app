@@ -13,6 +13,7 @@ class OrderRepository extends GetxController {
 
   final orderEndpoint = '$dbLink/orders';
   final userOrderEndpoint = '$dbLink/orders?userId=';
+  final getbrandName =  '$dbLink/orders/get_brand?orderId=';
 
   /// Get the FCM Token
   Future<String?> getFcmToken() async {
@@ -152,4 +153,23 @@ class OrderRepository extends GetxController {
       throw 'Something went wrong while fetching the OTP for the order.';
     }
   }
+
+   /// Fetch brand name by orderId
+  Future<String?> fetchBrandName(String orderId) async {
+    try {
+      var response = await Dio().get('$getbrandName$orderId');
+      
+      if (response.statusCode == 200 && response.data != null) {
+        // Extract and return the brand name
+        return response.data['name'];
+      } else {
+        print('Failed to fetch brand name');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching brand name: $e');
+      throw 'Something went wrong while fetching the brand name.';
+    }
+  }
 }
+

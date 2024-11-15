@@ -85,7 +85,7 @@ class OrderController extends GetxController {
         dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
     final isSunday = dayOfWeek == DateTime.sunday;
     final isMondayMorning =
-        dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
+        dayOfWeek == DateTime.friday && now.isBefore(endAvailability);
 
     return isSaturdayEvening || isSunday || isMondayMorning;
   }

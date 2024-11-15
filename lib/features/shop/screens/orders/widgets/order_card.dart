@@ -1,3 +1,4 @@
+import 'package:cheezechoice/data/repositories/order/order_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
 import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
@@ -21,6 +22,31 @@ class OrderCard extends StatefulWidget {
 
 class _OrderCardState extends State<OrderCard> {
   bool _isExpanded = false;
+  List<String> brandNames = [];  // To hold the fetched brand names
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBrandNames();
+  }
+
+  Future<void> _fetchBrandNames() async {
+  try {
+    List<String> fetchedBrandNames = [];
+    for (var item in widget.order.items) {
+      String? brandName = await OrderRepository.instance
+          .fetchBrandName(item.brandId.toString());  // Use 'orderId' here, not 'item.id'
+      if (brandName != null) {
+        fetchedBrandNames.add(brandName);
+      }
+    }
+      setState(() {
+        brandNames = fetchedBrandNames;
+      });
+    } catch (e) {
+      print("Error fetching brand names: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +87,11 @@ class _OrderCardState extends State<OrderCard> {
             children: [
               const Icon(Icons.food_bank_outlined),
               const SizedBox(width: TSizes.spaceBtwItems / 2),
-              for (var item in widget.order.items)
-                if (item.brandName != null)
+              // Display brand names once they are fetched
+              for (int i = 0; i < widget.order.items.length; i++)
+                if (brandNames.isNotEmpty)
                   Text(
-                    item.brandName!, // Replace with actual brand name
+                    brandNames[i],  // Use the fetched brand name
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
             ],
@@ -217,23 +244,6 @@ class _OrderCardState extends State<OrderCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  // TextButton(
-                  //   onPressed: () {
-                  //     Get.to(() => OrderOtpScreen(order: widget.order));
-                  //   }, // Navigate to OTP screen
-                  //   child: Row(
-                  //     children: [
-                  //       Icon(Iconsax.key, size: 18, color: TColors.accent),
-                  //       const SizedBox(width: 12),
-                  //       Text(
-                  //         'OTP',
-                  //         style: Theme.of(context).textTheme.bodyLarge!.apply(
-                  //               color: TColors.accent,
-                  //             ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   TextButton(
                     onPressed: () {
                       CartController.instance.repeatOrder(widget.order);

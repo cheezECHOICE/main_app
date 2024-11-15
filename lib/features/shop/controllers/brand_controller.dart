@@ -1,5 +1,6 @@
 import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
 import 'package:cheezechoice/data/repositories/brands/brand_repository.dart';
+import 'package:cheezechoice/data/repositories/order/order_repo.dart';
 import 'package:cheezechoice/features/authentication/controllers/signup/network_manager.dart';
 import 'package:cheezechoice/features/shop/models/brand_model.dart';
 import 'package:get/get.dart';
@@ -83,4 +84,6 @@ class BrandController extends GetxController {
   void setCurrentBrand(BrandModel brand) {
     currentBrand = brand;
   }
+
+  
 }
