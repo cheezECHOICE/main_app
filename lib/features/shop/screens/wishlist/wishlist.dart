@@ -17,7 +17,7 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = FavouriteController.instance;
+    final controller = Get.put(FavouriteController());
     return Scaffold(
       appBar: TAppBar(
         showBackArrow: true,

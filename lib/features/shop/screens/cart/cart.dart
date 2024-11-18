@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
 import 'package:cheezechoice/common/widgets/loaders/animation_loader.dart';

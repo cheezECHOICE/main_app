@@ -82,10 +82,10 @@ class OrderController extends GetxController {
 
     final dayOfWeek = now.weekday;
     final isSaturdayEvening =
-        dayOfWeek == DateTime.saturday && now.isAfter(startAvailability);
+        dayOfWeek == DateTime.sunday && now.isAfter(startAvailability);
     final isSunday = dayOfWeek == DateTime.sunday;
     final isMondayMorning =
-        dayOfWeek == DateTime.friday && now.isBefore(endAvailability);
+        dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
 
     return isSaturdayEvening || isSunday || isMondayMorning;
   }
@@ -264,7 +264,7 @@ class OrderController extends GetxController {
     try {
       // Start Loader
       TFullScreenLoader.openLoadingDialog(
-          'Processing your order', TImages.daceranimation);
+          'Processing your order', TImages.successanimation);
 
       // Get user authentication Id
       final userId = AuthenticationRepository.instance.authUser?.uid;
@@ -274,16 +274,16 @@ class OrderController extends GetxController {
       }
 
       // Check if address is provided
-      // if (isAvailable()) {
-      //   if (selectedAddress == null) {
-      //     TLoaders.warningSnackBar(
-      //         title: 'Address Required',
-      //         message:
-      //             'Please select a delivery address before proceeding to payment.');
-      //     TFullScreenLoader.stopLoading();
-      //     return;
-      //   }
-      // }
+      if (isAvailable()) {
+        if (selectedAddress == null) {
+          TLoaders.warningSnackBar(
+              title: 'Address Required',
+              message:
+                  'Please select a delivery address before proceeding to payment.');
+          TFullScreenLoader.stopLoading();
+          return;
+        }
+      }
       // Check if the cart value is less than ₹200
       final cartController = CartController.instance;
 

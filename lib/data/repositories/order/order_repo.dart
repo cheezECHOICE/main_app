@@ -157,7 +157,7 @@ class OrderRepository extends GetxController {
    /// Fetch brand name by orderId
   Future<String?> fetchBrandName(String orderId) async {
     try {
-      var response = await Dio().get('$getbrandName$orderId');
+      var response = await Dio().get(getbrandName);
       
       if (response.statusCode == 200 && response.data != null) {
         // Extract and return the brand name

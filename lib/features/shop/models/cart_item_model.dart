@@ -68,7 +68,7 @@ class CartItemModel {
       image: json['imgurl'],
       quantity: quantity,
       brandId: json['brandId'] ?? 0, 
-      brandName: json['brand'] ?? '',
+      brandName: json['brandName'] ?? '',
     );
   }
 }
