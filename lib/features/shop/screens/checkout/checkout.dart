@@ -12,6 +12,7 @@ import 'package:cheezechoice/features/shop/screens/checkout/widgets/select_addre
 import 'package:cheezechoice/utils/constants/colors.dart';
 import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
+
 import 'package:get/get.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
@@ -84,7 +85,7 @@ class CheckOutScreen extends StatelessWidget {
                   title: 'Empty Cart',
                   message: 'Add items in the cart in order to proceed.'),
           child: Obx(() => Text(
-              'Checkout ₹${TPricingCalculator.calculateTotalPrice(subtotal, 'IND')}')),
+              'Checkout ₹${TPricingCalculator.finalTotalPrice(subtotal, 'IND')}')),
         ),
       ),
     );
