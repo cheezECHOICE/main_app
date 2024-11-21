@@ -22,8 +22,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-
-
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
 
@@ -46,6 +44,10 @@ class OrderController extends GetxController {
 
   void setSelectedAddress(String address) {
     selectedAddress = address;
+  }
+
+  String getFinalAddress() {
+    return selectedAddress ?? "Main Gate";
   }
 
   // Method to fetch and save FCM token to Prisma when the user orders
@@ -75,10 +77,8 @@ class OrderController extends GetxController {
   // Function to determine if the section should be available
   bool isAvailable() {
     final now = DateTime.now();
-    final startAvailability =
-        DateTime(now.year, now.month, now.day, 18); 
-    final endAvailability =
-        DateTime(now.year, now.month, now.day, 20); 
+    final startAvailability = DateTime(now.year, now.month, now.day, 18);
+    final endAvailability = DateTime(now.year, now.month, now.day, 20);
 
     final dayOfWeek = now.weekday;
     final isSaturdayEvening =
@@ -114,7 +114,6 @@ class OrderController extends GetxController {
 
     parcelChargeProcessing.value = false;
   }
-
 
   @override
   void onInit() {
@@ -228,9 +227,12 @@ class OrderController extends GetxController {
           cartController.totalCartPrice.value, 'IND.'),
       AuthenticationRepository.instance.authUser!.uid,
       products,
-      TPricingCalculator.getDeliveryForLocation(cartController.totalCartPrice.value, 'IND.'),
-      TPricingCalculator.getTaxRateForLocation(cartController.totalCartPrice.value, 'IND.'),
-      TPricingCalculator.finalTotalPrice(cartController.totalCartPrice.value, 'IND.'),
+      TPricingCalculator.getDeliveryForLocation(
+          cartController.totalCartPrice.value, 'IND.'),
+      TPricingCalculator.getTaxRateForLocation(
+          cartController.totalCartPrice.value, 'IND.'),
+      TPricingCalculator.finalTotalPrice(
+          cartController.totalCartPrice.value, 'IND.'),
       TPricingCalculator.getCGST(cartController.totalCartPrice.value, 'IND.'),
       TPricingCalculator.getSGST(cartController.totalCartPrice.value, 'IND.'),
     );
@@ -287,7 +289,7 @@ class OrderController extends GetxController {
       // Check if the cart value is less than ₹200
       final cartController = CartController.instance;
 
-      if (cartController.totalCartPrice.value<150) {
+      if (cartController.totalCartPrice.value < 150) {
         TLoaders.warningSnackBar(
           title: 'Minimum Order Value',
           message: 'Your SubTotal value must be at least ₹180 to proceed.',
@@ -337,11 +339,16 @@ class OrderController extends GetxController {
               cartController.totalCartPrice.value, 'IND.'),
           userId,
           products,
-          TPricingCalculator.getDeliveryForLocation(cartController.totalCartPrice.value, 'IND.'),
-          TPricingCalculator.getTaxRateForLocation(cartController.totalCartPrice.value, 'IND.'),
-          TPricingCalculator.finalTotalPrice(cartController.totalCartPrice.value, 'IND.'),
-          TPricingCalculator.getCGST(cartController.totalCartPrice.value, 'IND.'),
-          TPricingCalculator.getSGST(cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.getDeliveryForLocation(
+              cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.getTaxRateForLocation(
+              cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.finalTotalPrice(
+              cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.getCGST(
+              cartController.totalCartPrice.value, 'IND.'),
+          TPricingCalculator.getSGST(
+              cartController.totalCartPrice.value, 'IND.'),
         );
 
         // Save FCM token to Prisma when the order is placed

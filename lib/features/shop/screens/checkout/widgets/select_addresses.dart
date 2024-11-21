@@ -11,49 +11,62 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
   String? selectedGender; // To hold selected gender
   String? selectedRoom; // To hold selected room
 
-  // Sample data for rooms
   final Map<String, List<String>> roomOptions = {
     "Men's": ["MH1", "MH2", "MH3", "MH4", "MH5", "MH6", "CB"],
     "Ladies": ["LH1", "LH2", "LH3"],
   };
 
-  // Function to determine if the section should be available
   bool isAvailable() {
     final now = DateTime.now();
-    final startAvailability =
-        DateTime(now.year, now.month, now.day, 1); // Saturday 5:00 PM
-    final endAvailability =
-        DateTime(now.year, now.month, now.day, 23); // Monday 8:00 PM
+    final startAvailability = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      16, // 4 PM
+    );
+    final endAvailability = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      9, // 9 AM
+    ).add(Duration(days: now.weekday == DateTime.monday ? 0 : 1));
 
-    // Check if today is between Saturday 5:00 PM and Monday 8:00 PM
-    final dayOfWeek = now.weekday;
-    final isSaturdayEvening =
-        dayOfWeek == DateTime.sunday && now.isAfter(startAvailability);
-    //final isSunday = dayOfWeek == DateTime.thursday;
-    final isMondayMorning =
-        dayOfWeek == DateTime.saturday && now.isBefore(endAvailability);
+    if (now.weekday == DateTime.saturday && now.isAfter(startAvailability)) {
+      return true;
+    } else if (now.weekday == DateTime.sunday) {
+      return true;
+    } else if (now.weekday == DateTime.monday &&
+        now.isBefore(endAvailability)) {
+      return true;
+    }
+    return false;
+  }
 
-    return isSaturdayEvening  || isMondayMorning;
-    
+  @override
+  void initState() {
+    super.initState();
+
+    // Set the default address to "Main Gate" when unavailable
+    if (!isAvailable()) {
+      OrderController.instance.setSelectedAddress("Main Gate");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final available = isAvailable(); // Check availability for the section
+    final available = isAvailable();
 
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 2), // Adding border
-        borderRadius:
-            BorderRadius.circular(12), // Rounded corners for the border
+        border: Border.all(color: Colors.grey, width: 2),
+        borderRadius: BorderRadius.circular(12),
       ),
-      padding: const EdgeInsets.all(16.0), // Padding around the content
+      padding: const EdgeInsets.all(16.0),
       child: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Gender Selection
               Text(
                 "Select Block:",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -70,7 +83,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                             ? (String? value) {
                                 setState(() {
                                   selectedGender = value;
-                                  selectedRoom = null; // Reset room selection
+                                  selectedRoom = null;
                                 });
                               }
                             : null,
@@ -87,7 +100,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                             ? (String? value) {
                                 setState(() {
                                   selectedGender = value;
-                                  selectedRoom = null; // Reset room selection
+                                  selectedRoom = null;
                                 });
                               }
                             : null,
@@ -96,7 +109,6 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                   ),
                 ],
               ),
-              // Room Selection based on Gender
               if (selectedGender != null) ...[
                 Text(
                   "Select Address:",
@@ -109,7 +121,6 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                       ? (String? newValue) {
                           setState(() {
                             selectedRoom = newValue;
-                            // Save the selected address to OrderController
                             if (selectedRoom != null) {
                               OrderController.instance
                                   .setSelectedAddress(selectedRoom!);
@@ -127,18 +138,15 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
               ],
             ],
           ),
-          // Overlay for "Collect Your Order" message with blur effect
           if (!available)
             Positioned.fill(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0), // Rounded edges
+                borderRadius: BorderRadius.circular(12.0),
                 child: BackdropFilter(
-                  filter:
-                      ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Blur effect
+                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black
-                          .withOpacity(0.56), // Dark transparent overlay
+                      color: Colors.black.withOpacity(0.56),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     alignment: Alignment.center,

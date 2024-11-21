@@ -22,60 +22,55 @@ class TCartItems extends StatelessWidget {
     final cartController = CartController.instance;
 
     return Obx(
-      () => ListView.separated(
-        shrinkWrap: true,
-        separatorBuilder: (_, __) =>
-            const SizedBox(height: TSizes.spaceBtwSections),
-        itemCount: cartController.cartItems.length,
-        itemBuilder: (_, index) => Obx(() {
-          final item = cartController.cartItems[index];
-          return Column(
-            children: [
-              ///cart item
-              Row(
-                children: [
-                  Expanded(child: TCartItem(cartItem: item)),
-                  if (!showAddRemoveButtons)
-                    Material(
-                      borderRadius: BorderRadius.circular(10),
-                      color: TColors.primary.withOpacity(0.8),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 34),
-                        child: Text(
-                          item.quantity.toString(),
-                          style: TextStyle(
-                            color: Colors.white,
+      () => Column(
+        children: List.generate(
+          cartController.cartItems.length,
+          (index) {
+            final item = cartController.cartItems[index];
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: TCartItem(cartItem: item)),
+                    if (!showAddRemoveButtons)
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        color: TColors.primary.withOpacity(0.8),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 34),
+                          child: Text(
+                            item.quantity.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                ],
-              ),
-              if (showAddRemoveButtons)
-                const SizedBox(height: TSizes.spaceBtwItems),
-
-              ///AddRemove
-              if (showAddRemoveButtons)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: 70),
-
-                        ///Add and remove
-                        ModifyQuantityButton(cartItem: item),
-                      ],
-                    ),
-                    //total price
-                    TProductPriceText(
-                        price: (item.price * item.quantity).toStringAsFixed(1)),
+                      )
                   ],
-                )
-            ],
-          );
-        }),
+                ),
+                if (showAddRemoveButtons)
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                if (showAddRemoveButtons)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(width: 70),
+                          ModifyQuantityButton(cartItem: item),
+                        ],
+                      ),
+                      TProductPriceText(
+                          price:
+                              (item.price * item.quantity).toStringAsFixed(1)),
+                    ],
+                  ),
+                const SizedBox(height: TSizes.spaceBtwSections),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

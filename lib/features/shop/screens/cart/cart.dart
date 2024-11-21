@@ -4,7 +4,6 @@ import 'package:cheezechoice/common/widgets/loaders/animation_loader.dart';
 import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
 import 'package:cheezechoice/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:cheezechoice/features/shop/screens/checkout/checkout.dart';
-import 'package:cheezechoice/features/shop/screens/home/home.dart';
 import 'package:cheezechoice/navigation_menu.dart';
 import 'package:cheezechoice/utils/constants/image_strings.dart';
 import 'package:cheezechoice/utils/constants/sizes.dart';
@@ -22,14 +21,15 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          leading: BackButton(
-            color: isDarkMode ? Colors.white : Colors.black,
-          ),
-          title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
-          centerTitle: true),
+        leading: BackButton(
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
+        centerTitle: true,
+      ),
       body: Obx(
         () {
-          ///Nothing found widget
+          // Widget to display when the cart is empty
           final emptyWidget = TAnimationLoaderWidget(
             text: 'Whoops! Cart is Empty',
             animation: TImages.cartanimation,
@@ -46,28 +46,32 @@ class CartScreen extends StatelessWidget {
           if (controller.cartItems.isEmpty) {
             return emptyWidget;
           } else {
-            return const SingleChildScrollView(
+            // Wrapping content in a SingleChildScrollView for scrollable behavior
+            return SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(TSizes.defaultSpace),
-
-                ///Items
-                child: TCartItems(),
+                padding: const EdgeInsets.all(TSizes.defaultSpace),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    TCartItems(), // Cart items widget
+                  ],
+                ),
               ),
             );
           }
         },
       ),
-      bottomNavigationBar: controller.cartItems.isEmpty
-          ? const SizedBox()
-          : Padding(
-              padding: const EdgeInsets.all(TSizes.defaultSpace),
-              child: ElevatedButton(
-                onPressed: () => Get.to(() => const CheckOutScreen()),
-                child: Obx(
-                  () => Text('CheckOut Rs${controller.totalCartPrice.value}'),
+      bottomNavigationBar: Obx(
+        () => controller.cartItems.isEmpty
+            ? const SizedBox()
+            : Padding(
+                padding: const EdgeInsets.all(TSizes.defaultSpace),
+                child: ElevatedButton(
+                  onPressed: () => Get.to(() => const CheckOutScreen()),
+                  child: Text('CheckOut Rs${controller.totalCartPrice.value}'),
                 ),
               ),
-            ),
+      ),
     );
   }
 }
