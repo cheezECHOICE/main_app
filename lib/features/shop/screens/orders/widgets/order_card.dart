@@ -1,4 +1,5 @@
 import 'package:cheezechoice/data/repositories/order/order_repo.dart';
+import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
 import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
@@ -22,7 +23,8 @@ class OrderCard extends StatefulWidget {
 
 class _OrderCardState extends State<OrderCard> {
   bool _isExpanded = false;
-  List<String> brandNames = [];  // To hold the fetched brand names
+  bool _isBillingExpanded = false; // For billing details dropdown
+  List<String> brandNames = []; // To hold the fetched brand names
 
   @override
   void initState() {
@@ -31,15 +33,15 @@ class _OrderCardState extends State<OrderCard> {
   }
 
   Future<void> _fetchBrandNames() async {
-  try {
-    List<String> fetchedBrandNames = [];
-    for (var item in widget.order.items) {
-      String? brandName = await OrderRepository.instance
-          .fetchBrandName(item.brandId.toString());  // Use 'orderId' here, not 'item.id'
-      if (brandName != null) {
-        fetchedBrandNames.add(brandName);
+    try {
+      List<String> fetchedBrandNames = [];
+      for (var item in widget.order.items) {
+        String? brandName = await OrderRepository.instance
+            .fetchBrandName(item.brandId.toString());
+        if (brandName != null) {
+          fetchedBrandNames.add(brandName);
+        }
       }
-    }
       setState(() {
         brandNames = fetchedBrandNames;
       });
@@ -50,6 +52,18 @@ class _OrderCardState extends State<OrderCard> {
 
   @override
   Widget build(BuildContext context) {
+    // Calculate billing details
+    final double subtotal = widget.order.totalAmount;
+    final double cgst =
+        TPricingCalculator.getCGST(subtotal, widget.order.address);
+    final double sgst =
+        TPricingCalculator.getSGST(subtotal, widget.order.address);
+    final double platformFee = 10.0; // Replace with actual calculation logic
+    final double deliveryCharge = TPricingCalculator.getDeliveryForLocation(
+        subtotal, widget.order.address);
+    final double finalTotal =
+        TPricingCalculator.finalTotalPrice(subtotal, widget.order.address);
+
     return TRoundedContainer(
       showBorder: true,
       padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 4),
@@ -74,7 +88,7 @@ class _OrderCardState extends State<OrderCard> {
               ),
               const Spacer(),
               Text(
-                '\Rs.${widget.order.totalAmount.toStringAsFixed(2)}',
+                '\Rs.${finalTotal}',
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
@@ -87,11 +101,10 @@ class _OrderCardState extends State<OrderCard> {
             children: [
               const Icon(Icons.food_bank_outlined),
               const SizedBox(width: TSizes.spaceBtwItems / 2),
-              // Display brand names once they are fetched
               for (int i = 0; i < widget.order.items.length; i++)
                 if (brandNames.isNotEmpty)
                   Text(
-                    brandNames[i],  // Use the fetched brand name
+                    brandNames[i],
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
             ],
@@ -109,7 +122,7 @@ class _OrderCardState extends State<OrderCard> {
               TextButton(
                 onPressed: () {
                   Get.to(() => OrderOtpScreen(order: widget.order));
-                }, // Navigate to OTP screen
+                },
                 child: Row(
                   children: [
                     Icon(Iconsax.key, size: 18, color: TColors.accent),
@@ -128,6 +141,8 @@ class _OrderCardState extends State<OrderCard> {
           const SizedBox(height: TSizes.spaceBtwItems),
           const Divider(thickness: 1),
           const SizedBox(height: TSizes.spaceBtwItems),
+
+          // Items Dropdown
           InkWell(
             onTap: () {
               setState(() {
@@ -137,10 +152,7 @@ class _OrderCardState extends State<OrderCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Items',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                Text('Items', style: Theme.of(context).textTheme.bodyLarge),
                 Icon(
                   _isExpanded ? Iconsax.arrow_down_14 : Iconsax.arrow_right_3,
                   size: 18,
@@ -211,23 +223,59 @@ class _OrderCardState extends State<OrderCard> {
               ],
             ),
           ),
-          const SizedBox(height: TSizes.spaceBtwItems),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  'Ordered on',
-                  style: Theme.of(context).textTheme.bodyLarge,
+          SizedBox(height: 15),
+          // Billing Details Dropdown
+          // const Divider(thickness: 1),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _isBillingExpanded = !_isBillingExpanded;
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Billing Details',
+                    style: Theme.of(context).textTheme.bodyLarge),
+                Icon(
+                  _isBillingExpanded
+                      ? Iconsax.arrow_down_14
+                      : Iconsax.arrow_right_3,
+                  size: 18,
                 ),
-              ),
-              Text(
-                widget.order.formattedOrderDate,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: TSizes.spaceBtwItems),
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(
+              begin: _isBillingExpanded ? 1 : 0,
+              end: _isBillingExpanded ? 1 : 0,
+            ),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            builder: (context, value, child) {
+              return ClipRect(
+                child: Align(
+                  heightFactor: value,
+                  child: child,
+                ),
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildBillingRow('Subtotal', subtotal),
+                _buildBillingRow('CGST (2.5%)', cgst),
+                _buildBillingRow('SGST (2.5%)', sgst),
+                _buildBillingRow('Platform Fee', platformFee),
+                _buildBillingRow('Delivery Charge', deliveryCharge),
+                _buildBillingRow('Total', finalTotal),
+              ],
+            ),
+          ),
+
+          // Order Status and Repeat Order
           const Divider(thickness: 1),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -266,6 +314,20 @@ class _OrderCardState extends State<OrderCard> {
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBillingRow(String label, double value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: Theme.of(context).textTheme.bodyMedium),
+          Text('Rs. ${value.toStringAsFixed(2)}',
+              style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
