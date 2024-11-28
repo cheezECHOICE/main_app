@@ -88,25 +88,103 @@ class TSignupForm extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           ///password
-          Obx(
-            () => TextFormField(
-              validator: (value) => TValidator.validatePassword(value),
-              controller: controller.password,
-              obscureText: controller.hidePassword.value,
-              decoration: InputDecoration(
-                labelText: TTexts.password,
-                prefixIcon: const Icon(Iconsax.password_check),
-                suffixIcon: IconButton(
-                  onPressed: () => controller.hidePassword.value =
-                      !controller.hidePassword.value,
-                  icon: Icon(controller.hidePassword.value
-                      ? Iconsax.eye_slash
-                      : Iconsax.eye),
-                ),
-              ),
-            ),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Password Input Field
+              Obx(() => TextFormField(
+                    controller: controller.password,
+                    obscureText: controller.hidePassword.value,
+                    onChanged: (value) {
+                      controller.updatePasswordRules(value);
+                    },
+                    validator: (value) => controller.areAllPasswordRulesValid()
+                        ? null
+                        : 'Password does not meet the requirements',
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: const Icon(Iconsax.password_check),
+                      suffixIcon: IconButton(
+                        onPressed: () => controller.hidePassword.value =
+                            !controller.hidePassword.value,
+                        icon: Icon(controller.hidePassword.value
+                            ? Iconsax.eye_slash
+                            : Iconsax.eye),
+                      ),
+                    ),
+                  )),
+              const SizedBox(height: 10),
+
+              // Password Rules with Dynamic Header
+              Obx(() {
+                if (!controller.isTypingPassword.value)
+                  return const SizedBox.shrink();
+
+                final allRulesSatisfied = controller.areAllPasswordRulesValid();
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          allRulesSatisfied
+                              ? Icons.check_circle
+                              : Icons.info_outline,
+                          color: allRulesSatisfied ? Colors.green : Colors.red,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          allRulesSatisfied
+                              ? "P̶a̶s̶s̶w̶o̶r̶d̶ m̶u̶s̶t̶ m̶e̶e̶t̶ t̶h̶e̶ f̶o̶l̶l̶o̶w̶i̶n̶g̶ r̶u̶l̶e̶s̶:̶"
+                              : "Password must meet the following rules:",
+                          style: TextStyle(
+                            color: allRulesSatisfied
+                                ? Colors.green
+                                : Colors.red.shade700,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+
+                    // Display Password Rules
+                    if (!allRulesSatisfied)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: controller.passwordValidationRules.entries
+                            .map((rule) {
+                          final isValid = rule.value;
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(left: 20.0, top: 4.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  isValid ? Icons.check_circle : Icons.cancel,
+                                  color: isValid ? Colors.green : Colors.red,
+                                  size: 16,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  rule.key,
+                                  style: TextStyle(
+                                    color: isValid ? Colors.green : Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                  ],
+                );
+              }),
+            ],
           ),
-          const SizedBox(height: TSizes.spaceBtwSections),
+          SizedBox(height: TSizes.spaceBtwSections),
 
           ///Terms
           const TTermsAndConditionsCheckBox(),
@@ -145,3 +223,4 @@ class TSignupForm extends StatelessWidget {
     );
   }
 }
+ // P̶a̶s̶s̶w̶o̶r̶d̶ m̶u̶s̶t̶ m̶e̶e̶t̶ t̶h̶e̶ f̶o̶l̶l̶o̶w̶i̶n̶g̶ r̶u̶l̶e̶s̶:̶

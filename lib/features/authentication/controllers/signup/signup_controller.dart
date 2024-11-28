@@ -12,9 +12,17 @@ import 'package:get/get.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
+  // Password Validation Rules
+  final passwordValidationRules = <String, bool>{
+    "At least 8 characters": false,
+    "At least one uppercase letter": false,
+    "At least one number": false,
+    "At least one special character": false,
+  }.obs;
 
   /// Variables
   final hidePassword = true.obs;
+  final isTypingPassword = false.obs;
   final email = TextEditingController();
   final lastName = TextEditingController();
   final username = TextEditingController();
@@ -24,6 +32,22 @@ class SignupController extends GetxController {
   var privacyPolicy = false.obs;
   bool get isSignupEnabled => privacyPolicy.value;
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // formValidation
+
+  // Validate all password rules
+  bool areAllPasswordRulesValid() =>
+      passwordValidationRules.values.every((isValid) => isValid);
+
+  // Update password rules dynamically
+  void updatePasswordRules(String value) {
+    isTypingPassword.value = value.isNotEmpty;
+    passwordValidationRules['At least 8 characters'] = value.length >= 8;
+    passwordValidationRules['At least one uppercase letter'] =
+        value.contains(RegExp(r'[A-Z]'));
+    passwordValidationRules['At least one number'] =
+        value.contains(RegExp(r'[0-9]'));
+    passwordValidationRules['At least one special character'] =
+        value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+  }
 
   /// -- SIGNUP
   void signup() async {
