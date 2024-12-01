@@ -114,6 +114,7 @@ class TSignupForm extends StatelessWidget {
                       ),
                     ),
                   )),
+
               const SizedBox(height: 10),
 
               // Password Rules with Dynamic Header

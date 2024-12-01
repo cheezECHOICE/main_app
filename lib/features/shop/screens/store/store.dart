@@ -1,3 +1,4 @@
+import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
@@ -5,10 +6,8 @@ import 'package:cheezechoice/features/shop/screens/store/widgets/search_bar.dart
 import 'package:cheezechoice/features/shop/screens/store/widgets/store_card.dart';
 import 'package:cheezechoice/utils/shimmers/store_shimmer.dart';
 import 'package:get/get.dart';
-import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
-import 'package:cheezechoice/utils/constants/colors.dart';
-import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:cheezechoice/utils/helpers/helper_functions.dart';
+import 'package:cheezechoice/features/shop/screens/store/widgets/animated_filter_button.dart';
 
 class StoreScreen extends StatefulWidget {
   const StoreScreen({Key? key}) : super(key: key);
@@ -21,15 +20,30 @@ class _StoreScreenState extends State<StoreScreen> {
   final brandController = Get.put(BrandController());
   final TextEditingController searchController = TextEditingController();
 
-  // Default dropdown value
-  String filterOption = 'Show All';
+  // Track selected filter, null means no filter (default: show all)
+  String? selectedFilter;
 
-  // Available options for the dropdown
-  final List<String> filterOptions = [
-    'Show All',
-    'Opened Stores',
-    'Closed Stores'
-  ];
+  void setFilter(String? filter) {
+    setState(() {
+      selectedFilter = filter;
+    });
+
+    // Apply filtering logic
+    if (filter == 'Opened Stores') {
+      brandController.brandsToShow.assignAll(
+        brandController.allBrands.where((store) => store.isOpen == true).toList(),
+      );
+    } else if (filter == 'Closed Stores') {
+      brandController.brandsToShow.assignAll(
+        brandController.allBrands
+            .where((store) => store.isOpen == false || store.isOpen == null)
+            .toList(),
+      );
+    } else {
+      // Default: Show All Stores
+      brandController.brandsToShow.assignAll(brandController.allBrands);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,92 +59,104 @@ class _StoreScreenState extends State<StoreScreen> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: TRoundedContainer(
-                showBorder: true,
-                backgroundColor: dark ? TColors.dark : TColors.white,
-                padding: const EdgeInsets.only(right: 4, left: 4),
-                child: DropdownButton<String>(
-                  value: filterOption,
-                  icon: const Icon(Icons.arrow_drop_down),
-                  underline: SizedBox.shrink(),
-                  borderRadius:
-                      BorderRadius.circular(2), // Narrower border radius
-                  dropdownColor: dark ? TColors.dark : TColors.white,
-                  items: filterOptions.map((String option) {
-                    return DropdownMenuItem<String>(
-                      value: option,
-                      child: Text(
-                        option,
-                        style: TextStyle(
-                          color: dark ? TColors.white : TColors.dark,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        filterOption = newValue;
-                        // Update the list based on selection
-                        if (filterOption == 'Opened Stores') {
-                          brandController.brandsToShow.assignAll(
-                            brandController.allBrands
-                                .where((store) => store.isOpen == true)
-                                .toList(),
-                          );
-                        } else if (filterOption == 'Closed Stores') {
-                          brandController.brandsToShow.assignAll(
-                            brandController.allBrands
-                                .where((store) =>
-                                    store.isOpen == false ||
-                                    store.isOpen == null)
-                                .toList(),
-                          );
-                        } else {
-                          // Show All Stores
-                          brandController.brandsToShow
-                              .assignAll(brandController.allBrands);
-                        }
-                      });
-                    }
-                  },
-                  style: TextStyle(
-                    color: dark ? TColors.white : TColors.dark,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                  iconSize: 20,
-                ),
-              ),
-            ),
-          ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(80.0),
+            preferredSize: const Size.fromHeight(120.0),
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 8,
-                    left: 8,
-                    right: 8,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: MySearchBar(
                     searchController: searchController,
                     searchHint: 'Search for your favourite store',
                     filterFunction: brandController.filterBrands,
                   ),
                 ),
+                const SizedBox(height: 15.0),
+                Obx(() {
+                  if (brandController.isLoading.value) {
+                    return const SizedBox();
+                  }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: TSizes.spaceBtwItems),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0,
+                            vertical: 4.0,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: selectedFilter == null
+                                  ? Colors.white
+                                  : Colors.red, // Border color changes dynamically
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Text(
+                            'Filter by',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: selectedFilter == null
+                                  ? Colors.white
+                                  : Colors.red, // Text color changes dynamically
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: TSizes.spaceBtwItems * 1.5),
+                        AnimatedFilterButton(
+                          label: 'Opened Stores',
+                          isSelected: selectedFilter == 'Opened Stores',
+                          onPressed: () {
+                            setFilter(
+                              selectedFilter == 'Opened Stores' ? null : 'Opened Stores',
+                            );
+                          },
+                        ),
+                        const SizedBox(width: 8.0),
+                        AnimatedFilterButton(
+                          label: 'Closed Stores',
+                          isSelected: selectedFilter == 'Closed Stores',
+                          onPressed: () {
+                            setFilter(
+                              selectedFilter == 'Closed Stores' ? null : 'Closed Stores',
+                            );
+                          },
+                        ),
+                        const SizedBox(width: 8.0),
+                        AnimatedFilterButton(
+                          label: 'Popular',
+                          isSelected: selectedFilter == 'Popular',
+                          onPressed: () {
+                            setFilter(
+                              selectedFilter == 'Popular' ? null : 'Popular',
+                            );
+                          },
+                        ),
+                        const SizedBox(width: 8.0),
+                        AnimatedFilterButton(
+                          label: 'Top Rated',
+                          isSelected: selectedFilter == 'Top Rated',
+                          onPressed: () {
+                            setFilter(
+                              selectedFilter == 'Top Rated' ? null : 'Top Rated',
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+                const SizedBox(height: 15.0),
               ],
             ),
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Column(
             children: [
               Expanded(

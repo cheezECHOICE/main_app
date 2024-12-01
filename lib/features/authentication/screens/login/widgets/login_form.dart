@@ -138,14 +138,26 @@ class TLoginForm extends StatelessWidget {
 
             const Text("Don't have an account?",
                 style: TextStyle(fontSize: 14)),
-            TextButton(
-              onPressed: () => Get.to(const SignupScreen()),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: const Text(
-                TTexts.signup,
-                style: TextStyle(fontSize: 13),
+            const SizedBox(height: TSizes.spaceBtwItems*0.5),
+            SizedBox(
+              height: 35,
+              child: TextButton(
+                style: ButtonStyle(
+                    backgroundColor:WidgetStateProperty.all(Color(0xFF935EB2).withOpacity(0.3)),
+                    shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ))),
+
+                onPressed: () => Get.to(const SignupScreen()),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: const Text(
+                  TTexts.signup,
+                  style: TextStyle(fontSize: 13,color: Colors.white),
+
+                ),
               ),
-            ),
+            )
+
           ],
         ),
       ),

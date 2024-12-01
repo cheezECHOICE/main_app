@@ -40,7 +40,7 @@ class PopularProductCard extends StatelessWidget {
                           BorderRadius.vertical(top: Radius.circular(16)),
                       child: ShimmerImage(
                         imageUrl: product.thumbnail,
-                        height: 125,
+                        height: 131,
                         width: double.infinity,
                       ),
                     ),
@@ -101,12 +101,12 @@ class PopularProductCard extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          AddToCartButton(
-                            product: product,
-                            color: TColors.primary.withOpacity(0.8),
-                            fontColor: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                          // AddToCartButton(
+                          //   product: product,
+                          //   color: TColors.primary.withOpacity(0.8),
+                          //   fontColor: Colors.white,
+                          //   borderRadius: BorderRadius.circular(10),
+                          // ),
                         ],
                       ),
                     ],
@@ -139,98 +139,98 @@ class PopularProductCard extends StatelessWidget {
   }
 }
 
-class AddToCartButton extends StatelessWidget {
-  final ProductModel product;
-  final Color? color;
-  final Color? fontColor;
-  final BorderRadius? borderRadius;
-
-  const AddToCartButton({
-    super.key,
-    required this.product,
-    this.color,
-    this.fontColor,
-    this.borderRadius,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    CartController cartController = Get.put(CartController());
-    return Obx(() {
-      return Container(
-        child: cartController.getProductQuantityInCart(product.id) == 0
-            ? SplashEffect(
-                borderRadius: borderRadius ?? BorderRadius.circular(10),
-                onTap: () => cartController.addOneProductToCart(product),
-                child: Material(
-                  borderRadius: borderRadius ?? BorderRadius.circular(10),
-                  color: color ?? TColors.primary.withOpacity(0.8),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Text(
-                      'ADD',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            : Container(
-                width: 80,
-                decoration: BoxDecoration(
-                  color: color ?? TColors.primary.withOpacity(0.8),
-                  borderRadius: borderRadius ?? BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SplashEffect(
-                      onTap: () =>
-                          cartController.removeOneProductFromCart(product),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 8),
-                          child: Text(
-                            '-',
-                            style: TextStyle(
-                              color: fontColor ?? Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        cartController
-                            .getProductQuantityInCart(product.id)
-                            .toString(),
-                        style: TextStyle(
-                          color: fontColor ?? Colors.white,
-                        ),
-                      ),
-                    ),
-                    SplashEffect(
-                      onTap: () => cartController.addOneProductToCart(product),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 8),
-                          child: Text(
-                            '+',
-                            style: TextStyle(color: fontColor ?? Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-      );
-    });
-  }
-}
+// class AddToCartButton extends StatelessWidget {
+//   final ProductModel product;
+//   final Color? color;
+//   final Color? fontColor;
+//   final BorderRadius? borderRadius;
+//
+//   const AddToCartButton({
+//     super.key,
+//     required this.product,
+//     this.color,
+//     this.fontColor,
+//     this.borderRadius,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     CartController cartController = Get.put(CartController());
+//     return Obx(() {
+//       return Container(
+//         child: cartController.getProductQuantityInCart(product.id) == 0
+//             ? SplashEffect(
+//                 borderRadius: borderRadius ?? BorderRadius.circular(10),
+//                 onTap: () => cartController.addOneProductToCart(product),
+//                 child: Material(
+//                   borderRadius: borderRadius ?? BorderRadius.circular(10),
+//                   color: color ?? TColors.primary.withOpacity(0.8),
+//                   child: const Padding(
+//                     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+//                     child: Text(
+//                       'ADD',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               )
+//             : Container(
+//                 width: 80,
+//                 decoration: BoxDecoration(
+//                   color: color ?? TColors.primary.withOpacity(0.8),
+//                   borderRadius: borderRadius ?? BorderRadius.circular(10),
+//                 ),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                   children: [
+//                     SplashEffect(
+//                       onTap: () =>
+//                           cartController.removeOneProductFromCart(product),
+//                       child: Container(
+//                         color: Colors.transparent,
+//                         child: Padding(
+//                           padding: const EdgeInsets.symmetric(
+//                               vertical: 8, horizontal: 8),
+//                           child: Text(
+//                             '-',
+//                             style: TextStyle(
+//                               color: fontColor ?? Colors.white,
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.symmetric(vertical: 8),
+//                       child: Text(
+//                         cartController
+//                             .getProductQuantityInCart(product.id)
+//                             .toString(),
+//                         style: TextStyle(
+//                           color: fontColor ?? Colors.white,
+//                         ),
+//                       ),
+//                     ),
+//                     SplashEffect(
+//                       onTap: () => cartController.addOneProductToCart(product),
+//                       child: Container(
+//                         color: Colors.transparent,
+//                         child: Padding(
+//                           padding: const EdgeInsets.symmetric(
+//                               vertical: 8, horizontal: 8),
+//                           child: Text(
+//                             '+',
+//                             style: TextStyle(color: fontColor ?? Colors.white),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//       );
+//     });
+//   }
+// }

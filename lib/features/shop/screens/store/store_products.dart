@@ -103,7 +103,7 @@ class StoreProductsScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   children: const [
                     StoreInfoCards(),
@@ -116,7 +116,7 @@ class StoreProductsScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Column(
                   children: [
                     MySearchBar(
@@ -129,13 +129,35 @@ class StoreProductsScreen extends StatelessWidget {
                       if (bpc.isLoading.value) {
                         return const SizedBox();
                       }
+                      // Check if any filter is active
+                      bool isFilterActive = bpc.filterVegEnabled.value ||
+                          bpc.filterNonVegEnabled.value;
+
                       return Row(
                         children: [
-                          const Text(
-                            'Filter by',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0,
+                              vertical: 4.0,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: isFilterActive
+                                    ? Colors.red
+                                    : Colors.white, // Border color dynamically
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Text(
+                              'Filter by',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: isFilterActive
+                                    ? Colors.red
+                                    : Colors.white, // Text color dynamically
+                              ),
                             ),
                           ),
                           const SizedBox(width: TSizes.spaceBtwItems * 2),
@@ -172,7 +194,7 @@ class StoreProductsScreen extends StatelessWidget {
               }
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) {
+                      (context, index) {
                     final product = bpc.productsToShow[index];
                     return Column(
                       children: [
