@@ -1,3 +1,4 @@
+import 'package:cheezechoice/features/shop/controllers/product/cart_controller.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/features/shop/controllers/brand_products_controller.dart';
@@ -21,6 +22,7 @@ class StoreProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final BrandProductsController bpc = Get.put(BrandProductsController());
+    final CartController cartController = Get.put(CartController());
     final TextEditingController searchController = TextEditingController();
     final String brandId = Get.arguments.toString();
     bpc.getBrandProducts(Get.arguments.toString());
@@ -90,11 +92,11 @@ class StoreProductsScreen extends StatelessWidget {
                           : Colors.black.withOpacity(0.3),
                       shape: BoxShape.circle,
                     ),
-                    child: IconButton(
-                      icon: const Icon(Icons.shopping_cart),
-                      color: isDarkMode ? Colors.white : Colors.black,
-                      onPressed: () => Get.to(() => const CartScreen()),
-                    ),
+                    // child: IconButton(
+                    //   icon: const Icon(Icons.shopping_cart),
+                    //   color: isDarkMode ? Colors.white : Colors.black,
+                    //   onPressed: () => Get.to(() => const CartScreen()),
+                    // ),
                   ),
                 ),
               ],
@@ -218,6 +220,48 @@ class StoreProductsScreen extends StatelessWidget {
             }),
           ],
         ),
+      ),
+      floatingActionButton: Stack(
+        children: [
+          // FloatingActionButton
+          FloatingActionButton(
+            backgroundColor: TColors.primary,
+            onPressed: () => Get.to(() => const CartScreen()),
+            child: const Icon(Icons.shopping_cart, color: Colors.white),
+          ),
+          // Notification Badge
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Obx(() {
+              // Display the badge only if there's at least one item in the cart
+              if (cartController.noOfCartItems.value > 0) {
+                return Container(
+                  padding: const EdgeInsets.all(4.0),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 18,
+                    minHeight: 18,
+                  ),
+                  child: Text(
+                    '${cartController.noOfCartItems.value}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            }),
+          ),
+        ],
       ),
     );
   }

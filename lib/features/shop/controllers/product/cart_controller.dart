@@ -85,7 +85,8 @@ class CartController extends GetxController {
       CartItemModel cartItem = cartItems.first;
       if (cartItem.brandId != item.brandId) {
         TLoaders.warningSnackBar(
-            message: 'You can only add products from the same brand',
+            message:
+                'You can only add products from the same restaurant to your cart!',
             title: 'Oh Snap!');
         return;
       }
