@@ -1,7 +1,10 @@
+import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
 import 'package:flutter/material.dart';
 
 class StoreInfoCards extends StatelessWidget {
-  const StoreInfoCards({Key? key}) : super(key: key);
+  final String brandId;
+
+  const StoreInfoCards({Key? key, required this.brandId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,45 +20,52 @@ class StoreInfoCards extends StatelessWidget {
       color: isDarkMode ? Colors.white : Colors.black,
     );
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          child: _buildInfoCard(
-            icon: Icons.production_quantity_limits,
-            label: 'Min Order value',
-            value: '₹ 200',
-            iconColor: iconColor,
-            labelStyle: labelStyle,
-            valueStyle: valueStyle,
-            isDarkMode: isDarkMode,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _buildInfoCard(
-            icon: Icons.delivery_dining,
-            label: 'Delivery time',
-            value: '25-35 min',
-            iconColor: iconColor,
-            labelStyle: labelStyle,
-            valueStyle: valueStyle,
-            isDarkMode: isDarkMode,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _buildInfoCard(
-            icon: Icons.attach_money,
-            label: 'Delivery price',
-            value: '₹ 60',
-            iconColor: iconColor,
-            labelStyle: labelStyle,
-            valueStyle: valueStyle,
-            isDarkMode: isDarkMode,
-          ),
-        ),
-      ],
+    return FutureBuilder<String?>(
+      future: BrandController.instance.getDeliveryTime(brandId),
+      builder: (context, snapshot) {
+        final deliveryTime = snapshot.data ?? 'Loading...';
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: _buildInfoCard(
+                icon: Icons.production_quantity_limits,
+                label: 'Min Order value',
+                value: '₹ 200',
+                iconColor: iconColor,
+                labelStyle: labelStyle,
+                valueStyle: valueStyle,
+                isDarkMode: isDarkMode,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: _buildInfoCard(
+                icon: Icons.delivery_dining,
+                label: 'Delivery time',
+                value: deliveryTime, // Use fetched deliveryTime here
+                iconColor: iconColor,
+                labelStyle: labelStyle,
+                valueStyle: valueStyle,
+                isDarkMode: isDarkMode,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: _buildInfoCard(
+                icon: Icons.attach_money,
+                label: 'Delivery price',
+                value: '₹ 60',
+                iconColor: iconColor,
+                labelStyle: labelStyle,
+                valueStyle: valueStyle,
+                isDarkMode: isDarkMode,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

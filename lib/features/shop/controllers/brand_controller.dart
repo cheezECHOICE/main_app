@@ -1,6 +1,5 @@
 import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
 import 'package:cheezechoice/data/repositories/brands/brand_repository.dart';
-import 'package:cheezechoice/data/repositories/order/order_repo.dart';
 import 'package:cheezechoice/features/authentication/controllers/signup/network_manager.dart';
 import 'package:cheezechoice/features/shop/models/brand_model.dart';
 import 'package:get/get.dart';
@@ -85,5 +84,14 @@ class BrandController extends GetxController {
     currentBrand = brand;
   }
 
-  
+  // Delivery Time
+  Future<String?> getDeliveryTime(String brandId) async {
+    try {
+      final brand = await brandRepository.getBrandById(brandId);
+      return brand?.deliveryTime; // Return deliveryTime
+    } catch (e) {
+      print('Error fetching delivery time: $e');
+      return null;
+    }
+  }
 }

@@ -22,6 +22,7 @@ class StoreProductsScreen extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final BrandProductsController bpc = Get.put(BrandProductsController());
     final TextEditingController searchController = TextEditingController();
+    final String brandId = Get.arguments.toString();
     bpc.getBrandProducts(Get.arguments.toString());
 
     return Scaffold(
@@ -103,10 +104,12 @@ class StoreProductsScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
-                  children: const [
-                    StoreInfoCards(),
+                  children: [
+                    StoreInfoCards(
+                      brandId: brandId,
+                    ),
                   ],
                 ),
               ),
@@ -116,7 +119,7 @@ class StoreProductsScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Column(
                   children: [
                     MySearchBar(
@@ -194,7 +197,7 @@ class StoreProductsScreen extends StatelessWidget {
               }
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
-                      (context, index) {
+                  (context, index) {
                     final product = bpc.productsToShow[index];
                     return Column(
                       children: [

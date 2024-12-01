@@ -6,13 +6,16 @@ class BrandModel {
   String image;
   bool? isFeatured;
   bool? isOpen;
+  String? deliveryTime;
 
-  BrandModel(
-      {required this.id,
-      required this.image,
-      required this.name,
-      this.isFeatured,
-      this.isOpen});
+  BrandModel({
+    required this.id,
+    required this.image,
+    required this.name,
+    this.isFeatured,
+    this.isOpen,
+    this.deliveryTime,
+  });
 
   // Empty helper function
   static BrandModel empty() => BrandModel(id: '', image: '', name: '');
@@ -24,7 +27,8 @@ class BrandModel {
       'name': name,
       'imgurl': image,
       'isopen': isOpen,
-      'isfeatured': isFeatured
+      'isfeatured': isFeatured,
+      'deliveryTime': deliveryTime,
     };
   }
 
@@ -37,6 +41,7 @@ class BrandModel {
       name: data['name'] ?? '',
       isFeatured: data['isFeatured'] ?? false,
       isOpen: data['isOpen'] ?? false,
+      deliveryTime: data['deliveryTime'],
     );
   }
 

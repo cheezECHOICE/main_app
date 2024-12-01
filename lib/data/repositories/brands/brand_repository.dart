@@ -86,4 +86,18 @@ class BrandRepository extends GetxController {
       return {};
     }
   }
+
+  // Fetch a single brand by ID (to get deliveryTime specifically)
+  Future<BrandModel?> getBrandById(String brandId) async {
+    try {
+      final request = await http.get(Uri.parse('$_brandByIdEndPoint$brandId'));
+      Map data = jsonDecode(request.body);
+      if (data['data'] != null) {
+        return BrandModel.fromJson(data['data']);
+      }
+    } catch (e) {
+      print('Error fetching brand: $e');
+    }
+    return null;
+  }
 }
