@@ -27,7 +27,7 @@ class _ShimmerImageState extends State<ShimmerImage> {
         Visibility(
           visible: !_isLoading,
           child: FadeInImage.assetNetwork(
-            placeholder: 'assets/images/products/chicken pizza.png',
+            placeholder: 'assets/cod.png',
             image: widget.imageUrl,
             width: widget.width,
             height: widget.height,

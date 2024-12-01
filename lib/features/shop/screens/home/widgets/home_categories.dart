@@ -27,7 +27,7 @@ class THomeCategories extends StatelessWidget {
       }
 
       return SizedBox(
-        height: categoryController.allCategories.length > 6 ? 200 : 100,
+        height: categoryController.allCategories.length > 6 ? 210 : 120,
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: categoryController.allCategories.length > 6 ? 2 : 1,

@@ -223,7 +223,6 @@ class StoreProductsScreen extends StatelessWidget {
       ),
       floatingActionButton: Stack(
         children: [
-          // FloatingActionButton
           FloatingActionButton(
             backgroundColor: TColors.primary,
             onPressed: () => Get.to(() => const CartScreen()),
@@ -234,7 +233,6 @@ class StoreProductsScreen extends StatelessWidget {
             right: 0,
             top: 0,
             child: Obx(() {
-              // Display the badge only if there's at least one item in the cart
               if (cartController.noOfCartItems.value > 0) {
                 return Container(
                   padding: const EdgeInsets.all(4.0),
