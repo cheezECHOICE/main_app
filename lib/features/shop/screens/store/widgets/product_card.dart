@@ -18,8 +18,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Check if the product is out of stock
-    final bool isOutOfStock =
-        product.stock < 5; // Assuming stock is an integer field in ProductModel
+    final bool isOutOfStock = product.stock < 5;
 
     return InkWell(
       onTap: () {

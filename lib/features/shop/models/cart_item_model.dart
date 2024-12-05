@@ -9,6 +9,7 @@ class CartItemModel {
   String? brandName;
   Map<String, String>? selectedVariation;
   int takeoutQuantity = 0;
+  int stock;
 
   CartItemModel({
     required this.productId,
@@ -20,11 +21,12 @@ class CartItemModel {
     this.title = '',
     this.selectedVariation,
     required this.brandName,
+    required this.stock,
   });
 
   ///Empty Cart
-  static CartItemModel empty() =>
-      CartItemModel(productId: '', quantity: 0, brandId: 0, brandName: '');
+  static CartItemModel empty() => CartItemModel(
+      productId: '', quantity: 0, brandId: 0, brandName: '', stock: 0);
 
   ///Convert a CartItem to a JSON MAP
 
@@ -39,6 +41,7 @@ class CartItemModel {
       'brandId': brandId,
       'selectedVariation': selectedVariation,
       'name': brandName,
+      'stock': stock,
     };
   }
 
@@ -52,6 +55,7 @@ class CartItemModel {
       quantity: json['quantity'],
       variationId: json['variationId'],
       brandId: json['brandId'] ?? 0,
+      stock: json['stock'] ?? 0,
       brandName: json['name'] ?? '',
       selectedVariation: json['selectedVariation'] != null
           ? Map<String, String>.from(json['selectedVariation'])
@@ -67,7 +71,8 @@ class CartItemModel {
       price: json['price']?.toDouble(),
       image: json['imgurl'],
       quantity: quantity,
-      brandId: json['brandId'] ?? 0, 
+      brandId: json['brandId'] ?? 0,
+      stock: json['stock'] ?? 0,
       brandName: json['brandName'] ?? '',
     );
   }

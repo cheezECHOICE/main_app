@@ -1,6 +1,5 @@
 import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
 import 'package:cheezechoice/features/shop/controllers/product/variation_controller.dart';
-import 'package:cheezechoice/features/shop/models/brand_model.dart';
 import 'package:cheezechoice/features/shop/models/cart_item_model.dart';
 import 'package:cheezechoice/features/shop/models/order_model.dart';
 import 'package:cheezechoice/features/shop/models/product_model.dart';
@@ -24,52 +23,99 @@ class CartController extends GetxController {
 
   //Add items to the cart
   void addToCart(ProductModel product) {
-    //Quantity Check
+    // Check if the quantity to add is valid
     if (productQuantityInCart.value < 1) {
       TLoaders.customToast(message: 'Select Quantity');
       return;
     }
-//Variation
-    if (product.productType == ProductType.variable.toString() &&
-        variationController.selectedVariation.value.id.isEmpty) {
-      TLoaders.customToast(message: 'Select Variation');
-      return;
-    }
-//Out of Stock
+
+    // Get available stock directly from the product model
+    int availableStock = product.stock;
+
+    // Handle variations
     if (product.productType == ProductType.variable.toString()) {
-      if (variationController.selectedVariation.value.stock < 1) {
+      if (variationController.selectedVariation.value.id.isEmpty) {
+        TLoaders.customToast(message: 'Select Variation');
+        return;
+      }
+
+      // Override stock with selected variation's stock
+      availableStock = variationController.selectedVariation.value.stock;
+      if (availableStock < 1) {
         TLoaders.warningSnackBar(
-            message: 'Select Variation is out of stock', title: 'Oh Snap!');
+            message: 'Selected variation is out of stock', title: 'Oh Snap!');
         return;
       }
     } else {
-      if (product.stock < 1) {
+      // Check stock for simple products
+      if (availableStock < 1) {
         TLoaders.warningSnackBar(
-            message: 'Selected Product is out of stock', title: 'Oh Snap!');
+            message: 'Selected product is out of stock', title: 'Oh Snap!');
         return;
       }
     }
 
-    //convert the productModel to a cartModel with the given quantity
-    final selectedCartItem =
+    // Convert product to a cart item
+    final CartItemModel selectedCartItem =
         convertToCartItem(product, productQuantityInCart.value);
+
+    // Check if the product/variation is already in the cart
     int index = cartItems.indexWhere((cartItem) =>
         cartItem.productId == selectedCartItem.productId &&
         cartItem.variationId == selectedCartItem.variationId);
 
+    // Calculate the current quantity in the cart for this product/variation
+    int currentCartQuantity = index >= 0 ? cartItems[index].quantity : 0;
+
+    // Validate against available stock
+    if (currentCartQuantity + productQuantityInCart.value > availableStock) {
+      TLoaders.warningSnackBar(
+          message: 'Cannot add more items. Only $availableStock in stock.',
+          title: 'Stock Limit Reached');
+      return;
+    }
+
+    // Add or update cart item
     if (index >= 0) {
-      //this quantity is already added or updated/removed from the design
-      cartItems[index].quantity = selectedCartItem.quantity;
+      cartItems[index].quantity += productQuantityInCart.value;
     } else {
       cartItems.add(selectedCartItem);
     }
 
+    // Update cart state
     updateCart();
     TLoaders.customToast(message: 'Your Product has been added to the Cart.');
   }
 
+  void incrementQuantity(ProductModel product) {
+    final int availableStock =
+        product.productType == ProductType.variable.toString()
+            ? variationController.selectedVariation.value.stock
+            : product.stock;
+
+    if (productQuantityInCart.value >= availableStock) {
+      TLoaders.customToast(
+          message: 'Cannot exceed available stock ($availableStock)');
+      return;
+    }
+
+    productQuantityInCart.value++;
+  }
+
+  void decrementQuantity() {
+    if (productQuantityInCart.value > 1) {
+      productQuantityInCart.value--;
+    } else {
+      TLoaders.customToast(message: 'Minimum quantity is 1');
+    }
+  }
+
+  // void addOneProductToCart(ProductModel product) {
+  //   addOneToCart(convertToCartItem(product, 1));
+  // }
   void addOneProductToCart(ProductModel product) {
-    addOneToCart(convertToCartItem(product, 1));
+    final CartItemModel cartItem = convertToCartItem(product, 1);
+    addOneToCart(cartItem);
   }
 
   void removeOneProductFromCart(ProductModel product) {
@@ -81,22 +127,33 @@ class CartController extends GetxController {
         cartItem.productId == item.productId &&
         cartItem.variationId == item.variationId);
 
-    if (cartItems.isNotEmpty) {
-      CartItemModel cartItem = cartItems.first;
-      if (cartItem.brandId != item.brandId) {
+    // Get the available stock based on product type
+    int availableStock = item.selectedVariation != null
+        ? variationController.selectedVariation.value.stock
+        : item.productId != null
+            ? item.stock
+            : 0;
+
+    // Check if adding one more item exceeds stock
+    if (index >= 0) {
+      if (cartItems[index].quantity >= availableStock) {
         TLoaders.warningSnackBar(
-            message:
-                'You can only add products from the same restaurant to your cart!',
-            title: 'Oh Snap!');
+            message: 'Cannot add more items. Only $availableStock in stock.',
+            title: 'Stock Limit Reached');
         return;
       }
-    }
-
-    if (index >= 0) {
       cartItems[index].quantity += 1;
     } else {
+      // Ensure the initial addition respects stock
+      if (item.quantity > availableStock) {
+        TLoaders.warningSnackBar(
+            message: 'Cannot add more items. Only $availableStock in stock.',
+            title: 'Stock Limit Reached');
+        return;
+      }
       cartItems.add(item);
     }
+
     updateCart();
   }
 
@@ -163,6 +220,7 @@ class CartController extends GetxController {
 
     final variation = variationController.selectedVariation.value;
     final isVariation = variation.id.isNotEmpty;
+    int availableStock = isVariation ? variation.stock : product.stock;
     // final price = isVariation
     //     ? variation.salePrice > 0.0
     //         ? variation.salePrice
@@ -182,6 +240,7 @@ class CartController extends GetxController {
       brandId: product.brand != null ? int.parse(product.brand!.id) : 0,
       brandName: product.brand != null ? product.brand!.name : ' ',
       selectedVariation: isVariation ? variation.attributeValues : null,
+      stock: availableStock,
     );
   }
 
