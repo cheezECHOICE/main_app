@@ -94,4 +94,27 @@ class BrandController extends GetxController {
       return null;
     }
   }
+
+  // filter function
+  Future<void> filterStoresByCampus(bool showInCampus) async {
+    isLoading.value = true;
+
+    if (showInCampus) {
+      // Filter for in-campus stores (brandId not in 1-2)
+      final inCampusStores = allBrands
+          .where((brand) =>
+              !(int.parse(brand.id) >= 1 && int.parse(brand.id) <= 2))
+          .toList();
+      brandsToShow.assignAll(inCampusStores);
+    } else {
+      // Filter for off-campus stores (brandId in 1-2)
+      final offCampusStores = allBrands
+          .where(
+              (brand) => int.parse(brand.id) >= 1 && int.parse(brand.id) <= 2)
+          .toList();
+      brandsToShow.assignAll(offCampusStores);
+    }
+
+    isLoading.value = false;
+  }
 }

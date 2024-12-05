@@ -29,19 +29,21 @@ class _StoreScreenState extends State<StoreScreen> {
     });
 
     // Apply filtering logic
-    if (filter == 'Opened Stores') {
-      brandController.brandsToShow.assignAll(
-        brandController.allBrands.where((store) => store.isOpen == true).toList(),
-      );
-    } else if (filter == 'Closed Stores') {
-      brandController.brandsToShow.assignAll(
-        brandController.allBrands
-            .where((store) => store.isOpen == false || store.isOpen == null)
-            .toList(),
-      );
-    } else {
-      // Default: Show All Stores
-      brandController.brandsToShow.assignAll(brandController.allBrands);
+    switch (filter) {
+      case 'Opened Stores':
+        brandController.filterStoresByStatus(true);
+        break;
+      case 'Closed Stores':
+        brandController.filterStoresByStatus(false);
+        break;
+      case 'In-Campus':
+        brandController.filterStoresByCampus(true);
+        break;
+      case 'Off-Campus':
+        brandController.filterStoresByCampus(false);
+        break;
+      default:
+        brandController.resetBrands();
     }
   }
 
@@ -90,7 +92,8 @@ class _StoreScreenState extends State<StoreScreen> {
                             border: Border.all(
                               color: selectedFilter == null
                                   ? Colors.white
-                                  : Colors.red, // Border color changes dynamically
+                                  : Colors
+                                      .red, // Border color changes dynamically
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
@@ -102,17 +105,50 @@ class _StoreScreenState extends State<StoreScreen> {
                               fontWeight: FontWeight.bold,
                               color: selectedFilter == null
                                   ? Colors.white
-                                  : Colors.red, // Text color changes dynamically
+                                  : Colors
+                                      .red, // Text color changes dynamically
                             ),
                           ),
                         ),
                         const SizedBox(width: TSizes.spaceBtwItems * 1.5),
                         AnimatedFilterButton(
+                          label: 'In-Campus',
+                          isSelected: selectedFilter == 'In-Campus',
+                          onPressed: () {
+                            setFilter(selectedFilter == 'In-Campus'
+                                ? null
+                                : 'In-Campus');
+                            if (selectedFilter == 'In-Campus') {
+                              brandController.filterStoresByCampus(true);
+                            } else {
+                              brandController.resetBrands();
+                            }
+                          },
+                        ),
+                        const SizedBox(width: 8.0),
+                        AnimatedFilterButton(
+                          label: 'Off-Campus',
+                          isSelected: selectedFilter == 'Off-Campus',
+                          onPressed: () {
+                            setFilter(selectedFilter == 'Off-Campus'
+                                ? null
+                                : 'Off-Campus');
+                            if (selectedFilter == 'Off-Campus') {
+                              brandController.filterStoresByCampus(false);
+                            } else {
+                              brandController.resetBrands();
+                            }
+                          },
+                        ),
+                        const SizedBox(width: 8.0),
+                        AnimatedFilterButton(
                           label: 'Opened Stores',
                           isSelected: selectedFilter == 'Opened Stores',
                           onPressed: () {
                             setFilter(
-                              selectedFilter == 'Opened Stores' ? null : 'Opened Stores',
+                              selectedFilter == 'Opened Stores'
+                                  ? null
+                                  : 'Opened Stores',
                             );
                           },
                         ),
@@ -122,7 +158,9 @@ class _StoreScreenState extends State<StoreScreen> {
                           isSelected: selectedFilter == 'Closed Stores',
                           onPressed: () {
                             setFilter(
-                              selectedFilter == 'Closed Stores' ? null : 'Closed Stores',
+                              selectedFilter == 'Closed Stores'
+                                  ? null
+                                  : 'Closed Stores',
                             );
                           },
                         ),
@@ -142,7 +180,9 @@ class _StoreScreenState extends State<StoreScreen> {
                           isSelected: selectedFilter == 'Top Rated',
                           onPressed: () {
                             setFilter(
-                              selectedFilter == 'Top Rated' ? null : 'Top Rated',
+                              selectedFilter == 'Top Rated'
+                                  ? null
+                                  : 'Top Rated',
                             );
                           },
                         ),
