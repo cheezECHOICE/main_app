@@ -138,7 +138,7 @@ class TSignupForm extends StatelessWidget {
                         const SizedBox(width: 5),
                         Text(
                           allRulesSatisfied
-                              ? "P̶a̶s̶s̶w̶o̶r̶d̶ m̶u̶s̶t̶ m̶e̶e̶t̶ t̶h̶e̶ f̶o̶l̶l̶o̶w̶i̶n̶g̶ r̶u̶l̶e̶s̶:̶"
+                              ? "You are good to GO"
                               : "Password must meet the following rules:",
                           style: TextStyle(
                             color: allRulesSatisfied

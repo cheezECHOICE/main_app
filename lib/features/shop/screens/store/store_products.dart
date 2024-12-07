@@ -29,6 +29,24 @@ class StoreProductsScreen extends StatelessWidget {
 
     return Scaffold(
       body: EasyRefresh(
+        header: ClassicHeader(
+          textStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold), // Set text color to black
+          iconTheme:
+              IconThemeData(color: Colors.black), // Set icon color to black
+        ),
+        footer: ClassicFooter(
+          textStyle: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold), // Set text color to black
+          iconTheme:
+              IconThemeData(color: Colors.black), // Set icon color to black
+        ),
         onRefresh: () async {
           await bpc.getBrandProducts(bpc.brand.id);
         },
