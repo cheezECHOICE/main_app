@@ -175,17 +175,17 @@ class _StoreScreenState extends State<StoreScreen> {
                           },
                         ),
                         const SizedBox(width: 8.0),
-                        AnimatedFilterButton(
-                          label: 'Top Rated',
-                          isSelected: selectedFilter == 'Top Rated',
-                          onPressed: () {
-                            setFilter(
-                              selectedFilter == 'Top Rated'
-                                  ? null
-                                  : 'Top Rated',
-                            );
-                          },
-                        ),
+                        // AnimatedFilterButton(
+                        //   label: 'Top Rated',
+                        //   isSelected: selectedFilter == 'Top Rated',
+                        //   onPressed: () {
+                        //     setFilter(
+                        //       selectedFilter == 'Top Rated'
+                        //           ? null
+                        //           : 'Top Rated',
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   );
@@ -200,8 +200,15 @@ class _StoreScreenState extends State<StoreScreen> {
           child: Column(
             children: [
               Expanded(
+                // This ensures the ListView gets bounded height
                 child: EasyRefresh(
-                  onRefresh: brandController.getAllBrands,
+                  onRefresh: () async {
+                    setState(() {
+                      selectedFilter = null; // Clear the filter on refresh
+                    });
+                    await brandController
+                        .getAllBrands(); // Fetch all brands again
+                  },
                   child: Obx(() {
                     if (brandController.isLoading.value) {
                       return const SingleChildScrollView(

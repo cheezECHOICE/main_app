@@ -284,7 +284,7 @@ class _OrderCardState extends State<OrderCard> {
                 child: Text(
                   widget.order.status,
                   style: Theme.of(context).textTheme.bodyLarge!.apply(
-                        color: TColors.secondary,
+                        color: _getStatusColor(widget.order.status),
                         fontWeightDelta: 1,
                       ),
                 ),
@@ -331,5 +331,20 @@ class _OrderCardState extends State<OrderCard> {
         ],
       ),
     );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return Colors.brown; // Color for pending
+      case 'ready':
+        return Colors.orange; // Color for ready
+      case 'cooking':
+        return Colors.blue; // Color for cooking
+      case 'delivered':
+        return Colors.green; // Color for delivered
+      default:
+        return TColors.primary; // Default color
+    }
   }
 }

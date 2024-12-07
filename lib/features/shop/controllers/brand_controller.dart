@@ -32,6 +32,22 @@ class BrandController extends GetxController {
     try {
       isLoading.value = true;
       final brands = await brandRepository.getAllBrands();
+
+      // Sort by isOpen first (open stores first), then by ID in ascending order
+      brands.sort((a, b) {
+        // Ensure `isOpen` is treated as false when null
+        bool aIsOpen = a.isOpen ?? false;
+        bool bIsOpen = b.isOpen ?? false;
+
+        // Sort by isOpen (open stores first)
+        if (aIsOpen != bIsOpen) {
+          return bIsOpen ? 1 : -1; // Open stores come first
+        }
+
+        // If isOpen is the same, sort by ID in ascending order
+        return int.parse(a.id).compareTo(int.parse(b.id));
+      });
+
       allBrands.assignAll(brands);
       brandsToShow.assignAll(brands);
     } catch (e) {
@@ -100,21 +116,16 @@ class BrandController extends GetxController {
     isLoading.value = true;
 
     if (showInCampus) {
-      // Filter for in-campus stores (brandId not in 1-2)
-      final inCampusStores = allBrands
-          .where((brand) =>
-              !(int.parse(brand.id) >= 1 && int.parse(brand.id) <= 2))
-          .toList();
+      // Filter for in-campus stores (brandId is 4)
+      final inCampusStores =
+          allBrands.where((brand) => int.parse(brand.id) == 1).toList();
       brandsToShow.assignAll(inCampusStores);
     } else {
-      // Filter for off-campus stores (brandId in 1-2)
-      final offCampusStores = allBrands
-          .where(
-              (brand) => int.parse(brand.id) >= 1 && int.parse(brand.id) <= 2)
-          .toList();
+      // Filter for off-campus stores (brandId is 1, 2, or 3)
+      final offCampusStores =
+          allBrands.where((brand) => int.parse(brand.id) > 1).toList();
       brandsToShow.assignAll(offCampusStores);
     }
-
     isLoading.value = false;
   }
 }
