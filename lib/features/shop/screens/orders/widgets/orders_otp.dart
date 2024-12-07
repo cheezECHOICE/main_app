@@ -75,7 +75,7 @@ class OrderOtpScreen extends StatelessWidget {
                             );
                           } else {
                             return Text(
-                              'No OTP available',
+                              'No OTP available currently',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineMedium!
@@ -85,7 +85,7 @@ class OrderOtpScreen extends StatelessWidget {
                         },
                       )
                     : Text(
-                        'No OTP available',
+                        'No OTP available currently',
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!

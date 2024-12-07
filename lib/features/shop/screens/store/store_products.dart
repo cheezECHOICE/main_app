@@ -167,7 +167,9 @@ class StoreProductsScreen extends StatelessWidget {
                               border: Border.all(
                                 color: isFilterActive
                                     ? Colors.red
-                                    : Colors.white, // Border color dynamically
+                                    : (isDarkMode
+                                        ? Colors.white
+                                        : Colors.black),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
@@ -179,7 +181,10 @@ class StoreProductsScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 color: isFilterActive
                                     ? Colors.red
-                                    : Colors.white, // Text color dynamically
+                                    : (isDarkMode
+                                        ? Colors.white
+                                        : Colors
+                                            .black), // Text color dynamically
                               ),
                             ),
                           ),

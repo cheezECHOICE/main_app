@@ -91,7 +91,7 @@ class _StoreScreenState extends State<StoreScreen> {
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: selectedFilter == null
-                                  ? Colors.white
+                                  ? (dark ? Colors.white : Colors.black)
                                   : Colors
                                       .red, // Border color changes dynamically
                               width: 1.0,
@@ -104,7 +104,7 @@ class _StoreScreenState extends State<StoreScreen> {
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: selectedFilter == null
-                                  ? Colors.white
+                                  ? (dark ? Colors.white : Colors.black)
                                   : Colors
                                       .red, // Text color changes dynamically
                             ),

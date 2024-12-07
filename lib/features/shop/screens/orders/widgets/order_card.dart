@@ -29,19 +29,21 @@ class _OrderCardState extends State<OrderCard> {
   @override
   void initState() {
     super.initState();
-    _fetchBrandNames();
+    _fetchBrandNames(); // Fetch brand names based on orderId
   }
 
   Future<void> _fetchBrandNames() async {
     try {
       List<String> fetchedBrandNames = [];
-      for (var item in widget.order.items) {
-        String? brandName = await OrderRepository.instance
-            .fetchBrandName(item.brandId.toString());
-        if (brandName != null) {
-          fetchedBrandNames.add(brandName);
-        }
+
+      // Fetch brand names for the entire order using the orderId
+      String? brandName =
+          await OrderRepository.instance.fetchBrandName(widget.order.id);
+
+      if (brandName != null) {
+        fetchedBrandNames.add(brandName); // Add fetched brandName to the list
       }
+
       setState(() {
         brandNames = fetchedBrandNames;
       });
@@ -101,12 +103,17 @@ class _OrderCardState extends State<OrderCard> {
             children: [
               const Icon(Icons.food_bank_outlined),
               const SizedBox(width: TSizes.spaceBtwItems / 2),
-              for (int i = 0; i < widget.order.items.length; i++)
-                if (brandNames.isNotEmpty)
+              if (brandNames.isNotEmpty) // Check that brandNames is not empty
+                for (int i = 0; i < brandNames.length; i++)
                   Text(
-                    brandNames[i],
+                    brandNames[i], // Display brand name
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
+              if (brandNames.isEmpty)
+                Text(
+                  "Loading....",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -275,7 +282,7 @@ class _OrderCardState extends State<OrderCard> {
             ),
           ),
 
-          // Order Status and Repeat Order
+          // Divider at the bottom
           const Divider(thickness: 1),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

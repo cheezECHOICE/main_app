@@ -13,7 +13,7 @@ class OrderRepository extends GetxController {
 
   final orderEndpoint = '$dbLink/orders';
   final userOrderEndpoint = '$dbLink/orders?userId=';
-  final getbrandName =  '$dbLink/orders/get_brand?orderId=';
+  final getbrandName = '$dbLink/orders/get_brand?orderId=';
 
   /// Get the FCM Token
   Future<String?> getFcmToken() async {
@@ -75,10 +75,17 @@ class OrderRepository extends GetxController {
   }
 
   // Prisma order
-  Future<void> pushOrder(int brandId, String address, 
-  double totalAmount,
-      String userId, List<Map<String, dynamic>> products,double deliveryPrice, double platformFee, double finalTotalAmount, double CGST, double SGST) async {
-        
+  Future<void> pushOrder(
+      int brandId,
+      String address,
+      double totalAmount,
+      String userId,
+      List<Map<String, dynamic>> products,
+      double deliveryPrice,
+      double platformFee,
+      double finalTotalAmount,
+      double CGST,
+      double SGST) async {
     try {
       await Dio().post(orderEndpoint, data: {
         'brandId': brandId,
@@ -86,11 +93,11 @@ class OrderRepository extends GetxController {
         'totalamount': totalAmount,
         'userId': userId,
         'products': products,
-        'deliveryPrice':deliveryPrice,
-        'platformFee':platformFee,
+        'deliveryPrice': deliveryPrice,
+        'platformFee': platformFee,
         'finalTotalAmount': finalTotalAmount,
-        'cGST':CGST,
-        'sGST':SGST,
+        'cGST': CGST,
+        'sGST': SGST,
       });
       // // Update FCM token when placing an order
       String? fcmToken = await getFcmToken();
@@ -154,14 +161,17 @@ class OrderRepository extends GetxController {
     }
   }
 
-   /// Fetch brand name by orderId
+  /// Fetch brand name by orderId
   Future<String?> fetchBrandName(String orderId) async {
     try {
-      var response = await Dio().get(getbrandName);
-      
+      // Make the GET request with the orderId appended to the URL
+      var response = await Dio().get(getbrandName + orderId);
+
+      // Check if the response status is 200 (OK) and contains data
       if (response.statusCode == 200 && response.data != null) {
         // Extract and return the brand name
-        return response.data['name'];
+        return response.data[
+            'brandName']; // Make sure to match the correct key from the response
       } else {
         print('Failed to fetch brand name');
         return null;
@@ -172,4 +182,3 @@ class OrderRepository extends GetxController {
     }
   }
 }
-

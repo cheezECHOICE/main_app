@@ -151,7 +151,7 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      'Collect your order from main gate',
+                      'Cannot order today',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
