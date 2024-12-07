@@ -54,7 +54,7 @@ class StoreInfoCards extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: _buildInfoCard(
-                icon: Icons.attach_money,
+                icon: Icons.currency_rupee,
                 label: 'Delivery price',
                 value: '₹ 60',
                 iconColor: iconColor,

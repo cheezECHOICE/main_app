@@ -77,14 +77,14 @@ class BrandController extends GetxController {
 
     // Filter based on store status
     if (showOnlyOpen) {
-      final openStores = allBrands
-          .where((brand) =>
-              brand.isOpen ==
-              true) // Assuming `isOpen` is a field in BrandModel
-          .toList();
+      final openStores =
+          allBrands.where((brand) => brand.isOpen == true).toList();
       brandsToShow.assignAll(openStores);
     } else {
-      brandsToShow.assignAll(allBrands);
+      final closedStores = allBrands
+          .where((brand) => brand.isOpen == false) // Closed stores filter
+          .toList();
+      brandsToShow.assignAll(closedStores);
     }
 
     isLoading.value = false;
