@@ -134,6 +134,17 @@ class CartController extends GetxController {
             ? item.stock
             : 0;
 
+    if (cartItems.isNotEmpty) {
+      CartItemModel cartItem = cartItems.first;
+      if (cartItem.brandId != item.brandId) {
+        TLoaders.warningSnackBar(
+            message:
+                'You can only add products from the same restaurant to your cart!',
+            title: 'Oh Snap!');
+        return;
+      }
+    }
+
     // Check if adding one more item exceeds stock
     if (index >= 0) {
       if (cartItems[index].quantity >= availableStock) {
