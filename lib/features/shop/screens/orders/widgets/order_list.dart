@@ -35,7 +35,7 @@ class TOrderListItems extends StatelessWidget {
 
       return EasyRefresh(
         onRefresh: () async {
-          await controller.fetchUserOrders();
+          await controller.getRecentOrders();
         },
         child: ListView.separated(
           shrinkWrap: true,
