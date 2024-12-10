@@ -1,7 +1,8 @@
+import 'package:cheezechoice/features/shop/screens/orders/widgets/order_list.dart';
+import 'package:cheezechoice/features/shop/screens/orders/widgets/order_list2.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
 import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
-import 'package:cheezechoice/features/shop/screens/orders/widgets/order_list.dart';
 import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:get/get.dart';
 
@@ -85,7 +86,7 @@ class OrderHistoryScreen extends StatelessWidget {
           if (controller.isLoading.value) {
             return Center(child: CircularProgressIndicator());
           } else {
-            return TOrderListItems();
+            return TOrderListItems2();
           }
         }),
       ),
