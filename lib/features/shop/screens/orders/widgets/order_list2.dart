@@ -9,8 +9,8 @@ import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:cheezechoice/utils/helpers/cloud_helper_function.dart';
 import 'package:get/get.dart';
 
-class TOrderListItems extends StatelessWidget {
-  const TOrderListItems({super.key});
+class TOrderListItems2 extends StatelessWidget {
+  const TOrderListItems2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +31,11 @@ class TOrderListItems extends StatelessWidget {
 
       if (orders.isEmpty) return emptyWidget;
 
-      final recentOrders = controller.getRecentOrders();
+      final recentOrders = controller.getAllOrders();
 
       return EasyRefresh(
         onRefresh: () async {
-          await controller.getRecentOrders();
+          await controller.getAllOrders();
         },
         child: ListView.separated(
           shrinkWrap: true,

@@ -33,7 +33,7 @@ class OrderController extends GetxController {
   final Rx<OrderType> orderType = OrderType.dineIn.obs;
   final RxBool parcelChargeProcessing = false.obs;
   final RxInt parcelCharge = 0.obs;
-  final RxInt filterDays = 5.obs;
+  final RxInt filterDays = 0.obs;
   final RxString filterLabel = 'Recent Orders'.obs;
   var isLoading = false.obs;
   String? selectedAddress;
@@ -134,17 +134,22 @@ class OrderController extends GetxController {
 
   // Function to retrieve recent orders
   List<OrderModel> getRecentOrders() {
-    final DateTime now = DateTime.now();
-    final DateTime filterDate = now.subtract(Duration(days: filterDays.value));
-    return orders
-        .where((order) => order.orderDate.isAfter(filterDate))
-        .toList();
-  }
+  final DateTime now = DateTime.now();
+  final DateTime startOfToday = DateTime(now.year, now.month, now.day); // Start of the day
+  return orders
+      .where((order) => order.orderDate.isAfter(startOfToday)) // Filter for today's orders
+      .toList()
+      ..sort((a, b) => b.orderDate.compareTo(a.orderDate)); // Sort by descending order date
+}
+
 
   // Function to load all orders without filtering
   List<OrderModel> getAllOrders() {
-    return orders.toList();
-  }
+  return orders
+      .toList()
+      ..sort((a, b) => b.orderDate.compareTo(a.orderDate)); // Sort by descending order date
+}
+
 
   // Fetch OTP for a given order
   Future<String?> fetchOtp(String orderId, String otp) async {
