@@ -1,3 +1,4 @@
+import 'package:cheezechoice/phonepe_payment.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/bindings/general_bindings.dart';
 import 'package:cheezechoice/routes/app_routes.dart';
@@ -10,12 +11,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return PhonepePayment();
+    //return CheckoutPage();
     return GetMaterialApp(
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      //bj
       debugShowCheckedModeBanner: false,
       initialBinding: GeneralBindings(),
       getPages: AppRoutes.pages,
