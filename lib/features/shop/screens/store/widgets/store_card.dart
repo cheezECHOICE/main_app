@@ -77,7 +77,7 @@ class StoreCard extends StatelessWidget {
         // Determine if the store is open based on both local and server data
         final bool storeClosedFromApi =
             snapshot.data ?? false; // Store status from API
-        final bool storeOpen = getStoreOpenStatus() || !storeClosedFromApi;
+        final bool storeOpen = getStoreOpenStatus() && !storeClosedFromApi;
 
         return GestureDetector(
           onTap: () {
