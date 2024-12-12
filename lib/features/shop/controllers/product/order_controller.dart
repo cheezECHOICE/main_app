@@ -132,24 +132,66 @@ class OrderController extends GetxController {
     }
   }
 
+  // timer clause checkss.
+  Future<bool> validateCheckoutClauses() async {
+    // Check if the user is authenticated
+    final userId = AuthenticationRepository.instance.authUser?.uid;
+    if (userId == null || userId.isEmpty) {
+      TLoaders.warningSnackBar(
+          title: 'Authentication Required',
+          message: 'Please log in to continue.');
+      return false;
+    }
+
+    // Check if an address is selected
+    if (selectedAddress == null) {
+      TLoaders.warningSnackBar(
+          title: 'Address Required',
+          message: 'Please select a delivery address.');
+      return false;
+    }
+
+    // Check if the cart value meets the minimum requirement
+    if (cartController.totalCartPrice.value < 150) {
+      TLoaders.warningSnackBar(
+        title: 'Minimum Order Value',
+        message: 'Your SubTotal value must be at least ₹180 to proceed.',
+      );
+      return false;
+    }
+
+    // Check if the store is open
+    if (await BrandRepository.isStoreClosed(
+        cartController.cartItems.first.brandId)) {
+      TLoaders.warningSnackBar(
+          title: 'Store Closed',
+          message: 'Store is closed. Please try again later.');
+      return false;
+    }
+
+    // All checks passed
+    return true;
+  }
+
   // Function to retrieve recent orders
   List<OrderModel> getRecentOrders() {
-  final DateTime now = DateTime.now();
-  final DateTime startOfToday = DateTime(now.year, now.month, now.day); // Start of the day
-  return orders
-      .where((order) => order.orderDate.isAfter(startOfToday)) // Filter for today's orders
-      .toList()
-      ..sort((a, b) => b.orderDate.compareTo(a.orderDate)); // Sort by descending order date
-}
-
+    final DateTime now = DateTime.now();
+    final DateTime startOfToday =
+        DateTime(now.year, now.month, now.day); // Start of the day
+    return orders
+        .where((order) =>
+            order.orderDate.isAfter(startOfToday)) // Filter for today's orders
+        .toList()
+      ..sort((a, b) =>
+          b.orderDate.compareTo(a.orderDate)); // Sort by descending order date
+  }
 
   // Function to load all orders without filtering
   List<OrderModel> getAllOrders() {
-  return orders
-      .toList()
-      ..sort((a, b) => b.orderDate.compareTo(a.orderDate)); // Sort by descending order date
-}
-
+    return orders.toList()
+      ..sort((a, b) =>
+          b.orderDate.compareTo(a.orderDate)); // Sort by descending order date
+  }
 
   // Fetch OTP for a given order
   Future<String?> fetchOtp(String orderId, String otp) async {
