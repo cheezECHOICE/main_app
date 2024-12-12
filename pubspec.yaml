@@ -84,13 +84,14 @@ dependencies:
 dev_dependencies:
     flutter_test:
         sdk: flutter
-    flutter_launcher_icons: ^0.14.0
+    flutter_launcher_icons: ^0.14.2
 
 flutter_launcher_icons:
     android: "launcher_icon"
     ios: true
-    image_path:
-        "assets/logos/t-store-splash-logo-white"
+    image_path: "assets/cc_logo.png"
+    adaptive_icon_foreground: "assets/1024.png"
+    adaptive_icon_background: "#FFFFFF"
 
         # The "flutter_lints" package below contains a set of recommended lints to
         # encourage good coding practices. The lint set provided by the package is
