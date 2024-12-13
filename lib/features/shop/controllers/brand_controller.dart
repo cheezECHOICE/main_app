@@ -112,20 +112,56 @@ class BrandController extends GetxController {
   }
 
   // filter function
+  // Future<void> filterStoresByCampus(bool showInCampus) async {
+  //   isLoading.value = true;
+
+  //   if (showInCampus) {
+  //     // Filter for in-campus stores (brandId is 4)
+  //     final inCampusStores =
+  //         allBrands.where((brand) => int.parse(brand.id) == 1).toList();
+  //     brandsToShow.assignAll(inCampusStores);
+  //   } else {
+  //     // Filter for off-campus stores (brandId is 1, 2, or 3)
+  //     final offCampusStores =
+  //         allBrands.where((brand) => int.parse(brand.id) > 1).toList();
+  //     brandsToShow.assignAll(offCampusStores);
+  //   }
+  //   isLoading.value = false;
+  // }
   Future<void> filterStoresByCampus(bool showInCampus) async {
     isLoading.value = true;
 
-    if (showInCampus) {
-      // Filter for in-campus stores (brandId is 4)
-      final inCampusStores =
-          allBrands.where((brand) => int.parse(brand.id) == 1).toList();
-      brandsToShow.assignAll(inCampusStores);
-    } else {
-      // Filter for off-campus stores (brandId is 1, 2, or 3)
-      final offCampusStores =
-          allBrands.where((brand) => int.parse(brand.id) > 1).toList();
-      brandsToShow.assignAll(offCampusStores);
-    }
+    // Filter based on the `inCampus` field
+    final filteredBrands =
+        allBrands.where((brand) => brand.inCampus == showInCampus).toList();
+    brandsToShow.assignAll(filteredBrands);
+
     isLoading.value = false;
+  }
+
+  Future<void> filterStoresByExclusive(bool showExclusive) async {
+    isLoading.value = true;
+
+    if (showExclusive) {
+      final exclusiveStores =
+          allBrands.where((brand) => brand.exclusive == true).toList();
+      brandsToShow.assignAll(exclusiveStores);
+    } else {
+      brandsToShow.assignAll(allBrands); // Reset filter
+    }
+
+    isLoading.value = false;
+  }
+
+  // Fetch and update isExclusive status for a specific brand
+  Future<void> updateIsExclusiveStatus(String brandId) async {
+    try {
+      final isExclusive = await brandRepository.fetchIsExclusive(brandId);
+      final brand = allBrands.firstWhere((b) => b.id == brandId);
+      brand.exclusive = isExclusive; // Update the local model
+      brandsToShow.refresh(); // Refresh observable list
+    } catch (e) {
+      print('Error updating exclusive status: $e');
+    }
   }
 }

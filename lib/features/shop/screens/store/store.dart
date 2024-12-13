@@ -142,6 +142,22 @@ class _StoreScreenState extends State<StoreScreen> {
                         ),
                         const SizedBox(width: 8.0),
                         AnimatedFilterButton(
+                          label: 'Exclusive',
+                          isSelected: selectedFilter == 'Exclusive',
+                          onPressed: () {
+                            setFilter(selectedFilter == 'Exclusive'
+                                ? null
+                                : 'Exclusive');
+                            if (selectedFilter == 'Exclusive') {
+                              brandController.filterStoresByExclusive(true);
+                            } else {
+                              brandController.resetBrands();
+                            }
+                          },
+                        ),
+
+                        const SizedBox(width: 8.0),
+                        AnimatedFilterButton(
                           label: 'Opened Stores',
                           isSelected: selectedFilter == 'Opened Stores',
                           onPressed: () {

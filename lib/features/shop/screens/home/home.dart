@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: TSizes.spaceBtwItems - 4),
+                  const SizedBox(height: TSizes.spaceBtwItems - 8),
 
                   // Exclusive Card
                   ExclusiveCard(

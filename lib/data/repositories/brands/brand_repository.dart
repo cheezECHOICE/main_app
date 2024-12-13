@@ -100,4 +100,16 @@ class BrandRepository extends GetxController {
     }
     return null;
   }
+
+  // Fetch exclusive
+  Future<bool?> fetchIsExclusive(String brandId) async {
+    final response = await http.get(Uri.parse('$_brandByIdEndPoint$brandId'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['status'] as bool?;
+    } else {
+      throw Exception('Failed to fetch exclusive status for brand $brandId');
+    }
+  }
 }

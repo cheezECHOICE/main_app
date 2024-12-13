@@ -7,6 +7,8 @@ class BrandModel {
   bool? isFeatured;
   bool? isOpen;
   String? deliveryTime;
+  bool? inCampus;
+  bool? exclusive;
 
   BrandModel({
     required this.id,
@@ -15,6 +17,8 @@ class BrandModel {
     this.isFeatured,
     this.isOpen,
     this.deliveryTime,
+    this.inCampus,
+    this.exclusive,
   });
 
   // Empty helper function
@@ -29,6 +33,8 @@ class BrandModel {
       'isopen': isOpen,
       'isfeatured': isFeatured,
       'deliveryTime': deliveryTime,
+      'inCampus': inCampus,
+      'exclusive': exclusive,
     };
   }
 
@@ -42,6 +48,8 @@ class BrandModel {
       isFeatured: data['isFeatured'] ?? false,
       isOpen: data['isOpen'] ?? false,
       deliveryTime: data['deliveryTime'],
+      inCampus: data['inCampus'],
+      exclusive: data['exclusive'] ?? false,
     );
   }
 
