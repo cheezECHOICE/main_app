@@ -1,3 +1,4 @@
+import 'package:cheezechoice/features/shop/screens/home/widgets/exclusive_card.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/widgets/custom_shapes/container/primary_header_container.dart';
 import 'package:cheezechoice/features/shop/screens/home/widgets/home_appbar.dart';
@@ -13,18 +14,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            //Header
-            TPrimaryHeaderContainer(
+            // Header
+            const TPrimaryHeaderContainer(
               child: Column(
                 children: [
-                  //Appbar
+                  // Appbar
                   THomeAppBar(),
 
-                  //SearchBar
+                  // SearchBar
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: SearchContainer(),
@@ -39,33 +40,94 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            //Categories
-            SizedBox(height: TSizes.spaceBtwInputFields),
-            Padding(
+            // Categories
+            const SizedBox(height: TSizes.spaceBtwInputFields),
+            const Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: TSizes.defaultSpace / 2),
               child: Column(
                 children: [
-                  TitleDivider(
-                    title: 'Categories',
-                  ),
+                  TitleDivider(title: 'Categories'),
                   SizedBox(height: TSizes.spaceBtwItems - 2),
 
-                  //Categories
+                  // Categories
                   THomeCategories(),
                 ],
               ),
             ),
-            SizedBox(height: TSizes.spaceBtwItems),
+
+            const SizedBox(height: TSizes.spaceBtwItems * 2 - 2),
+
+            // divider
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+              child: Divider(
+                thickness: 0.2,
+                color: Colors.grey,
+              ),
+            ),
+
+            const SizedBox(height: TSizes.spaceBtwItems - 12),
+
+            // Exclusive Store card
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: TSizes.defaultSpace / 2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: const Text(
+                          'Exclusive Stores',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          print('View All pressed');
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.blue,
+                        ),
+                        child: const Text(
+                          'View All',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: TSizes.spaceBtwItems - 4),
+
+                  // Exclusive Card
+                  ExclusiveCard(
+                    imagePath: 'assets/exclusive.webp',
+                    onPressed: () {
+                      print('Exclusive Card Pressed');
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: TSizes.spaceBtwItems + 4),
 
             // Popular Products
-            Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
               child: Column(
                 children: [
-                  TitleDivider(
-                    title: 'Popular Items',
-                  ),
+                  TitleDivider(title: 'Popular Items'),
                   SizedBox(height: TSizes.spaceBtwItems),
                   PopularProducts(),
                 ],
