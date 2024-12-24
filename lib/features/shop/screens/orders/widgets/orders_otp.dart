@@ -1,3 +1,4 @@
+import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
 import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
@@ -37,7 +38,7 @@ class OrderOtpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 Text(
-                  'Total Amount: Rs.${order.totalAmount.toStringAsFixed(2)}',
+                  'Total Amount: Rs.${TPricingCalculator.finalTotalPrice(order.totalAmount,order.address).toStringAsFixed(2)}',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),

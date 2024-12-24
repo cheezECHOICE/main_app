@@ -55,16 +55,16 @@ class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
     // Calculate billing details
-    final double subtotal = widget.order.totalAmount;
+    final double subtotal = widget.order.totalAmount - (widget.order.totalAmount)*0.025 - (widget.order.totalAmount)*0.025;
     final double cgst =
-        TPricingCalculator.getCGST(subtotal, widget.order.address);
+        TPricingCalculator.getCGST(widget.order.totalAmount, widget.order.address);
     final double sgst =
-        TPricingCalculator.getSGST(subtotal, widget.order.address);
-    final double platformFee = 10.0; // Replace with actual calculation logic
+        TPricingCalculator.getSGST(widget.order.totalAmount, widget.order.address);
+    final double platformFee = TPricingCalculator.getTaxRateForLocation(subtotal, widget.order.address);
     final double deliveryCharge = TPricingCalculator.getDeliveryForLocation(
-        subtotal, widget.order.address);
+        widget.order.totalAmount, widget.order.address);
     final double finalTotal =
-        TPricingCalculator.finalTotalPrice(subtotal, widget.order.address);
+        TPricingCalculator.finalTotalPrice(widget.order.totalAmount, widget.order.address);
 
     return TRoundedContainer(
       showBorder: true,
@@ -272,7 +272,7 @@ class _OrderCardState extends State<OrderCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildBillingRow('Subtotal', subtotal),
+                _buildBillingRow('Taxable Amount', subtotal),
                 _buildBillingRow('CGST (2.5%)', cgst),
                 _buildBillingRow('SGST (2.5%)', sgst),
                 _buildBillingRow('Platform Fee', platformFee),

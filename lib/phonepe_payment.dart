@@ -285,7 +285,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  PhonepePg(context: context, amount: int.parse(textEditingController.text)).init();
+                  PhonepePg(context: context, amount: double.parse(textEditingController.text)).init();
                 },
                 child: const Text("Check out"))
           ],

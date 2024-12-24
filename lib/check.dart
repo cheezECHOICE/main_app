@@ -2,13 +2,14 @@ import 'dart:convert' show base64Encode, jsonEncode, utf8;
 import 'dart:developer';
 import 'dart:math';
 
+import 'package:cheezechoice/features/shop/screens/checkout/checkout.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/phonepe_payment.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
 class PhonepePg {
-  int amount;
+  double amount;
   BuildContext context;
 
   PhonepePg({required this.context, required this.amount});
@@ -50,7 +51,7 @@ class PhonepePg {
         .then((success) {
       //log("Payment success ${success}");
       Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (a) => CheckoutPage()), (e) => false);
+          MaterialPageRoute(builder: (a) => CheckOutScreen()), (e) => false);
     }).catchError((error) {
       //log("Payment failed $error");
     });

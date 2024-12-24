@@ -11,6 +11,6 @@ class PaymentMethodModel {
 
 List<PaymentMethodModel> paymentMethods = [
   // PaymentMethodModel(image: TImages.paytm, name: 'Paytm'),
-  // PaymentMethodModel(image: TImages.razorPay, name: 'RazorPay'),
-  PaymentMethodModel(image: TImages.cod, name: 'Cash On Delivery')
+  PaymentMethodModel(image: TImages.cod, name: 'Cash On Delivery'),
+  PaymentMethodModel(image: TImages.razorPay, name: 'RazorPay'),
 ];
