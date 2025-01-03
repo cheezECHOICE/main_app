@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
+import 'package:cheezechoice/features/shop/screens/checkout/widgets/order_type.dart';
 import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/styles/TRoundedContainer.dart';
@@ -27,8 +29,9 @@ class CheckOutScreen extends StatelessWidget {
     final cartController = CartController.instance;
     final subtotal = cartController.totalCartPrice.value;
     final orderController = Get.put(OrderController());
+    final brandController = Get.put(BrandController()); 
     final dark = THelperFunctions.isDarkMode(context);
-    final isDialogActive = false.obs; // To track if a dialog is active
+    final isDialogActive = false.obs;
 
     return Scaffold(
       appBar: TAppBar(
@@ -47,6 +50,23 @@ class CheckOutScreen extends StatelessWidget {
               /// Coupon Section
               const TCouponCode(),
               const SizedBox(height: TSizes.spaceBtwSections),
+
+              /// Order Type Button
+              Obx(() {
+                final inCampusBrands = brandController.brandsToShow
+                    .where((brand) => brand.inCampus!)
+                    .toList();
+                final hasInCampusBrand = inCampusBrands.isNotEmpty;
+
+                return hasInCampusBrand
+                    ? Column(
+                        children: [
+                          OrderTypeButton(),
+                          const SizedBox(height: TSizes.spaceBtwSections),
+                        ],
+                      )
+                    : const SizedBox.shrink();
+              }),
 
               /// Delivery Address Section
               DeliveryAddressSection2(),
@@ -165,22 +185,22 @@ class CheckOutScreen extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                  isCanceled = true; // Skip the dialog and process order
-                  mainTimer?.cancel(); // Cancel main timer
-                  mainTimer = null; // Clear main timer reference
-                  Navigator.pop(context); // Close dialog
-                  orderController.processPrismaOrder(); // Process order
-                  isDialogActive.value = false; // Unblock checkout button
+                  isCanceled = true; 
+                  mainTimer?.cancel();
+                  mainTimer = null; 
+                  Navigator.pop(context); 
+                  orderController.processPrismaOrder(); 
+                  isDialogActive.value = false; 
                 },
                 child: const Text("Skip & proceed"),
               ),
               TextButton(
                 onPressed: () {
-                  isCanceled = true; // Cancel operation
-                  mainTimer?.cancel(); // Cancel main timer
-                  mainTimer = null; // Clear main timer reference
-                  Navigator.pop(context); // Close dialog
-                  isDialogActive.value = false; // Unblock checkout button
+                  isCanceled = true; 
+                  mainTimer?.cancel(); 
+                  mainTimer = null; 
+                  Navigator.pop(context); 
+                  isDialogActive.value = false;
                 },
                 child: const Text("Cancel"),
               ),
@@ -188,10 +208,9 @@ class CheckOutScreen extends StatelessWidget {
           );
         },
       ).then((_) {
-        // Ensure timers are canceled when dialog is dismissed
         mainTimer?.cancel();
         mainTimer = null;
-        isDialogActive.value = false; // Unblock checkout button
+        isDialogActive.value = false; 
       });
     });
   }

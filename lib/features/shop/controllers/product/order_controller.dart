@@ -1,4 +1,5 @@
 import 'package:cheezechoice/check.dart';
+import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
 import 'package:cheezechoice/features/shop/screens/checkout/widgets/select_addresses.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -257,20 +258,40 @@ void processPrismaOrder() async {
       TFullScreenLoader.stopLoading();
       return;
     }
+    
+    final brandController = Get.put(BrandController()); 
+    final inCampusBrands = brandController.brandsToShow
+    .where((brand) => brand.inCampus!)
+    .toList();
+    final hasInCampusBrand = inCampusBrands.isNotEmpty;
 
-    // Check payment method
-    if (checkoutController.selectedPaymentMethod == paymentMethods[0]) {
-      // Proceed with the existing order processing logic
-      await pushOrderToDatabase(userId, cartController);
-    } else if (checkoutController.selectedPaymentMethod == paymentMethods[1]) {
-      // Process payment using PhonePe SDK
-      await processPhonePePayment(TPricingCalculator.finalTotalPrice(
-        cartController.totalCartPrice.value, 'IND.'));
+if (hasInCampusBrand) {
+  if (checkoutController.selectedPaymentMethod == paymentMethods[1]) {
+    await processPhonePePayment(TPricingCalculator.finalTotalPrice(
+      cartController.totalCartPrice.value, 'IND.'));
+  } else {
+    // Show an error message to the user
+    TFullScreenLoader.stopLoading();
+    TLoaders.warningSnackBar(
+          title: 'Only UPI available',
+          message: 'Only PhonePe payment is allowed for in-campus orders.');
+    return;
+  }
+} else {
+  // Allow both payment methods for non in-campus brands
+  if (checkoutController.selectedPaymentMethod == paymentMethods[0]) {
+    // Proceed with the existing order processing logic
+    await pushOrderToDatabase(userId, cartController);
+  } else if (checkoutController.selectedPaymentMethod == paymentMethods[1]) {
+    // Process payment using PhonePe SDK
+    await processPhonePePayment(TPricingCalculator.finalTotalPrice(
+      cartController.totalCartPrice.value, 'IND.'));
+  } else {
+    TFullScreenLoader.stopLoading();
+    return;
+  }
+}
 
-    } else {
-      TFullScreenLoader.stopLoading();
-      return;
-    }
   } catch (e) {
     TFullScreenLoader.stopLoading();
     TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -307,16 +328,11 @@ Future<void> pushOrderToDatabase(String userId, CartController cartController) a
         cartController.totalCartPrice.value, 'IND.'),
     userId,
     products,
-    TPricingCalculator.getDeliveryForLocation(
-        cartController.totalCartPrice.value, 'IND.'),
-    TPricingCalculator.getTaxRateForLocation(
-        cartController.totalCartPrice.value, 'IND.'),
-    TPricingCalculator.finalTotalPrice(
-        cartController.totalCartPrice.value, 'IND.'),
-    TPricingCalculator.getCGST(
-        cartController.totalCartPrice.value, 'IND.'),
-    TPricingCalculator.getSGST(
-        cartController.totalCartPrice.value, 'IND.'),
+    TPricingCalculator.getDeliveryForLocation(cartController.totalCartPrice.value, 'IND.'),
+    TPricingCalculator.getTaxRateForLocation(cartController.totalCartPrice.value, 'IND.'),
+    TPricingCalculator.finalTotalPrice(cartController.totalCartPrice.value, 'IND.'),
+    TPricingCalculator.getCGST(cartController.totalCartPrice.value, 'IND.'),
+    TPricingCalculator.getSGST(cartController.totalCartPrice.value, 'IND.'),
   );
 
   // Show success screen

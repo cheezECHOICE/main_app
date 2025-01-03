@@ -39,11 +39,11 @@ class NavigationMenu extends StatelessWidget {
                 darkMode ? TColors.black : TColors.white.withOpacity(0.1),
             indicatorColor: TColors.primary.withOpacity(0.2),
             destinations: const [
-              NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
+              NavigationDestination(icon: Icon(Iconsax.home), label: 'Hub'),
               NavigationDestination(
-                  icon: Icon(Iconsax.shop_add), label: 'Store'),
+                  icon: Icon(Iconsax.shop_add), label: 'Bistros'),
               NavigationDestination(
-                  icon: Icon(Iconsax.shopping_cart), label: 'Cart'),
+                  icon: Icon(Iconsax.shopping_cart), label: 'Tray'),
               NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
             ],
           ),
@@ -72,7 +72,7 @@ class NavigationController extends GetxController {
   ];
   // Method to navigate to "My Orders" in the Settings screen
   void goToMyOrders() {
-    selectedIndex.value = 3; // Index for 'Profile' Tab
+    selectedIndex.value = 3; 
     Future.delayed(Duration(milliseconds: 100), () {
       Get.to(() => const OrderScreen());
     });

@@ -1,5 +1,7 @@
 import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
+import 'package:cheezechoice/data/repositories/brands/brand_repository.dart';
 import 'package:cheezechoice/features/shop/controllers/product/variation_controller.dart';
+import 'package:cheezechoice/features/shop/models/brand_model.dart';
 import 'package:cheezechoice/features/shop/models/cart_item_model.dart';
 import 'package:cheezechoice/features/shop/models/order_model.dart';
 import 'package:cheezechoice/features/shop/models/product_model.dart';
@@ -20,6 +22,7 @@ class CartController extends GetxController {
   CartController() {
     loadCartItems();
   }
+
 
   //Add items to the cart
   void addToCart(ProductModel product) {

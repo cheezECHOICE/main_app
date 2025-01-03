@@ -12,8 +12,8 @@ class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
   String? selectedRoom; // To hold selected room
 
   final Map<String, List<String>> roomOptions = {
-    "Men's": ["MH1", "MH2", "MH3", "MH4", "MH5", "MH6", "CB"],
-    "Ladies": ["LH1", "LH2", "LH3"],
+    "Boys": ["MH1", "MH2", "MH3", "MH4", "MH5", "MH6", "CB"],
+    "Girls": ["LH1", "LH2", "LH3"],
   };
 
   bool isAvailable() {

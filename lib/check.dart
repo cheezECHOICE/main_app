@@ -36,7 +36,7 @@ class PhonepePg {
       "merchantUserId": "asas", // login
       "amount": amount * 100, // paisa
       "callbackUrl": callbackURL,
-      "mobileNumber": "9876543210", // login
+      "mobileNumber": "", // login
       "paymentInstrument": {"type": "PAY_PAGE"}
     };
     //log(body.toString());
@@ -54,6 +54,8 @@ class PhonepePg {
           MaterialPageRoute(builder: (a) => CheckOutScreen()), (e) => false);
     }).catchError((error) {
       //log("Payment failed $error");
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (a) => CheckOutScreen()), (e) => false);
     });
   }
 
