@@ -353,8 +353,8 @@ Future<void> pushOrderToDatabase(String userId, CartController cartController) a
 // Helper method for PhonePe payment
 Future<void> processPhonePePayment(double amount) async {
   try {
-    final phonePe = PhonepePg(context: Get.context!, amount: amount);
-    phonePe.init();
+    final phonePe = PhonepePaymentGateway(context: Get.context!, amount: amount);
+    phonePe.initializeSdk();
   } catch (e) {
     TLoaders.errorSnackBar(
         title: 'Payment Failed', message: 'PhonePe Payment Failed: $e');

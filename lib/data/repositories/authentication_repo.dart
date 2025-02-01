@@ -10,16 +10,12 @@ import 'package:cheezechoice/data/repositories/user/user_repo.dart';
 import 'package:cheezechoice/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:cheezechoice/features/authentication/screens/login/login.dart';
 import 'package:cheezechoice/features/authentication/screens/onboarding/onboarding.dart';
-import 'package:cheezechoice/features/authentication/screens/signup/verify_email.dart';
-import 'package:cheezechoice/features/personalisation/controllers/user_controller.dart';
-import 'package:cheezechoice/navigation_menu.dart';
-import 'package:cheezechoice/phonepe_payment.dart';
+import 'package:cheezechoice/launching.dart';
 import 'package:cheezechoice/utils/constants/api_constants.dart';
 import 'package:cheezechoice/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:cheezechoice/utils/exceptions/firebase_exception.dart';
 import 'package:cheezechoice/utils/exceptions/format_exception.dart';
 import 'package:cheezechoice/utils/exceptions/paltform_exception.dart';
-import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -56,22 +52,28 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Function to Show Relevant Screen
+  // void screenRedirect() async {
+  //   final user = _auth.currentUser;
+  //   if (user != null) {
+  //     await TLocalStorage.init(user.uid);
+  //     if (user.emailVerified) {
+  //       Get.offAll(() => const NavigationMenu());
+  //     } else {
+  //       Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
+  //     }
+  //   } else {
+  //     // Local Storage
+  //     deviceStorage.writeIfNull('isFirstTime', true);
+  //     deviceStorage.read('isFirstTime') != true
+  //         ? Get.off(() => const LoginScreen())
+  //         : Get.off(() => const OnBoardingScreen());
+  //   }
+  // }
   void screenRedirect() async {
-    final user = _auth.currentUser;
-    if (user != null) {
-      await TLocalStorage.init(user.uid);
-      if (user.emailVerified) {
-        Get.offAll(() => const NavigationMenu());
-      } else {
-        Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
-      }
-    } else {
-      // Local Storage
-      deviceStorage.writeIfNull('isFirstTime', true);
+    deviceStorage.writeIfNull('isFirstTime', true);
       deviceStorage.read('isFirstTime') != true
-          ? Get.off(() => const LoginScreen())
+          ? Get.off(() => LoginScreen())
           : Get.off(() => const OnBoardingScreen());
-    }
   }
 
   //[EmailAuthentication] - LogIn
@@ -289,4 +291,48 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+
+    // Method to send OTP
+Future<void> sendOtp(String phoneNumber, Null Function(dynamic verificationId) param1) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  await auth.verifyPhoneNumber(
+    phoneNumber: phoneNumber,
+    verificationCompleted: (PhoneAuthCredential credential) async {
+      // Auto-retrieval or instant verification
+      await auth.signInWithCredential(credential);
+    },
+    verificationFailed: (FirebaseAuthException e) {
+      // Handle error
+      print('Verification failed: ${e.message}');
+    },
+    codeSent: (String verificationId, int? resendToken) {
+      // Store the verification ID for later use
+      // Navigate to OTP input screen
+      deviceStorage.write('verificationId', verificationId);
+    },
+    codeAutoRetrievalTimeout: (String verificationId) {
+      // Auto-retrieval timeout
+    },
+  );
+}
+
+  // Method to verify OTP
+  Future<void> verifyOtp(String verificationId, String smsCode) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  PhoneAuthCredential credential = PhoneAuthProvider.credential(
+    verificationId: verificationId,
+    smsCode: smsCode,
+  );
+
+  try {
+    await auth.signInWithCredential(credential);
+    // Handle successful verification
+  } catch (e) {
+    // Handle error
+    print('Verification failed: $e');
+  }
+}
 }
