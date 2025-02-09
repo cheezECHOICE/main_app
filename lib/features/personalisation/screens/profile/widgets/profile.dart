@@ -64,12 +64,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 showActionButton: false,
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
-              TProfileMenu(
-                title: 'Name',
-                value: controller.user.value.fullName,
-                icon: Iconsax.edit,
-                onPressed: () => Get.to(() => const ChangeName()),
-              ),
+              // TProfileMenu(
+              //   title: 'Name',
+              //   value: controller.user.value.fullName,
+              //   icon: Iconsax.edit,
+              //   onPressed: () => Get.to(() => const ChangeName()),
+              // ),
               TProfileMenu(
                 title: 'UserName',
                 value: controller.user.value.username,
@@ -114,9 +114,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 value: controller.user.value.phoneNumber,
                 onPressed: () {},
               ),
+              TProfileMenu(
+                title: 'Address',
+                value: controller.user.value.address,
+                onPressed: () {},
+              ),
+
 
               // Gender with dropdown
-              TProfileMenu(title: 'User', value: 'Student', onPressed: () {}),
+              // TProfileMenu(title: 'User', value: 'Student', onPressed: () {}),
 
               const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),

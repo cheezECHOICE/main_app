@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:cheezechoice/features/authentication/screens/signup/verify_email.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -38,13 +41,14 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> createPrismaUser(
-      String uid, String name, String email, String phoneNumber) async {
+      String uid, String name, String email, String phoneNumber, String address) async {
     try {
       await Dio().post('$dbLink/user', data: {
         "id": uid,
         "name": name,
         "email": email,
-        "phoneno": phoneNumber
+        "phoneno": phoneNumber,
+        "address": address
       });
     } catch (e) {
       if (kDebugMode) print('Prisma Error: $e');
@@ -52,28 +56,51 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Function to Show Relevant Screen
-  // void screenRedirect() async {
-  //   final user = _auth.currentUser;
-  //   if (user != null) {
-  //     await TLocalStorage.init(user.uid);
-  //     if (user.emailVerified) {
-  //       Get.offAll(() => const NavigationMenu());
-  //     } else {
-  //       Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
-  //     }
-  //   } else {
-  //     // Local Storage
-  //     deviceStorage.writeIfNull('isFirstTime', true);
-  //     deviceStorage.read('isFirstTime') != true
-  //         ? Get.off(() => const LoginScreen())
-  //         : Get.off(() => const OnBoardingScreen());
-  //   }
-  // }
   void screenRedirect() async {
-    deviceStorage.writeIfNull('isFirstTime', true);
+    final user = _auth.currentUser;
+    if (user != null) {
+      await TLocalStorage.init(user.uid);
+      if (user.emailVerified) {
+        Get.offAll(() => const NavigationMenu());
+      } else {
+        Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
+      }
+    } else {
+      // Local Storage
+      deviceStorage.writeIfNull('isFirstTime', true);
       deviceStorage.read('isFirstTime') != true
-          ? Get.off(() => LoginScreen())
+          ? Get.off(() => const LoginScreen())
           : Get.off(() => const OnBoardingScreen());
+    }
+  }
+  // void screenRedirect() async {
+  //   deviceStorage.writeIfNull('isFirstTime', true);
+  //   deviceStorage.read('isFirstTime') != true
+  //       ? Get.off(() => LoginScreen())
+  //       : Get.off(() => const OnBoardingScreen());
+  // }
+
+  Future<bool> checkIfEmailExists(String email) async {
+    try {
+      // Fetch sign-in methods for the provided email
+      List<String> signInMethods =
+          await _auth.fetchSignInMethodsForEmail(email);
+
+      // If the list is not empty, it means the email is already registered with one or more methods
+      return signInMethods.isNotEmpty;
+    } on FirebaseAuthException catch (e) {
+      // Handle specific exceptions related to authentication if necessary
+      if (e.code == 'invalid-email') {
+        // The email is badly formatted or invalid
+        throw ('Invalid email format.');
+      }
+      // If other errors occur, rethrow them
+      rethrow;
+    } catch (e) {
+      // Handle any other errors
+      print('Error in checking email existence: $e');
+      rethrow;
+    }
   }
 
   //[EmailAuthentication] - LogIn
@@ -115,8 +142,9 @@ class AuthenticationRepository extends GetxController {
         userCredential.user!.uid,
         '${signupController.username.text.trim()}', // Accessing username through the controller
         email,
-        signupController.phoneNumber.text
-            .trim(), // Accessing phone number through the controller
+        '${signupController.phoneNumber.text
+            .trim()}',
+        '${signupController.address.text.trim()}' 
       );
 
       return userCredential;
@@ -218,6 +246,7 @@ class AuthenticationRepository extends GetxController {
         googleUser.displayName ?? 'User',
         googleUser.email,
         userCredential.user!.phoneNumber ?? '',
+        ''
       );
 
       return userCredential;
@@ -292,47 +321,47 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
+  // Method to send OTP
+  Future<void> sendOtp(
+      String phoneNumber, Null Function(dynamic verificationId) param1) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
 
-    // Method to send OTP
-Future<void> sendOtp(String phoneNumber, Null Function(dynamic verificationId) param1) async {
-  FirebaseAuth auth = FirebaseAuth.instance;
-
-  await auth.verifyPhoneNumber(
-    phoneNumber: phoneNumber,
-    verificationCompleted: (PhoneAuthCredential credential) async {
-      // Auto-retrieval or instant verification
-      await auth.signInWithCredential(credential);
-    },
-    verificationFailed: (FirebaseAuthException e) {
-      // Handle error
-      print('Verification failed: ${e.message}');
-    },
-    codeSent: (String verificationId, int? resendToken) {
-      // Store the verification ID for later use
-      // Navigate to OTP input screen
-      deviceStorage.write('verificationId', verificationId);
-    },
-    codeAutoRetrievalTimeout: (String verificationId) {
-      // Auto-retrieval timeout
-    },
-  );
-}
+    await auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        // Auto-retrieval or instant verification
+        await auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        // Handle error
+        print('Verification failed: ${e.message}');
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        // Store the verification ID for later use
+        // Navigate to OTP input screen
+        deviceStorage.write('verificationId', verificationId);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Auto-retrieval timeout
+      },
+    );
+  }
 
   // Method to verify OTP
   Future<void> verifyOtp(String verificationId, String smsCode) async {
-  FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
 
-  PhoneAuthCredential credential = PhoneAuthProvider.credential(
-    verificationId: verificationId,
-    smsCode: smsCode,
-  );
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
 
-  try {
-    await auth.signInWithCredential(credential);
-    // Handle successful verification
-  } catch (e) {
-    // Handle error
-    print('Verification failed: $e');
+    try {
+      await auth.signInWithCredential(credential);
+      // Handle successful verification
+    } catch (e) {
+      // Handle error
+      print('Verification failed: $e');
+    }
   }
-}
 }

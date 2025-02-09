@@ -111,35 +111,35 @@ class _StoreScreenState extends State<StoreScreen> {
                           ),
                         ),
                         const SizedBox(width: TSizes.spaceBtwItems * 1.5),
-                        AnimatedFilterButton(
-                          label: 'In-Campus',
-                          isSelected: selectedFilter == 'In-Campus',
-                          onPressed: () {
-                            setFilter(selectedFilter == 'In-Campus'
-                                ? null
-                                : 'In-Campus');
-                            if (selectedFilter == 'In-Campus') {
-                              brandController.filterStoresByCampus(true);
-                            } else {
-                              brandController.resetBrands();
-                            }
-                          },
-                        ),
+                        // AnimatedFilterButton(
+                        //   label: 'In-Campus',
+                        //   isSelected: selectedFilter == 'In-Campus',
+                        //   onPressed: () {
+                        //     setFilter(selectedFilter == 'In-Campus'
+                        //         ? null
+                        //         : 'In-Campus');
+                        //     if (selectedFilter == 'In-Campus') {
+                        //       brandController.filterStoresByCampus(true);
+                        //     } else {
+                        //       brandController.resetBrands();
+                        //     }
+                        //   },
+                        // ),
                         const SizedBox(width: 8.0),
-                        AnimatedFilterButton(
-                          label: 'Off-Campus',
-                          isSelected: selectedFilter == 'Off-Campus',
-                          onPressed: () {
-                            setFilter(selectedFilter == 'Off-Campus'
-                                ? null
-                                : 'Off-Campus');
-                            if (selectedFilter == 'Off-Campus') {
-                              brandController.filterStoresByCampus(false);
-                            } else {
-                              brandController.resetBrands();
-                            }
-                          },
-                        ),
+                        // AnimatedFilterButton(
+                        //   label: 'Off-Campus',
+                        //   isSelected: selectedFilter == 'Off-Campus',
+                        //   onPressed: () {
+                        //     setFilter(selectedFilter == 'Off-Campus'
+                        //         ? null
+                        //         : 'Off-Campus');
+                        //     if (selectedFilter == 'Off-Campus') {
+                        //       brandController.filterStoresByCampus(false);
+                        //     } else {
+                        //       brandController.resetBrands();
+                        //     }
+                        //   },
+                        // ),
                         const SizedBox(width: 8.0),
                         AnimatedFilterButton(
                           label: 'Exclusive',
@@ -182,11 +182,11 @@ class _StoreScreenState extends State<StoreScreen> {
                         ),
                         const SizedBox(width: 8.0),
                         AnimatedFilterButton(
-                          label: 'Popular',
-                          isSelected: selectedFilter == 'Popular',
+                          label: 'Offers',
+                          isSelected: selectedFilter == 'Offers',
                           onPressed: () {
                             setFilter(
-                              selectedFilter == 'Popular' ? null : 'Popular',
+                              selectedFilter == 'Offers' ? null : 'Offers',
                             );
                           },
                         ),

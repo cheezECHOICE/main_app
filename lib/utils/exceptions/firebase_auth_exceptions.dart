@@ -76,7 +76,7 @@ class TFirebaseAuthException implements Exception {
       case 'user-token-mismatch':
         return 'The provided user\'s token has a mismatch with the authenticated user\'s user ID.';
       case 'unknown':
-        return 'An unknown Firebase error occurred. Please try again.';
+        return 'An unknown error occurred. Please try again.';
       case 'invalid-custom-token':
         return 'The custom token format is incorrect. Please check your custom token.';
       case 'custom-token-mismatch':
@@ -94,7 +94,7 @@ class TFirebaseAuthException implements Exception {
       case 'INVALID_LOGIN_CREDENTIALS':
         return 'Invalid login credentials. ';
       default:
-        return 'An unexpected Firebase error occured.Please try again';
+        return 'An unexpected error occured.Please try again';
     }
   }
 }

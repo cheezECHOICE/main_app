@@ -12,9 +12,10 @@ import 'package:get/get.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
+
   // Password Validation Rules
   final passwordValidationRules = <String, bool>{
-    "At least 8 characters": false,
+    "At least 6 characters": false,
     "At least one uppercase letter": false,
     "At least one number": false,
     "At least one special character": false,
@@ -29,7 +30,9 @@ class SignupController extends GetxController {
   final password = TextEditingController();
   final firstName = TextEditingController();
   final phoneNumber = TextEditingController();
+  final address = TextEditingController();
   var privacyPolicy = false.obs;
+  // var address = ''.obs; 
   bool get isSignupEnabled => privacyPolicy.value;
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // formValidation
 
@@ -40,7 +43,7 @@ class SignupController extends GetxController {
   // Update password rules dynamically
   void updatePasswordRules(String value) {
     isTypingPassword.value = value.isNotEmpty;
-    passwordValidationRules['At least 8 characters'] = value.length >= 8;
+    passwordValidationRules['At least 8 characters'] = value.length >= 6;
     passwordValidationRules['At least one uppercase letter'] =
         value.contains(RegExp(r'[A-Z]'));
     passwordValidationRules['At least one number'] =
@@ -54,7 +57,7 @@ class SignupController extends GetxController {
     try {
       // Start Loading
       TFullScreenLoader.openLoadingDialog(
-          'Making your way Foodie World...', TImages.mailanimation);
+          'Making your way to Foodie World...', TImages.mailanimation);
 
       // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -65,21 +68,22 @@ class SignupController extends GetxController {
 
       // Form Validation
       final trimmedUsername = username.text.trim();
-      final trimmedFirstName = firstName.text.trim();
-      final trimmedLastName = lastName.text.trim();
+      // final trimmedFirstName = firstName.text.trim();
+      // final trimmedLastName = lastName.text.trim();
+      final trimmedAddress = address.text.trim();
 
-      // Form Validation
       if (!signupFormKey.currentState!.validate() ||
           _isFieldEmpty(trimmedUsername) ||
-          _isFieldEmpty(trimmedFirstName) ||
-          _isFieldEmpty(trimmedLastName)) {
+          // _isFieldEmpty(trimmedFirstName) ||
+          // _isFieldEmpty(trimmedLastName) ||
+          _isFieldEmpty(trimmedAddress)) {
         TFullScreenLoader.stopLoading();
         TLoaders.customToast(
             message: "Please fill all required fields properly.");
         return;
       }
 
-      // privacy aggrement
+      // Privacy agreement
       if (!privacyPolicy.value) {
         TLoaders.customToast(
             message: "Please agree to the privacy policy to continue.");
@@ -87,19 +91,32 @@ class SignupController extends GetxController {
         return;
       }
 
+      // Check if email is already registered
+      final emailExists = await AuthenticationRepository.instance
+          .checkIfEmailExists(email.text.trim());
+      if (emailExists) {
+        TFullScreenLoader.stopLoading();
+        TLoaders.customToast(
+            message: "This email is already registered. Please log in.");
+        return;
+      }
+
       // Register user in the Firebase Authentication & Save user data in the Firebase
       final userCredential = await AuthenticationRepository.instance
           .registerWithEmailAndPassword(
               email.text.trim(), password.text.trim());
+
+      // Send email verification
+      await userCredential.user?.sendEmailVerification();
+
       // Save Authenticated user data in the Firebase Firestore
       final newuser = UserModel(
         id: userCredential.user!.uid,
-        firstName: firstName.text.trim(),
-        lastName: lastName.text.trim(),
         username: username.text.trim(),
         email: email.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: '',
+        address: address.text.trim(),
       );
 
       final userRepository = Get.put(UserRepository());
@@ -107,7 +124,7 @@ class SignupController extends GetxController {
 
       await TLocalStorage.init(userCredential.user!.uid);
 
-      //Remove loader
+      // Remove loader
       TFullScreenLoader.stopLoading();
       // Show Success Message
       TLoaders.successSnackBar(

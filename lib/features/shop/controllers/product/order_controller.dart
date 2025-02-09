@@ -22,7 +22,7 @@ import 'package:cheezechoice/utils/helpers/pricing_calculator.dart';
 import 'package:cheezechoice/utils/popups/fullScreenLoader.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+// import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
@@ -42,15 +42,15 @@ class OrderController extends GetxController {
 
   final authRepo = Get.put(AuthenticationRepository());
   final FirebaseMessaging firebaseMessaging =
-      FirebaseMessaging.instance; // Firebase Messaging instance
+      FirebaseMessaging.instance; 
 
   void setSelectedAddress(String address) {
     selectedAddress = address;
   }
 
-  String getFinalAddress() {
-    return selectedAddress ?? "Main Gate";
-  }
+  // String getFinalAddress() {
+  //   return selectedAddress ?? "Main Gate";
+  // }
 
   // Method to fetch and save FCM token to Prisma when the user orders
   // Future<void> saveFcmTokenToPrisma() async {
@@ -77,20 +77,20 @@ class OrderController extends GetxController {
   }
 
   // Function to determine if the section should be available
-  bool isAvailable() {
-    final now = DateTime.now();
-    final startAvailability = DateTime(now.year, now.month, now.day, 18);
-    final endAvailability = DateTime(now.year, now.month, now.day, 20);
+  // bool isAvailable() {
+  //   final now = DateTime.now();
+  //   final startAvailability = DateTime(now.year, now.month, now.day, 18);
+  //   final endAvailability = DateTime(now.year, now.month, now.day, 20);
 
-    final dayOfWeek = now.weekday;
-    final isSaturdayEvening =
-        dayOfWeek == DateTime.sunday && now.isAfter(startAvailability);
-    final isSunday = dayOfWeek == DateTime.sunday;
-    final isMondayMorning =
-        dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
+  //   final dayOfWeek = now.weekday;
+  //   final isSaturdayEvening =
+  //       dayOfWeek == DateTime.sunday && now.isAfter(startAvailability);
+  //   final isSunday = dayOfWeek == DateTime.sunday;
+  //   final isMondayMorning =
+  //       dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
 
-    return isSaturdayEvening || isSunday || isMondayMorning;
-  }
+  //   return isSaturdayEvening || isSunday || isMondayMorning;
+  // }
 
   Future<void> calculateParcelCharges() async {
     parcelChargeProcessing.value = true;
@@ -134,9 +134,8 @@ class OrderController extends GetxController {
     }
   }
 
-  // timer clause checkss.
+  // // timer clause checkss.
   Future<bool> validateCheckoutClauses() async {
-    // Check if the user is authenticated
     final userId = AuthenticationRepository.instance.authUser?.uid;
     if (userId == null || userId.isEmpty) {
       TLoaders.warningSnackBar(
@@ -154,7 +153,7 @@ class OrderController extends GetxController {
     }
 
     // Check if the cart value meets the minimum requirement
-    if (cartController.totalCartPrice.value < 150) {
+    if (cartController.totalCartPrice.value < 1) {
       TLoaders.warningSnackBar(
         title: 'Minimum Order Value',
         message: 'Your SubTotal value must be at least ₹180 to proceed.',
@@ -210,7 +209,6 @@ class OrderController extends GetxController {
     }
   }
 
-  // Method for processing Prisma order without Razorpay
 // Method for processing Prisma order with or without PhonePe Payment
 void processPrismaOrder() async {
   try {
@@ -226,7 +224,7 @@ void processPrismaOrder() async {
     }
 
     // Check if address is provided
-    if (isAvailable()) {
+  
       if (selectedAddress == null) {
         TLoaders.warningSnackBar(
             title: 'Address Required',
@@ -235,15 +233,15 @@ void processPrismaOrder() async {
         TFullScreenLoader.stopLoading();
         return;
       }
-    }
+
 
     // Check if the cart value is less than ₹200
     final cartController = CartController.instance;
 
-    if (cartController.totalCartPrice.value < 150) {
+    if (cartController.totalCartPrice.value < 1) {
       TLoaders.warningSnackBar(
         title: 'Minimum Order Value',
-        message: 'Your SubTotal value must be at least ₹180 to proceed.',
+        message: 'Your SubTotal value must be at least ₹250 to proceed.',
       );
       TFullScreenLoader.stopLoading();
       return;
@@ -291,7 +289,6 @@ if (hasInCampusBrand) {
     return;
   }
 }
-
   } catch (e) {
     TFullScreenLoader.stopLoading();
     TLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
@@ -300,7 +297,6 @@ if (hasInCampusBrand) {
 
 // Helper method to push order to database
 Future<void> pushOrderToDatabase(String userId, CartController cartController) async {
-  // Prepare product details
   List<Map<String, dynamic>> products = [];
   for (var item in cartController.cartItems) {
     if (item.takeoutQuantity > 0) {
@@ -321,8 +317,11 @@ Future<void> pushOrderToDatabase(String userId, CartController cartController) a
     }
   }
 
+  bool isPaid = checkoutController.selectedPaymentMethod == paymentMethods[1];
+
   await orderRepository.pushOrder(
     cartController.cartItems.first.brandId,
+    // "VITAP, AndhraPradesh",
     selectedAddress!,
     TPricingCalculator.TotalPrice(
         cartController.totalCartPrice.value, 'IND.'),
@@ -333,6 +332,7 @@ Future<void> pushOrderToDatabase(String userId, CartController cartController) a
     TPricingCalculator.finalTotalPrice(cartController.totalCartPrice.value, 'IND.'),
     TPricingCalculator.getCGST(cartController.totalCartPrice.value, 'IND.'),
     TPricingCalculator.getSGST(cartController.totalCartPrice.value, 'IND.'),
+    isPaid,
   );
 
   // Show success screen
@@ -353,7 +353,7 @@ Future<void> pushOrderToDatabase(String userId, CartController cartController) a
 // Helper method for PhonePe payment
 Future<void> processPhonePePayment(double amount) async {
   try {
-    final phonePe = PhonepePaymentGateway(context: Get.context!, amount: amount);
+    final phonePe = PhonepePaymentGateway(context: Get.context!, amount: 1);
     phonePe.initializeSdk();
   } catch (e) {
     TLoaders.errorSnackBar(

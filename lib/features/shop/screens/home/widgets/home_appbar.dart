@@ -1,3 +1,4 @@
+import 'package:cheezechoice/common/widgets/products/cart/cart_menu_icon%20copy.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/common/widgets/appbar/appbar.dart';
 import 'package:cheezechoice/common/widgets/products/cart/cart_menu_icon.dart';
@@ -28,7 +29,7 @@ class THomeAppBar extends StatelessWidget {
             if (controller.profileLoading.value) {
               return const TShimmerEffect(width: 80, height: 15);
             } else {
-              return Text(controller.user.value.fullName,
+              return Text(controller.user.value.username,
                   style: Theme.of(context)
                       .textTheme
                       .labelMedium!
@@ -38,10 +39,14 @@ class THomeAppBar extends StatelessWidget {
         ],
       ),
       actions: const [
-        TWishlistCounterIcon(
+        // TWishlistCounterIcon(
+        //     iconColor: TColors.white,
+        //     counterBgColor: TColors.white,
+        //     counterTextColor: Colors.red),
+            TWishlistCounterIcon2(
             iconColor: TColors.white,
-            counterBgColor: TColors.primary,
-            counterTextColor: TColors.white),
+            counterBgColor: TColors.white,
+            counterTextColor: Colors.red),
       ],
     );
   }

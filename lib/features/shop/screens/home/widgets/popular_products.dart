@@ -18,7 +18,7 @@ class PopularProducts extends StatelessWidget {
 
       return GridView.builder(
         // itemCount: homeController.products.length,
-        itemCount: 6,
+        itemCount: 4,
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),

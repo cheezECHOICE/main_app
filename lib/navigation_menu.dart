@@ -1,3 +1,4 @@
+import 'package:cheezechoice/features/pickup/screens/handoff.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/features/personalisation/screens/settings/settings.dart';
 import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
@@ -36,14 +37,15 @@ class NavigationMenu extends StatelessWidget {
               controller.selectedIndex.value = index;
             },
             backgroundColor:
-                darkMode ? TColors.black : TColors.white.withOpacity(0.1),
+                darkMode ? TColors.black : TColors.grey.withOpacity(0.1),
             indicatorColor: TColors.primary.withOpacity(0.2),
             destinations: const [
               NavigationDestination(icon: Icon(Iconsax.home), label: 'Hub'),
+              //  NavigationDestination(icon: Icon(Iconsax.export), label: 'HandOff'),
               NavigationDestination(
                   icon: Icon(Iconsax.shop_add), label: 'Bistros'),
               NavigationDestination(
-                  icon: Icon(Iconsax.shopping_cart), label: 'Tray'),
+                  icon: Icon(Iconsax.bag_tick), label: 'Tray'),
               NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
             ],
           ),
@@ -55,7 +57,8 @@ class NavigationMenu extends StatelessWidget {
 
   void _resetStores() {
     if (NavigationController.instance.selectedIndex.value == 1) {
-      BrandController.instance.resetBrands();
+      final brand = Get.put(BrandController());
+      brand.resetBrands();
     }
   }
 }
@@ -65,9 +68,10 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 
   final screens = [
-    const HomeScreen(),
+    HomeScreen(),
+    // MapPage(),
     const StoreScreen(),
-    const CartScreen(),
+    const OrderScreen(),
     const SettingScreen(),
   ];
   // Method to navigate to "My Orders" in the Settings screen
@@ -77,4 +81,5 @@ class NavigationController extends GetxController {
       Get.to(() => const OrderScreen());
     });
   }
+  
 }

@@ -19,6 +19,10 @@ class TValidator {
       return 'Invalid email address.';
     }
 
+    // if (!value.endsWith('@vitapstudent.ac.in') || !value.endsWith('@gmail.com')) {
+    //   return 'Email must be a VIT-AP student email';
+    // }
+
     return null;
   }
 

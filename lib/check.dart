@@ -75,9 +75,13 @@ import 'dart:convert' show base64Encode, jsonEncode, utf8;
 import 'dart:developer';
 import 'dart:math' hide log;
 
+import 'package:cheezechoice/common/widgets/success_screen/success_screen.dart';
 import 'package:cheezechoice/features/shop/screens/checkout/checkout.dart';
+import 'package:cheezechoice/navigation_menu.dart';
+import 'package:cheezechoice/utils/constants/image_strings.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
 class PhonepePaymentGateway {
@@ -89,7 +93,7 @@ class PhonepePaymentGateway {
   static const String _merchantId = "M22HEZTG4PPQA";
   static const String _salt = "676835a1-a270-4ad0-926e-cf731976b6ac"; 
   static const int _saltIndex = 1; 
-  static const String _callbackUrl = '';
+  static const String _callbackUrl = 'https://webhook.site/b590d414-be68-4eb7-aa81-2909c5f247db';
   static const String _apiEndpoint = '/pg/v1/pay';
 
   PhonepePaymentGateway({
@@ -120,43 +124,56 @@ class PhonepePaymentGateway {
   }
 
   /// Start a payment transaction
-  Future<void> startTransaction() async {
-    try {
-      String transactionId = generateTransactionId();
-      Map<String, dynamic> body = _buildRequestPayload(transactionId);
-      String bodyEncoded = base64Encode(utf8.encode(jsonEncode(body)));
-      String checksum = _generateChecksum(bodyEncoded);
+Future<void> startTransaction() async {
+  try {
+    String transactionId = generateTransactionId();
+    Map<String, dynamic> body = _buildRequestPayload(transactionId);
+    String bodyEncoded = base64Encode(utf8.encode(jsonEncode(body)));
+    String checksum = _generateChecksum(bodyEncoded);
 
-      Map? success = await PhonePePaymentSdk.startTransaction(
-        bodyEncoded,
-        _callbackUrl,
-        checksum,
-        "com.appenexus.cheezechoice",
-      );
+    Map? success = await PhonePePaymentSdk.startTransaction(
+      bodyEncoded,
+      _callbackUrl,
+      checksum,
+      "com.appenexus.cheezechoice",
+    );
 
-      if (success != null) {
-        log('Payment successful');
-        _navigateToCheckout();
-      } else {
-        log('Payment failed');
-        _navigateToCheckout();
-      }
-    } catch (error) {
-      log('Error during transaction: $error');
-      showErrorSnackbar('Payment failed. Please try again.');
+    if (success != null && success['status'] == 'SUCCESS') {
+      log('Payment successful');
+      _navigateToSuccess();  // Navigate to success screen
+    } else {
+      log('Payment failed');
       _navigateToCheckout();
     }
+  } catch (error) {
+    log('Error during transaction: $error');
+    showErrorSnackbar('Payment failed. Please try again.');
+    _navigateToCheckout();
   }
+}
+
+void _navigateToSuccess() {
+  Get.off(() => SuccessScreen(
+        image: TImages.successfulPaymentIcon,
+        title: 'Order Processed',
+        subtitle: 'Your item will be ready soon!',
+        onPressed: () {
+          Get.offAll(() => const NavigationMenu());
+          NavigationController.instance.goToMyOrders();
+        },
+      ));
+}
+
 
   /// Build the request payload
   Map<String, dynamic> _buildRequestPayload(String transactionId) {
     return {
       "merchantId": _merchantId,
       "merchantTransactionId": transactionId,
-      "merchantUserId": "user123", // Replace with actual user ID
+      "merchantUserId": "cheezECHOICE", 
       "amount": (amount * 100).toInt(), // Convert to paisa
       "callbackUrl": _callbackUrl,
-      "mobileNumber": "9876543210", // Replace with actual mobile number
+      "mobileNumber": "8121069872", 
       "paymentInstrument": {"type": "PAY_PAGE"},
     };
   }
@@ -174,13 +191,10 @@ class PhonepePaymentGateway {
   }
 
   /// Navigate to the checkout screen
-  void _navigateToCheckout() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (_) => CheckOutScreen()),
-      (route) => false,
-    );
-  }
+ void _navigateToCheckout() {
+  Get.off(() => const CheckOutScreen());
+}
+
 
   /// Show an error snackbar
   void showErrorSnackbar(String message) {

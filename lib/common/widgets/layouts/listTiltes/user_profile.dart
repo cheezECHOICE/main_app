@@ -33,7 +33,7 @@ class TUserProfileTile extends StatelessWidget {
               );
       }),
       title: Text(
-        controller.user.value.fullName,
+        controller.user.value.username,
         style: Theme.of(context)
             .textTheme
             .headlineMedium!

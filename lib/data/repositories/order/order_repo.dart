@@ -85,7 +85,8 @@ class OrderRepository extends GetxController {
       double platformFee,
       double finalTotalAmount,
       double CGST,
-      double SGST) async {
+      double SGST,
+      bool isPaid) async {
     try {
       await Dio().post(orderEndpoint, data: {
         'brandId': brandId,
@@ -98,6 +99,7 @@ class OrderRepository extends GetxController {
         'finalTotalAmount': finalTotalAmount,
         'cGST': CGST,
         'sGST': SGST,
+        'isPaid':isPaid,
       });
       // // Update FCM token when placing an order
       String? fcmToken = await getFcmToken();

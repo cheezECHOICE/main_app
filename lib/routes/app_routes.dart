@@ -20,7 +20,7 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppRoutes {
   static final pages = [
-    GetPage(name: TRoutes.home, page: () => const HomeScreen()),
+    GetPage(name: TRoutes.home, page: () => HomeScreen()),
     GetPage(name: TRoutes.store, page: () => const StoreScreen()),
     GetPage(
         name: TRoutes.storeProducts, page: () => const StoreProductsScreen()),

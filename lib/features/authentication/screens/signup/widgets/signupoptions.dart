@@ -1,3 +1,4 @@
+import 'package:cheezechoice/features/authentication/screens/signup/widgets/college_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/features/authentication/screens/signup/signup.dart';
 import 'package:cheezechoice/features/authentication/screens/signup/signup2.dart';
@@ -8,8 +9,26 @@ class SignUpOptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Join Us!'),
-        backgroundColor: Color(0xFF935EB2),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 14.0, top: 16),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white.withOpacity(0.1)
+                    : Colors.black.withOpacity(0.1),
+              ),
+              child: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).iconTheme.color,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -17,12 +36,12 @@ class SignUpOptionPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Choose Your Path',
+              'Order Your Feast',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
             Text(
-              'We are excited to have you on board! Whether you are a student or an outsider, we have something special for you.',
+              'Welcome to CheezECHOICE!\n Whether you\'re a hungry student or a local foodie, delicious meals are just a tap away. Let\'s get started!',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16),
             ),
@@ -35,8 +54,9 @@ class SignUpOptionPage extends StatelessWidget {
                 ),
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
               ),
-              onPressed: () => Get.to(()=>SignupScreen()),
-              child: Text('Student Sign Up', style: TextStyle(fontSize: 18)),
+              onPressed: () => Get.to(() => SignupScreen()),
+              child: Text('Order as a Student',
+                  style: TextStyle(fontSize: 16, fontFamily: 'Poppins')),
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -47,8 +67,9 @@ class SignUpOptionPage extends StatelessWidget {
                 ),
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
               ),
-              onPressed: () => Get.to(()=>PhoneNumberInput()),
-              child: Text('Outsider Sign Up', style: TextStyle(fontSize: 18)),
+              onPressed: () => Get.to(() => OutsiderSignup()),
+              child: Text('Order as a Local',
+                  style: TextStyle(fontSize: 16, fontFamily: 'Poppins')),
             ),
           ],
         ),

@@ -40,7 +40,7 @@ class PopularProductCard extends StatelessWidget {
                           BorderRadius.vertical(top: Radius.circular(16)),
                       child: ShimmerImage(
                         imageUrl: product.thumbnail,
-                        height: 131,
+                        height: 120,
                         width: double.infinity,
                       ),
                     ),

@@ -3,26 +3,28 @@ import 'package:cheezechoice/utils/formatters/formatter.dart';
 
 class UserModel {
   final String id;
-  String firstName;
-  String lastName;
+  // String firstName;
+  // String lastName;
   final String username;
   final String email;
   String phoneNumber;
   String profilePicture;
+  final String address;
 
   /// Constructor for UserModel.
   UserModel({
     required this.id,
-    required this.firstName,
-    required this.lastName,
+    // required this.firstName,
+    // required this.lastName,
     required this.username,
     required this.email,
     required this.phoneNumber,
     required this.profilePicture,
+    required this.address,
   });
 
   /// Helper function to get the full name.
-  String get fullName => '$firstName $lastName';
+  // String get fullName => '$firstName $lastName';
 
   /// Helper function to format phone number.
   String get formattedPhoneNo => TFormatter.formatPhoneNumber(phoneNumber);
@@ -45,22 +47,24 @@ class UserModel {
   /// Static function to create an empty user model.
   static UserModel empty() => UserModel(
       id: '',
-      firstName: '',
-      lastName: '',
+      // firstName: '',
+      // lastName: '',
       username: '',
       email: '',
       phoneNumber: '',
-      profilePicture: '');
+      profilePicture: '',
+      address:'');
 
   /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
     return {
-      'FirstName': firstName,
-      'LastName': lastName,
+      // 'FirstName': firstName,
+      // 'LastName': lastName,
       'Username': username,
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
+      'Address':address,
     };
   }
 
@@ -71,12 +75,13 @@ class UserModel {
       final data = document.data()!;
       return UserModel(
         id: document.id,
-        firstName: data['FirstName'] ?? '',
-        lastName: data['LastName'] ?? '',
+        // firstName: data['FirstName'] ?? '',
+        // lastName: data['LastName'] ?? '',
         username: data['Username'] ?? '',
         email: data['Email'] ?? '',
         phoneNumber: data['PhoneNumber'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
+        address: data['Address']??''
       );
     }
     // Add a default return statement for the case when document.data() is null

@@ -118,33 +118,37 @@ class _OrderCardState extends State<OrderCard> {
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
           Row(
-            children: [
-              const Icon(Icons.fmd_good_outlined),
-              const SizedBox(width: TSizes.spaceBtwItems / 2),
-              Text(
-                widget.order.address,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  Get.to(() => OrderOtpScreen(order: widget.order));
-                },
-                child: Row(
-                  children: [
-                    Icon(Iconsax.key, size: 18, color: TColors.accent),
-                    const SizedBox(width: 12),
-                    Text(
-                      'OTP',
-                      style: Theme.of(context).textTheme.bodyLarge!.apply(
-                            color: TColors.accent,
-                          ),
-                    ),
-                  ],
+  children: [
+    const Icon(Icons.fmd_good_outlined),
+    const SizedBox(width: TSizes.spaceBtwItems / 2),
+    Expanded(
+      child: Text(
+        widget.order.address,
+        style: Theme.of(context).textTheme.bodyMedium,
+        maxLines: 2, // Allows up to two lines
+        overflow: TextOverflow.ellipsis, // Truncates if too long
+      ),
+    ),
+    const Spacer(),
+    TextButton(
+      onPressed: () {
+        Get.to(() => OrderOtpScreen(order: widget.order));
+      },
+      child: Row(
+        children: [
+          Icon(Iconsax.key, size: 18, color: TColors.accent),
+          const SizedBox(width: 12),
+          Text(
+            'OTP',
+            style: Theme.of(context).textTheme.bodyLarge!.apply(
+                  color: TColors.accent,
                 ),
-              ),
-            ],
           ),
+        ],
+      ),
+    ),
+  ],
+),
           const SizedBox(height: TSizes.spaceBtwItems),
           const Divider(thickness: 1),
           const SizedBox(height: TSizes.spaceBtwItems),

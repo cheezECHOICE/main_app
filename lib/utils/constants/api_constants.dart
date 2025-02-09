@@ -1,6 +1,5 @@
-/* -- LIST OF Constants used in APIs -- */
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-// Example
-const String tSecretAPIKey = "cwt_live_b2da6ds3df3e785v8ddc59198f7615ba";
-
-const String dbLink = 'https://panel-ochre-nine.vercel.app/api';
+String? tSecretAPIKey = dotenv.env['SECRET_API_KEY'];
+String dbLink = dotenv.env['DB_LINK'] ?? '';
+String MAP_API = dotenv.env['MAP_API_KEY'] ?? '';

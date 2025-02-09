@@ -6,7 +6,7 @@ class TFirebaseException implements Exception {
   String get message {
     switch (code) {
       case 'unknown':
-        return 'An unknown Firebase error occurred. Please try again.';
+        return 'An unknown error occurred. Please try again.';
       case 'invalid-custom-token':
         return 'The custom token format is incorrect. Please check your custom token.';
       case 'custom-token-mismatch':
@@ -90,7 +90,7 @@ class TFirebaseException implements Exception {
       case 'credential-already-in-use':
         return 'This credential is already associated with a different user account.';
       default:
-        return 'An unexpected Firebase error occurred. Please try again.';
+        return 'An unexpected error occurred. Please try again.';
     }
   }
 }

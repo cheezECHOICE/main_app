@@ -57,17 +57,19 @@ class UserController extends GetxController {
               UserModel.nameParts(userCredentials.user!.displayName ?? '');
           final username = UserModel.generateUsername(
               userCredentials.user!.displayName ?? '');
+              
 
           //Map Data
           final user = UserModel(
             id: userCredentials.user!.uid,
-            firstName: nameParts[0],
-            lastName:
-                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+            // firstName: nameParts[0],
+            // lastName:
+                // nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
             username: username,
             email: userCredentials.user!.email ?? '',
             phoneNumber: userCredentials.user!.phoneNumber ?? '',
             profilePicture: userCredentials.user!.photoURL ?? '',
+            address:'',
           );
 
           await userRepository.saveUserRecord(user);
@@ -150,7 +152,8 @@ class UserController extends GetxController {
               verifyEmail.text.trim(), verifyPassword.text.trim());
       await AuthenticationRepository.instance.deleteAccount();
       TFullScreenLoader.stopLoading();
-      Get.off(() => const LoginScreen());
+      Get.offAll(() => const LoginScreen());
+
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.warningSnackBar(title: 'Oh Snap!', message: '');

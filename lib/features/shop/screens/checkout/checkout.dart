@@ -69,7 +69,7 @@ class CheckOutScreen extends StatelessWidget {
               }),
 
               /// Delivery Address Section
-              DeliveryAddressSection2(),
+              DeliveryAddressSection(),
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Billing Information

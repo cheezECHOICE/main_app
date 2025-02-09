@@ -1,166 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/features/shop/controllers/product/order_controller.dart';
-import 'dart:ui';
 
-class DeliveryAddressSection2 extends StatefulWidget {
+class DeliveryAddressSection extends StatefulWidget {
   @override
   _DeliveryAddressSectionState createState() => _DeliveryAddressSectionState();
 }
 
-class _DeliveryAddressSectionState extends State<DeliveryAddressSection2> {
-  String? selectedGender; // To hold selected gender
-  String? selectedRoom; // To hold selected room
+class _DeliveryAddressSectionState extends State<DeliveryAddressSection> {
+  String? selectedAddress;
+  bool isCustomAddress = false;
+  TextEditingController customAddressController = TextEditingController();
 
-  final Map<String, List<String>> roomOptions = {
-    "Boys": ["MH1", "MH2", "MH3", "MH4", "MH5", "MH6", "CB"],
-    "Girls": ["LH1", "LH2", "LH3"],
-  };
-
-  bool isAvailable() {
-    final now = DateTime.now();
-    final startAvailability = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      16, // 4 PM
-    );
-    final endAvailability = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      9, // 9 AM
-    ).add(Duration(days: now.weekday == DateTime.monday ? 0 : 1));
-
-    if (now.weekday == DateTime.saturday && now.isAfter(startAvailability)) {
-      return true;
-    } else if (now.weekday == DateTime.sunday) {
-      return true;
-    } else if (now.weekday == DateTime.monday &&
-        now.isBefore(endAvailability)) {
-      return true;
-    }
-    return false;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Set the default address to "Main Gate" when unavailable
-    if (!isAvailable()) {
-      OrderController.instance.setSelectedAddress("Main Gate");
-    }
-  }
+  final List<String> addresses = [
+    "VITAP, Amaravathi AndhraPradesh",
+    "Other (Enter manually)",
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final available = isAvailable();
-
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 2),
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.all(16.0),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Select Block:",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: Text("Men's"),
-                      leading: Radio<String>(
-                        value: "Men's",
-                        groupValue: selectedGender,
-                        onChanged: available
-                            ? (String? value) {
-                                setState(() {
-                                  selectedGender = value;
-                                  selectedRoom = null;
-                                });
-                              }
-                            : null,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ListTile(
-                      title: Text("Ladies"),
-                      leading: Radio<String>(
-                        value: "Ladies",
-                        groupValue: selectedGender,
-                        onChanged: available
-                            ? (String? value) {
-                                setState(() {
-                                  selectedGender = value;
-                                  selectedRoom = null;
-                                });
-                              }
-                            : null,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              if (selectedGender != null) ...[
-                Text(
-                  "Select Address:",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                DropdownButton<String>(
-                  value: selectedRoom,
-                  hint: Text("Choose a block"),
-                  onChanged: available
-                      ? (String? newValue) {
-                          setState(() {
-                            selectedRoom = newValue;
-                            if (selectedRoom != null) {
-                              OrderController.instance
-                                  .setSelectedAddress(selectedRoom!);
-                            }
-                          });
-                        }
-                      : null,
-                  items: roomOptions[selectedGender]?.map((String room) {
-                    return DropdownMenuItem<String>(
-                      value: room,
-                      child: Text(room),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ],
+          Text(
+            "Select Location to deliver:",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          if (!available)
-            Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.56),
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Cannot order today',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+          DropdownButton<String>(
+            value: selectedAddress,
+            hint: Text("Choose an address"),
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedAddress = newValue;
+                isCustomAddress = selectedAddress == "Other (Enter manually)";
+                if (!isCustomAddress && selectedAddress != null) {
+                  OrderController.instance.setSelectedAddress(selectedAddress!);
+                }
+              });
+            },
+            items: addresses.map((String address) {
+              return DropdownMenuItem<String>(
+                value: address,
+                child: Text(
+                  address.length > 20 ? "${address.substring(0, 20)}..." : address, 
+                  overflow: TextOverflow.ellipsis, 
                 ),
+              );
+            }).toList(),
+          ),
+          if (isCustomAddress)
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: TextField(
+                controller: customAddressController,
+                decoration: InputDecoration(
+                  labelText: "Enter your address",
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  OrderController.instance.setSelectedAddress(value);
+                },
               ),
             ),
         ],

@@ -40,30 +40,30 @@ class PromoSlider extends StatelessWidget {
                       .map((banner) => TRoundedImage(
                             imageUrl: banner.imageUrl,
                             isNetworkImage: true,
-                            onPressed: (() => Get.toNamed(banner.targetScreen)),
+                            // onPressed: (() => Get.toNamed(banner.targetScreen)),
                             padding: const EdgeInsets.all(5),
                           ))
                       .toList()),
               const SizedBox(height: TSizes.spaceBtwItems),
-              Center(
-                child: Obx(
-                  () => Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (int i = 0; i < controller.banners.length; i++)
-                        TCircularContainer(
-                          width: 20,
-                          height: 4,
-                          margin: const EdgeInsets.only(right: 10),
-                          backgroundColor:
-                              controller.carousalCurrentIndex.value == i
-                                  ? Colors.black
-                                  : Colors.grey,
-                        ),
-                    ],
-                  ),
-                ),
-              )
+              // Center(
+              //   child: Obx(
+              //     () => Row(
+              //       mainAxisSize: MainAxisSize.min,
+              //       // children: [
+              //       //   for (int i = 0; i < controller.banners.length; i++)
+              //       //     TCircularContainer(
+              //       //       width: 20,
+              //       //       height: 4,
+              //       //       margin: const EdgeInsets.only(right: 10),
+              //       //       backgroundColor:
+              //       //           controller.carousalCurrentIndex.value == i
+              //       //               ? Colors.black
+              //       //               : Colors.grey,
+              //       //     ),
+              //       // ],
+              //     ),
+              //   ),
+              // )
             ],
           );
         }
