@@ -114,11 +114,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 value: controller.user.value.phoneNumber,
                 onPressed: () {},
               ),
-              TProfileMenu(
-                title: 'Address',
-                value: controller.user.value.address,
-                onPressed: () {},
-              ),
+              // TProfileMenu(
+              //   title: 'Address',
+              //   value: controller.user.value.address,
+              //   onPressed: () {},
+              // ),
 
 
               // Gender with dropdown

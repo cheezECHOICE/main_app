@@ -39,10 +39,10 @@ class THomeAppBar extends StatelessWidget {
         ],
       ),
       actions: const [
-        // TWishlistCounterIcon(
-        //     iconColor: TColors.white,
-        //     counterBgColor: TColors.white,
-        //     counterTextColor: Colors.red),
+        TWishlistCounterIcon(
+            iconColor: TColors.white,
+            counterBgColor: TColors.white,
+            counterTextColor: Colors.red),
             TWishlistCounterIcon2(
             iconColor: TColors.white,
             counterBgColor: TColors.white,

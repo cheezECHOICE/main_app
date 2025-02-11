@@ -106,8 +106,8 @@ class PhonepePaymentGateway {
     try {
       bool isInitialized = await PhonePePaymentSdk.init(
         "PRODUCTION",
-        null,
         _merchantId,
+        "cheezECHOICE",
         true,
       );
       log('PhonePe SDK Initialized: $isInitialized');
@@ -133,8 +133,8 @@ Future<void> startTransaction() async {
 
     Map? success = await PhonePePaymentSdk.startTransaction(
       bodyEncoded,
-      _callbackUrl,
-      checksum,
+      // _callbackUrl,
+      // checksum,
       "com.appenexus.cheezechoice",
     );
 

@@ -16,7 +16,7 @@ class SignupController extends GetxController {
   // Password Validation Rules
   final passwordValidationRules = <String, bool>{
     "At least 6 characters": false,
-    "At least one uppercase letter": false,
+    // "At least one uppercase letter": false,
     "At least one number": false,
     "At least one special character": false,
   }.obs;
@@ -30,7 +30,7 @@ class SignupController extends GetxController {
   final password = TextEditingController();
   final firstName = TextEditingController();
   final phoneNumber = TextEditingController();
-  final address = TextEditingController();
+  // final address = TextEditingController();
   var privacyPolicy = false.obs;
   // var address = ''.obs; 
   bool get isSignupEnabled => privacyPolicy.value;
@@ -43,9 +43,9 @@ class SignupController extends GetxController {
   // Update password rules dynamically
   void updatePasswordRules(String value) {
     isTypingPassword.value = value.isNotEmpty;
-    passwordValidationRules['At least 8 characters'] = value.length >= 6;
-    passwordValidationRules['At least one uppercase letter'] =
-        value.contains(RegExp(r'[A-Z]'));
+    passwordValidationRules['At least 6 characters'] = value.length >= 6;
+    // passwordValidationRules['At least one uppercase letter'] =
+        // value.contains(RegExp(r'[A-Z]'));
     passwordValidationRules['At least one number'] =
         value.contains(RegExp(r'[0-9]'));
     passwordValidationRules['At least one special character'] =
@@ -68,15 +68,16 @@ class SignupController extends GetxController {
 
       // Form Validation
       final trimmedUsername = username.text.trim();
-      // final trimmedFirstName = firstName.text.trim();
-      // final trimmedLastName = lastName.text.trim();
-      final trimmedAddress = address.text.trim();
+      final trimmedFirstName = firstName.text.trim();
+      final trimmedLastName = lastName.text.trim();
+      // final trimmedAddress = address.text.trim();
 
       if (!signupFormKey.currentState!.validate() ||
           _isFieldEmpty(trimmedUsername) ||
-          // _isFieldEmpty(trimmedFirstName) ||
-          // _isFieldEmpty(trimmedLastName) ||
-          _isFieldEmpty(trimmedAddress)) {
+          _isFieldEmpty(trimmedFirstName) ||
+          _isFieldEmpty(trimmedLastName) 
+          // _isFieldEmpty(trimmedAddress)
+          ) {
         TFullScreenLoader.stopLoading();
         TLoaders.customToast(
             message: "Please fill all required fields properly.");
@@ -112,11 +113,12 @@ class SignupController extends GetxController {
       // Save Authenticated user data in the Firebase Firestore
       final newuser = UserModel(
         id: userCredential.user!.uid,
+        firstName: firstName.text.trim(),
+        lastName: lastName.text.trim(),
         username: username.text.trim(),
         email: email.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: '',
-        address: address.text.trim(),
       );
 
       final userRepository = Get.put(UserRepository());

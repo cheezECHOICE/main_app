@@ -1,3 +1,4 @@
+import 'package:cheezechoice/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/data/repositories/authentication_repo.dart';
@@ -62,14 +63,13 @@ class UserController extends GetxController {
           //Map Data
           final user = UserModel(
             id: userCredentials.user!.uid,
-            // firstName: nameParts[0],
-            // lastName:
-                // nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+            firstName: nameParts[0],
+            lastName:
+                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
             username: username,
             email: userCredentials.user!.email ?? '',
             phoneNumber: userCredentials.user!.phoneNumber ?? '',
             profilePicture: userCredentials.user!.photoURL ?? '',
-            address:'',
           );
 
           await userRepository.saveUserRecord(user);

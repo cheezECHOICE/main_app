@@ -19,12 +19,40 @@ class TSignupForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final controller = Get.put(SignupController());
-    const String googleMapsApiKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY');
+    // const String googleMapsApiKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY');
 
     return Form(
       key: controller.signupFormKey,
       child: Column(
         children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: controller.firstName,
+                  validator: (value) =>
+                      TValidator.validateEmptyText('FirstName', value),
+                  expands: false,
+                  decoration: const InputDecoration(
+                      labelText: TTexts.firstName,
+                      prefixIcon: Icon(Iconsax.user)),
+                ),
+              ),
+              const SizedBox(width: TSizes.spaceBtwInputFields),
+              Expanded(
+                child: TextFormField(
+                  controller: controller.lastName,
+                  validator: (value) =>
+                      TValidator.validateEmptyText('LastName', value),
+                  expands: false,
+                  decoration: const InputDecoration(
+                      labelText: TTexts.lastName,
+                      prefixIcon: Icon(Iconsax.user)),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
           // Username
           TextFormField(
             controller: controller.username,
@@ -59,14 +87,14 @@ class TSignupForm extends StatelessWidget {
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
 
-          TextFormField(
-            controller: controller.address,
-            validator: (value) => TValidator.validateEmptyText('Address', value),
-            decoration: const InputDecoration(
-              labelText: "Address",
-              prefixIcon: Icon(Iconsax.user_edit),
-            ),
-          ),
+          // TextFormField(
+          //   controller: controller.address,
+          //   validator: (value) => TValidator.validateEmptyText('Address', value),
+          //   decoration: const InputDecoration(
+          //     labelText: "Address",
+          //     prefixIcon: Icon(Iconsax.user_edit),
+          //   ),
+          // ),
           
 
           // Address with Google Places

@@ -41,14 +41,13 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> createPrismaUser(
-      String uid, String name, String email, String phoneNumber, String address) async {
+      String uid, String name, String email, String phoneNumber) async {
     try {
       await Dio().post('$dbLink/user', data: {
         "id": uid,
         "name": name,
         "email": email,
         "phoneno": phoneNumber,
-        "address": address
       });
     } catch (e) {
       if (kDebugMode) print('Prisma Error: $e');
@@ -142,9 +141,8 @@ class AuthenticationRepository extends GetxController {
         userCredential.user!.uid,
         '${signupController.username.text.trim()}', // Accessing username through the controller
         email,
-        '${signupController.phoneNumber.text
-            .trim()}',
-        '${signupController.address.text.trim()}' 
+        signupController.phoneNumber.text.trim()
+        // '${signupController.address.text.trim()}' 
       );
 
       return userCredential;
@@ -246,7 +244,6 @@ class AuthenticationRepository extends GetxController {
         googleUser.displayName ?? 'User',
         googleUser.email,
         userCredential.user!.phoneNumber ?? '',
-        ''
       );
 
       return userCredential;

@@ -256,43 +256,43 @@
 // }
 
 
-import 'package:flutter/material.dart';
-import 'package:cheezechoice/check.dart';
+// import 'package:flutter/material.dart';
+// import 'package:cheezechoice/check.dart';
 
-class CheckoutPage extends StatefulWidget {
-  const CheckoutPage({super.key});
+// class CheckoutPage extends StatefulWidget {
+//   const CheckoutPage({super.key});
 
-  @override
-  State<CheckoutPage> createState() => _CheckoutPageState();
-}
+//   @override
+//   State<CheckoutPage> createState() => _CheckoutPageState();
+// }
 
-class _CheckoutPageState extends State<CheckoutPage> {
-  TextEditingController textEditingController = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Checkout"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: textEditingController,
-              decoration: InputDecoration(
-                  hintText: "Enter amount", border: OutlineInputBorder()),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  PhonepePaymentGateway(context: context, amount: double.parse(textEditingController.text)).initializeSdk();
-                },
-                child: const Text("Check out"))
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class _CheckoutPageState extends State<CheckoutPage> {
+//   TextEditingController textEditingController = TextEditingController();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Checkout"),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Column(
+//           children: [
+//             TextField(
+//               controller: textEditingController,
+//               decoration: InputDecoration(
+//                   hintText: "Enter amount", border: OutlineInputBorder()),
+//             ),
+//             ElevatedButton(
+//                 onPressed: () {
+//                   PhonepePaymentGateway(context: context, amount: double.parse(textEditingController.text)).initializeSdk();
+//                 },
+//                 child: const Text("Check out"))
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
