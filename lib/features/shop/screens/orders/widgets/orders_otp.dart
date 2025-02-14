@@ -49,7 +49,7 @@ class OrderOtpScreen extends StatelessWidget {
                 const SizedBox(height: TSizes.spaceBtwItems),
 
                 // Check if the order is in 'ready' status
-                order.status == 'ready'
+                order.status == 'pickup'
                     ? FutureBuilder<String?>(
                         future: OrderController.instance.fetchOtp(
                             order.id, order.otp), // Use appropriate OTP

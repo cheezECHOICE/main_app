@@ -2,7 +2,6 @@ import 'package:cheezechoice/utils/local_storage/storage_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:get_storage/get_storage.dart';
 
 class LocationSearchScreen extends StatefulWidget {
   @override
@@ -17,6 +16,7 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
   String? selectedAddress;
   List<String> savedAddresses = [];
   GoogleMapController? mapController;
+  bool showPopup = false;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
         children: [
           GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: LatLng(16.4971,80.4992),
+              target: LatLng(16.4971, 80.4992),
               zoom: 8,
             ),
             onMapCreated: (controller) {
@@ -85,32 +85,7 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
               ],
             ),
           ),
-          Positioned(
-            bottom: 140,
-            left: 20,
-            right: 20,
-            child: TextField(
-              controller: _manualAddressController,
-              decoration: InputDecoration(
-                hintText: "Specify Block no/Street name",
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 80,
-            left: 20,
-            right: 20,
-            child: ElevatedButton(
-              onPressed: _saveAddress,
-              child: Text("Save Address"),
-            ),
-          ),
+          if (showPopup) _buildAddressPopup(),
           Positioned(
             bottom: 20,
             left: 20,
@@ -125,9 +100,53 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
     );
   }
 
+  Widget _buildAddressPopup() {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          padding: EdgeInsets.all(16),
+          width: 300,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(color: Colors.black26, blurRadius: 6),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () => setState(() => showPopup = false),
+                ),
+              ),
+              TextField(
+                controller: _manualAddressController,
+                decoration: InputDecoration(
+                  hintText: "Specify Block No./Street Name",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _saveAddress,
+                child: Text("Save Address"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _onMapTapped(LatLng location) async {
     setState(() {
       selectedLocation = location;
+      showPopup = true;
     });
     try {
       String address = await getAddressFromCoordinates(location.latitude, location.longitude);
@@ -161,7 +180,9 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
       String fullAddress = '${_manualAddressController.text}, $selectedAddress';
       savedAddresses.add(fullAddress);
       await localStorage.saveData('savedAddresses', savedAddresses);
-      setState(() {});
+      setState(() {
+        showPopup = false;
+      });
       print("Address saved: $fullAddress");
     } else {
       print("No address selected to save");
@@ -220,7 +241,6 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
     );
   }
 }
-
 Future<String> getAddressFromCoordinates(double latitude, double longitude) async {
   List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
   if (placemarks.isNotEmpty) {

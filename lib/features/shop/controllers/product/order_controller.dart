@@ -48,26 +48,8 @@ class OrderController extends GetxController {
     selectedAddress = address;
   }
 
-  // String getFinalAddress() {
-  //   return selectedAddress ?? "Main Gate";
-  // }
 
-  // Method to fetch and save FCM token to Prisma when the user orders
-  // Future<void> saveFcmTokenToPrisma() async {
-  //   try {
-  //     String? fcmToken = await firebaseMessaging.getToken();
-  //     print("FCM Token: $fcmToken");
-  //     if (fcmToken != null) {
-  //       String userId = authRepo.authUser!.uid;
-  //       await orderRepository.saveFcmTokenInPrisma(userId, fcmToken);
-  //       print("FCM token saved successfully");
-  //     } else {
-  //       print("Failed to fetch FCM token");
-  //     }
-  //   } catch (e) {
-  //     print("Error fetching or saving FCM token: $e");
-  //   }
-  // }
+
 
   // order status for OTP
   List<OrderModel> getOrdersByStatus(String status) {
@@ -76,21 +58,6 @@ class OrderController extends GetxController {
         .toList();
   }
 
-  // Function to determine if the section should be available
-  // bool isAvailable() {
-  //   final now = DateTime.now();
-  //   final startAvailability = DateTime(now.year, now.month, now.day, 18);
-  //   final endAvailability = DateTime(now.year, now.month, now.day, 20);
-
-  //   final dayOfWeek = now.weekday;
-  //   final isSaturdayEvening =
-  //       dayOfWeek == DateTime.sunday && now.isAfter(startAvailability);
-  //   final isSunday = dayOfWeek == DateTime.sunday;
-  //   final isMondayMorning =
-  //       dayOfWeek == DateTime.monday && now.isBefore(endAvailability);
-
-  //   return isSaturdayEvening || isSunday || isMondayMorning;
-  // }
 
   Future<void> calculateParcelCharges() async {
     parcelChargeProcessing.value = true;
@@ -208,6 +175,41 @@ class OrderController extends GetxController {
       throw 'Failed to fetch OTP: $e';
     }
   }
+
+void checkOrderTime(BuildContext context) {
+  // Get current time in IST
+  DateTime now = DateTime.now().toUtc().add(Duration(hours: 5, minutes: 30)); 
+
+  // Define allowed time range (IST)
+  TimeOfDay start = TimeOfDay(hour: 18, minute: 0); // 6:00 PM
+  TimeOfDay end = TimeOfDay(hour: 20, minute: 0);   // 8:00 PM
+  TimeOfDay current = TimeOfDay.fromDateTime(now);
+
+  bool isAllowedTime = (current.hour > start.hour || 
+                        (current.hour == start.hour && current.minute >= start.minute)) &&
+                       (current.hour < end.hour || 
+                        (current.hour == end.hour && current.minute <= end.minute));
+
+  if (!isAllowedTime) {
+    // Show alert if order is placed outside allowed time
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Ordering Time Restriction"),
+        content: Text("You can only place orders between 6 PM and 8 PM IST."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("OK"),
+          ),
+        ],
+      ),
+    );
+  } else {
+    // Proceed with checkout
+    processPrismaOrder();
+  }
+}
 
 // Method for processing Prisma order with or without PhonePe Payment
 void processPrismaOrder() async {

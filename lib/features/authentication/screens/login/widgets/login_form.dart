@@ -31,7 +31,7 @@ class TLoginForm extends StatelessWidget {
           // Email Input Field
           TextFormField(
             controller: controller.email,
-            validator: (value) => TValidator.validateEmail(value),
+            validator: (value) => TValidator.validateloginEmail(value),
             decoration: InputDecoration(
               prefixIcon: const Icon(Iconsax.message_search4),
               enabledBorder: UnderlineInputBorder(
