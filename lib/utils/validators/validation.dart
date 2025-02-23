@@ -19,10 +19,6 @@ class TValidator {
       return 'Invalid email address.';
     }
 
-    if (!value.endsWith('@vitapstudent.ac.in')) {
-      return 'Email must be a VIT-AP student email';
-    }
-
     return null;
   }
 
@@ -34,9 +30,9 @@ class TValidator {
     // Regular expression for email validation
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
-    if (!emailRegExp.hasMatch(value)) {
-      return 'Invalid email address.';
-    }
+    // if (!emailRegExp.hasMatch(value)) {
+    //   return 'Invalid email address.';
+    // }
 
     // if (!value.endsWith('@vitapstudent.ac.in')) {
     //   return 'Email must be a VIT-AP student email';

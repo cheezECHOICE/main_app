@@ -12,13 +12,13 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('cheezECHOICE'),
-        centerTitle: true,
-        backgroundColor: dark ? TColors.dark : Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: TColors.primary),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('cheezECHOICE'),
+      //   centerTitle: true,
+      //   backgroundColor: dark ? TColors.dark : Colors.white,
+      //   elevation: 0,
+      //   iconTheme: IconThemeData(color: TColors.primary),
+      // ),
       backgroundColor: dark ? TColors.dark : Colors.white,
       body: SingleChildScrollView(
         child: Padding(
@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
 
               /// Logo, Title and SubTitle
               const TLoginHeader(),

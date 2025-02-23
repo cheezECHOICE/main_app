@@ -1,5 +1,6 @@
 import 'package:cheezechoice/features/authentication/screens/password_configuration/forgot_password.dart';
 import 'package:cheezechoice/features/authentication/screens/signup/signup.dart';
+import 'package:cheezechoice/features/authentication/screens/signup/signup2.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/features/authentication/controllers/login/login_controller.dart';
 import 'package:cheezechoice/utils/constants/colors.dart';
@@ -24,16 +25,16 @@ class TLoginForm extends StatelessWidget {
         children: [
           // Email Label
           const Text(
-            "Email",
+            "Phone No",
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 5), // Space between label and input field
           // Email Input Field
           TextFormField(
-            controller: controller.email,
-            validator: (value) => TValidator.validateloginEmail(value),
+            controller: controller.phone,
+            validator: (value) => TValidator.validatePhoneNumber(value),
             decoration: InputDecoration(
-              prefixIcon: const Icon(Iconsax.message_search4),
+              prefixIcon: const Icon(Iconsax.mobile),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: dark ? Colors.white : Colors.black),
               ),
@@ -109,7 +110,7 @@ class TLoginForm extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
-              onPressed: () => controller.emailAndPasswordSignIn(),
+              onPressed: () => controller.phoneAndPasswordSignIn(),
               child: const Text(
                 TTexts.signIn,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),

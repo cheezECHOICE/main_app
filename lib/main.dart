@@ -27,6 +27,7 @@ Future<void> main() async {
   // GetX Local Storage
   await GetStorage.init();
   await dotenv.load(fileName: ".env"); 
+  Get.put(AuthController());
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
@@ -107,6 +108,7 @@ Future<void> _showNotification(RemoteMessage message) async {
 // import 'package:cheezechoice/data/repositories/authentication_repo.dart';
 // import 'package:get/get.dart';
 // import 'package:get_storage/get_storage.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // import 'firebase_options.dart';
 
@@ -117,6 +119,8 @@ Future<void> _showNotification(RemoteMessage message) async {
 
 //   // GetX Local Storage
 //   await GetStorage.init();
+//   Get.put(AuthController());
+//   await dotenv.load(fileName: ".env"); 
 
 //   // Splash wait until items Load
 //   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

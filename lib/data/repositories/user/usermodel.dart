@@ -22,7 +22,7 @@ class UserModel {
   });
 
   /// Helper function to get the full name.
-  // String get fullName => '$firstName $lastName';
+  String get fullName => '$firstName $lastName';
 
   /// Helper function to format phone number.
   String get formattedPhoneNo => TFormatter.formatPhoneNumber(phoneNumber);
@@ -50,8 +50,7 @@ class UserModel {
       username: '',
       email: '',
       phoneNumber: '',
-      profilePicture: '',
-  );
+      profilePicture: '');
 
   /// Convert model to JSON structure for storing data in Firebase.
   Map<String, dynamic> toJson() {
@@ -62,7 +61,6 @@ class UserModel {
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
-      // 'Address':address,
     };
   }
 

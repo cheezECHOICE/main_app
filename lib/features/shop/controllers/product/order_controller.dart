@@ -101,9 +101,18 @@ class OrderController extends GetxController {
     }
   }
 
+  
+
   // // timer clause checkss.
   Future<bool> validateCheckoutClauses() async {
-    final userId = AuthenticationRepository.instance.authUser?.uid;
+    final authController = AuthController.instance;
+
+String token = authController.authToken.value;
+String userId = authController.userId.value;
+
+print('Stored Token: $token');
+print('Stored User ID: $userId');
+    // final userId = AuthenticationRepository.instance.authUser?.uid;
     if (userId == null || userId.isEmpty) {
       TLoaders.warningSnackBar(
           title: 'Authentication Required',
@@ -218,8 +227,14 @@ void processPrismaOrder() async {
     TFullScreenLoader.openLoadingDialog(
         'Processing your order', TImages.successanimation);
 
-    // Get user authentication Id
-    final userId = AuthenticationRepository.instance.authUser?.uid;
+    final authController = AuthController.instance;
+
+String token = authController.authToken.value;
+String userId = authController.userId.value;
+
+print('Stored Token: $token');
+print('Stored User ID: $userId');
+    // final userId = AuthenticationRepository.instance.authUser?.uid;
     if (userId == null || userId.isEmpty) {
       TFullScreenLoader.stopLoading();
       return;
@@ -368,7 +383,9 @@ Future<void> processPhonePePayment(double amount) async {
 
   void handleFcmTokenRefresh() {
     firebaseMessaging.onTokenRefresh.listen((newToken) async {
-      String userId = authRepo.authUser!.uid;
+      final localStorage = GetStorage();
+      final userId = localStorage.read('user_id');
+      // String userId = authRepo.authUser!.uid;
       await orderRepository.saveFcmTokenInPrisma(
           userId, newToken); // Save new token
       print("FCM token refreshed and saved");

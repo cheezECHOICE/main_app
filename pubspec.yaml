@@ -128,11 +128,14 @@ flutter:
         - assets/
         - assets/docs/
         - assets/logos/
+        - assets/images/2.png
+        - assets/images/3.png
         - assets/images/content/
         - assets/images/banners/
         - assets/icons/
         - assets/images/animations/
         - assets/images/animations/processing.json
+        - assets/images/animations/na.json
         - assets/icons/payment_methods/
 
     #--------------- LOCAL FONTS ------------------#

@@ -20,35 +20,35 @@ class TSocialButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        InkWell(
-          onTap: () => controller.googleSignIn(),
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              border: Border.all(color: TColors.grey),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: [
-                const Image(
-                  width: TSizes.iconMd,
-                  height: TSizes.iconLg,
-                  image: AssetImage(TImages.google),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'Google',
-                  style: TextStyle(
-                    fontSize: 16, // Adjust the font size as needed
-                    color: textColor, // Adjust the color based on the theme
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        ),
+        // InkWell(
+        //   onTap: () => controller.googleSignIn(),
+        //   borderRadius: BorderRadius.circular(20),
+        //   child: Container(
+        //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        //     decoration: BoxDecoration(
+        //       border: Border.all(color: TColors.grey),
+        //       borderRadius: BorderRadius.circular(20),
+        //     ),
+        //     child: Row(
+        //       children: [
+        //         const Image(
+        //           width: TSizes.iconMd,
+        //           height: TSizes.iconLg,
+        //           image: AssetImage(TImages.google),
+        //         ),
+        //         const SizedBox(width: 10),
+        //         Text(
+        //           'Google',
+        //           style: TextStyle(
+        //             fontSize: 16, // Adjust the font size as needed
+        //             color: textColor, // Adjust the color based on the theme
+        //           ),
+        //           textAlign: TextAlign.center,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

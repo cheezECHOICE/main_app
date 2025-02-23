@@ -15,16 +15,18 @@ class LoginController extends GetxController {
   final rememberMe = false.obs;
   final hidePassword = true.obs;
   final localStorage = GetStorage();
-  final email = TextEditingController();
+  // final email = TextEditingController();
   final password = TextEditingController();
+  final phone = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final userController = Get.put(UserController());
 
   @override
   void onInit() {
     // Storing credentials
-    email.text = localStorage.read('REMEMBER_ME_EMAIL') ?? '';
+    // email.text = localStorage.read('REMEMBER_ME_EMAIL') ?? '';
     password.text = localStorage.read('REMEMBER_ME_PASSWORD') ?? '';
+    phone.text = localStorage.read('REMEMBER_ME_PHONE') ?? '';
     super.onInit();
   }
 
@@ -50,7 +52,7 @@ class LoginController extends GetxController {
 
       // Save Data if Remember Me is Selected
       if (rememberMe.value) {
-        localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
+        // localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
         localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
       } else {
         localStorage.remove('REMEMBER_ME_EMAIL');
@@ -58,10 +60,10 @@ class LoginController extends GetxController {
       }
 
       // Login User using email and password Authentication
-      final userCredentials = await AuthenticationRepository.instance
-          .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      // final userCredentials = await AuthenticationRepository.instance
+      //     .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
-      await userController.saveUserRecord(userCredentials);
+      // await userController.saveUserRecord(userCredentials);
 
       // Reset isLoggedOut flag
       localStorage.write('isLoggedOut', false);
@@ -78,38 +80,52 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> googleSignIn() async {
-    try {
-      //Start loading
-      TFullScreenLoader.openLoadingDialog(
-          'Logging you in...', TImages.daceranimation);
 
-      //Check Internet
-      final isConnected = await NetworkManager.instance.isConnected();
-      if (!isConnected) {
-        TFullScreenLoader.stopLoading();
-        return;
-      }
+Future<void> phoneAndPasswordSignIn() async {
+  try {
+    // Start Loading
+    TFullScreenLoader.openLoadingDialog('Logging you in...', TImages.daceranimation);
 
-      //Google Authentication
-      final userCredentials =
-          await AuthenticationRepository.instance.signInWithGoogle();
-
-      //Save User record
-      await userController.saveUserRecord(userCredentials);
-
-      // Reset isLoggedOut flag
-      localStorage.write('isLoggedOut', false);
-      await TLocalStorage.init(userController.user.value.id);
-
-      //Remove Loader
+    // Check Internet Connectivity
+    final isConnected = await NetworkManager.instance.isConnected();
+    if (!isConnected) {
       TFullScreenLoader.stopLoading();
-
-      // Redirect
-      Get.offAll(() => const NavigationMenu());
-    } catch (e) {
-      TFullScreenLoader.stopLoading();
-      TLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+      return;
     }
+
+    // Form Validation
+    if (!loginFormKey.currentState!.validate()) {
+      TFullScreenLoader.stopLoading();
+      return;
+    }
+
+    // Save Data if Remember Me is Selected
+    if (rememberMe.value) {
+      localStorage.write('REMEMBER_ME_PHONE', phone.text.trim());
+      localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
+    } else {
+      localStorage.remove('REMEMBER_ME_PHONE');
+      localStorage.remove('REMEMBER_ME_PASSWORD');
+    }
+
+    // Call Login API
+    await AuthenticationRepository.instance.loginWithPhoneAndPassword(
+      phone.text.trim(),
+      password.text.trim(),
+    );
+
+    // Reset isLoggedOut flag
+    localStorage.write('isLoggedOut', false);
+    await TLocalStorage.init(userController.user.value.id);
+
+// await GetStorage.init();
+    // Remove Loader
+    TFullScreenLoader.stopLoading();
+    Get.offAll(() => const NavigationMenu());
+    
+  } catch (e) {
+    TFullScreenLoader.stopLoading();
+    TLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
   }
+}
 }

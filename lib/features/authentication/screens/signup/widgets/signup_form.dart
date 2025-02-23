@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cheezechoice/common/widgets/loaders/loaders.dart';
 import 'package:cheezechoice/features/authentication/controllers/signup/signup_controller.dart';
+import 'package:cheezechoice/features/authentication/screens/signup/widgets/terms_and_conditions_checkbox.dart';
 import 'package:cheezechoice/utils/constants/colors.dart';
 import 'package:cheezechoice/utils/constants/sizes.dart';
 import 'package:cheezechoice/utils/constants/text_strings.dart';
@@ -7,24 +9,23 @@ import 'package:cheezechoice/utils/helpers/helper_functions.dart';
 import 'package:cheezechoice/utils/validators/validation.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-
-import '../../../../../common/widgets/loaders/loaders.dart';
-import 'terms_and_conditions_checkbox.dart';
+//import 'package:cheezechoice/features/authentication/screens/signup/verify_email.dart';
 
 class TSignupForm extends StatelessWidget {
-  const TSignupForm({super.key});
+  const TSignupForm({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final dark = THelperFunctions.isDarkMode(context);
     final controller = Get.put(SignupController());
-    // const String googleMapsApiKey = String.fromEnvironment('GOOGLE_MAPS_API_KEY');
-
     return Form(
       key: controller.signupFormKey,
       child: Column(
         children: [
+          // First and Last Name
           Row(
             children: [
               Expanded(
@@ -53,78 +54,43 @@ class TSignupForm extends StatelessWidget {
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
-          // Username
+
+          ///username
           TextFormField(
             controller: controller.username,
-            validator: (value) => TValidator.validateEmptyText('Name', value),
+            validator: (value) =>
+                TValidator.validateEmptyText('Username', value),
+            expands: false,
             decoration: const InputDecoration(
-              labelText: TTexts.username,
-              prefixIcon: Icon(Iconsax.user_edit),
-            ),
+                labelText: TTexts.username,
+                prefixIcon: Icon(Iconsax.user_edit)),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          // Email
+          ///email
           TextFormField(
             controller: controller.email,
             validator: (value) => TValidator.validateEmail(value),
             decoration: const InputDecoration(
-              labelText: TTexts.email,
-              prefixIcon: Icon(Iconsax.direct),
-            ),
+                labelText: TTexts.email, prefixIcon: Icon(Iconsax.direct)),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          // Phone Number
+          ///phone number
           TextFormField(
             controller: controller.phoneNumber,
             validator: (value) => TValidator.validatePhoneNumber(value),
             decoration: const InputDecoration(
-              labelText: TTexts.phoneNo,
-              prefixIcon: Icon(Iconsax.call),
-            ),
+                labelText: TTexts.phoneNo, prefixIcon: Icon(Iconsax.call)),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
+          ///password
 
-          // TextFormField(
-          //   controller: controller.address,
-          //   validator: (value) => TValidator.validateEmptyText('Address', value),
-          //   decoration: const InputDecoration(
-          //     labelText: "Address",
-          //     prefixIcon: Icon(Iconsax.user_edit),
-          //   ),
-          // ),
-          
-
-          // Address with Google Places
-          // Address TextEditingController
-
-
-// GooglePlaceAutoCompleteTextField(
-//   textEditingController: controller.address,  // Use this controller
-//   googleAPIKey: "AIzaSyBhFlq0nn0ExMa8-cjIqOSMk3F9bQEAmVk", 
-//   inputDecoration: const InputDecoration(
-//     labelText: 'Address',
-//     prefixIcon: Icon(Icons.location_on),
-//   ),
-//   debounceTime: 400,
-//   isLatLngRequired: false,
-//   getPlaceDetailWithLatLng: (prediction) {
-//     if (prediction.description != null) {
-//       controller.address.value = prediction.description! as TextEditingValue;
-//       controller.address.text = prediction.description!; // Set selected address
-//     }
-//     FocusScope.of(context).unfocus(); // Close keyboard and suggestions
-//   },
-// ),
-
-          const SizedBox(height: TSizes.spaceBtwInputFields),
-
-          // Password
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Password Input Field
               Obx(() => TextFormField(
                     controller: controller.password,
                     obscureText: controller.hidePassword.value,
@@ -146,9 +112,13 @@ class TSignupForm extends StatelessWidget {
                       ),
                     ),
                   )),
+
               const SizedBox(height: 10),
+
+              // Password Rules with Dynamic Header
               Obx(() {
-                if (!controller.isTypingPassword.value) return const SizedBox.shrink();
+                if (!controller.isTypingPassword.value)
+                  return const SizedBox.shrink();
 
                 final allRulesSatisfied = controller.areAllPasswordRulesValid();
 
@@ -158,7 +128,9 @@ class TSignupForm extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
-                          allRulesSatisfied ? Icons.check_circle : Icons.info_outline,
+                          allRulesSatisfied
+                              ? Icons.check_circle
+                              : Icons.info_outline,
                           color: allRulesSatisfied ? Colors.green : Colors.red,
                         ),
                         const SizedBox(width: 5),
@@ -167,20 +139,26 @@ class TSignupForm extends StatelessWidget {
                               ? "You are good to GO"
                               : "Password must meet the following rules:",
                           style: TextStyle(
-                            color: allRulesSatisfied ? Colors.green : Colors.red.shade700,
+                            color: allRulesSatisfied
+                                ? Colors.green
+                                : Colors.red.shade700,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 5),
+
+                    // Display Password Rules
                     if (!allRulesSatisfied)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: controller.passwordValidationRules.entries.map((rule) {
+                        children: controller.passwordValidationRules.entries
+                            .map((rule) {
                           final isValid = rule.value;
                           return Padding(
-                            padding: const EdgeInsets.only(left: 20.0, top: 4.0),
+                            padding:
+                                const EdgeInsets.only(left: 20.0, top: 4.0),
                             child: Row(
                               children: [
                                 Icon(
@@ -207,11 +185,11 @@ class TSignupForm extends StatelessWidget {
           ),
           SizedBox(height: TSizes.spaceBtwSections),
 
-          // Terms
+          ///Terms
           const TTermsAndConditionsCheckBox(),
           const SizedBox(height: TSizes.spaceBtwSections),
 
-          // Signup Button
+          ///Signup button
           SizedBox(
             width: 300,
             child: Obx(() => ElevatedButton(
@@ -219,11 +197,14 @@ class TSignupForm extends StatelessWidget {
                       ? () => controller.signup()
                       : () {
                           TLoaders.customToast(
-                              message: "Please agree to the policy to continue");
+                              message:
+                                  "Please agree to the policy to continue");
                         },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      controller.isSignupEnabled ? TColors.primary : Colors.grey,
+                    backgroundColor: WidgetStateProperty.all(
+                      controller.isSignupEnabled
+                          ? TColors.primary
+                          : Colors.grey,
                     ),
                   ),
                   child: Text(

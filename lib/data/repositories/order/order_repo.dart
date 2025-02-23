@@ -5,6 +5,7 @@ import 'package:cheezechoice/features/shop/models/order_model.dart';
 import 'package:cheezechoice/utils/constants/api_constants.dart';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:get_storage/get_storage.dart';
 
 class OrderRepository extends GetxController {
   static OrderRepository get instance => Get.find();
@@ -47,7 +48,9 @@ class OrderRepository extends GetxController {
   /// Get all order related to current User
   Future<List<OrderModel>> fetchUserOrders() async {
     try {
-      final userId = AuthenticationRepository.instance.authUser?.uid;
+      final authController = AuthController.instance;
+String userId = authController.userId.value;
+      // final userId = AuthenticationRepository.instance.authUser?.uid;
       if (userId!.isEmpty) {
         throw 'Unable to find user information. Try again in few minutes.';
       }
@@ -113,8 +116,11 @@ class OrderRepository extends GetxController {
   Future<List<OrderModel>> fetchUserOrdersPrisma() async {
     List<OrderModel> orders = [];
     try {
+      final authController = AuthController.instance;
+String userId = authController.userId.value;
       var data = await Dio().get(
-          '${userOrderEndpoint}${AuthenticationRepository.instance.authUser?.uid}');
+          // '${userOrderEndpoint}${AuthenticationRepository.instance.authUser?.uid}');
+          '${userOrderEndpoint}${userId}');
 
       for (var item in data.data['data']) {
         orders.add(OrderModel.fromJson(item));

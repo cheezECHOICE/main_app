@@ -1,4 +1,5 @@
 import 'package:cheezechoice/features/pickup/screens/handoff.dart';
+import 'package:cheezechoice/address_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:cheezechoice/features/personalisation/screens/settings/settings.dart';
 import 'package:cheezechoice/features/shop/controllers/brand_controller.dart';
@@ -71,6 +72,7 @@ class NavigationController extends GetxController {
     HomeScreen(),
     // MapPage(),
     const StoreScreen(),
+    // LocationSearchScreen(),
     const OrderScreen(),
     const SettingScreen(),
   ];

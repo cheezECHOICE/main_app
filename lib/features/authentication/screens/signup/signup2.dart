@@ -1,151 +1,149 @@
+import 'package:cheezechoice/features/authentication/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:cheezechoice/data/repositories/authentication_repo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cheezechoice/features/authentication/screens/signup/verifyotp.dart';
-import 'package:cheezechoice/utils/constants/colors.dart';
-import 'package:cheezechoice/utils/constants/sizes.dart';
-import 'package:cheezechoice/utils/validators/validation.dart';
+import 'package:get/get.dart';
 
-class OutsiderSignup extends StatefulWidget {
-  @override
-  _OutsiderSignupState createState() => _OutsiderSignupState();
-}
+import '../../../../common/widgets/success_screen/success_screen.dart';
+import '../../../../data/repositories/authentication_repo.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/image_strings.dart';
+import '../../../../utils/constants/text_strings.dart';
+import '../../../../utils/helpers/helper_functions.dart';
 
-class _OutsiderSignupState extends State<OutsiderSignup> {
+class VerifyNumberScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController otpController = TextEditingController();
-  final AuthenticationRepository authRepo = AuthenticationRepository();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  bool otpSent = false;
-  String? verificationId;
-
-  void sendOtp() {
+  void sendOtp(BuildContext context) async {
     String phoneNumber = phoneController.text.trim();
     if (phoneNumber.length == 10 &&
         RegExp(r'^[0-9]{10}$').hasMatch(phoneNumber)) {
       String fullPhoneNumber = "+91$phoneNumber";
-      authRepo.sendOtp(fullPhoneNumber, (verificationId) {
-        setState(() {
-          otpSent = true;
-          this.verificationId = verificationId;
-        });
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Enter a valid 10-digit phone number')),
+      await _auth.verifyPhoneNumber(
+        phoneNumber: fullPhoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _auth.signInWithCredential(credential);
+          Get.off(
+        () => SuccessScreen(
+          image: TImages.staticSuccessIllustration,
+          title: TTexts.yourAccountCreatedTitle,
+          subtitle: TTexts.yourAccountCreatedSubTitle,
+          onPressed: () => AuthenticationRepository.instance.screenRedirect(),
+        ),
+      );
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Verification failed, Try again after 20 seconds')),
+          );
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VerificationCodeScreen(verificationId: verificationId),
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Outsider Sign Up')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          child: ListView(
+      backgroundColor: dark ? TColors.dark : Colors.white,
+      resizeToAvoidBottomInset: true,
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Username
-              TextFormField(
-                controller: usernameController,
-                validator: (value) =>
-                    TValidator.validateEmptyText('Username', value),
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                  prefixIcon: Icon(Icons.person),
-                ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
-              // Email
-              TextFormField(
-                controller: emailController,
-                validator: (value) => TValidator.validateEmail(value),
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
-              // Phone Number with OTP
-              TextFormField(
-                controller: phoneController,
-                decoration: InputDecoration(
-                  labelText: 'Phone Number',
-                  prefixText: '+91 ',
-                  prefixIcon: Icon(Icons.phone),
-                  suffixIcon: TextButton(
-                    onPressed: () {
-                      sendOtp();
-                    },
-                    child: Text('Get OTP',
-                        style: TextStyle(color: TColors.primary)),
+              Container(
+                height: 200,
+                width: 350,
+                decoration: BoxDecoration(
+                  color: dark ? TColors.dark : Colors.white,
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/2.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                keyboardType: TextInputType.phone,
               ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
-              if (otpSent == true) ...[
-                // OTP Input Field
-                TextFormField(
-                  controller: otpController,
-                  decoration: InputDecoration(
-                    labelText: 'Enter OTP',
-                    prefixIcon: Icon(Icons.lock),
+              SizedBox(height: 20),
+              Text(
+                'Verify Your Number',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: dark ? TColors.white : Colors.black,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Please enter your Phone Number & Join the Foodie World',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: dark ? TColors.white : Colors.black,
+                ),
+              ),
+              SizedBox(height: 60),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 8),
+                        Text('+91'),
+                      ],
+                    ),
                   ),
-                  keyboardType: TextInputType.number,
-                  maxLength: 6,
-                ),
-                const SizedBox(height: TSizes.spaceBtwInputFields),
-              ],
-
-              // Address
-              TextFormField(
-                controller: addressController,
-                validator: (value) =>
-                    TValidator.validateEmptyText('Address', value),
-                decoration: const InputDecoration(
-                  labelText: 'Address',
-                  prefixIcon: Icon(Icons.home),
-                ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: phoneController,
+                      decoration: InputDecoration(
+                        hintText: 'Phone Number',
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
-              // Password
-              TextFormField(
-                controller: passwordController,
-                obscureText: true,
-                validator: (value) => TValidator.validatePassword(value),
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
-                ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwInputFields),
-
-              // Sign Up Button
+              SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_validateForm()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Signed Up Successfully!')),
-                      );
-                    }
-                  },
+                  onPressed: () => sendOtp(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: TColors.primary,
+                    backgroundColor: TColors.primary.withOpacity(0.8),
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    textStyle: TextStyle(fontSize: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                  child: Text('Sign Up'),
+                  child: Text(
+                    'GET OTP',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -153,13 +151,5 @@ class _OutsiderSignupState extends State<OutsiderSignup> {
         ),
       ),
     );
-  }
-
-  bool _validateForm() {
-    return usernameController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        phoneController.text.length == 10 &&
-        addressController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
   }
 }

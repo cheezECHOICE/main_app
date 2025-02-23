@@ -67,7 +67,7 @@ class SignUpOptionPage extends StatelessWidget {
                 ),
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
               ),
-              onPressed: () => Get.to(() => OutsiderSignup()),
+              onPressed: () => Get.to(() => VerifyNumberScreen()),
               child: Text('Order as a Local',
                   style: TextStyle(fontSize: 16, fontFamily: 'Poppins')),
             ),
